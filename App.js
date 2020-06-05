@@ -1,12 +1,10 @@
 import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
-import Icon from 'react-native-vector-icons/Ionicons';
-import Micon from 'react-native-vector-icons/MaterialIcons';
+import MCIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import MainTabs from './navigation/MainTabs';
 
-Icon.loadFont();
-Micon.loadFont();
+MCIcon.loadFont();
 
 const App = () => (
   <NavigationContainer>

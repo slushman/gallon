@@ -15,16 +15,16 @@ import * as utils from '../../utils';
 const today = dayjs();
 
 const initialValues = {
-  date: today,
-  odometer: '',
-  total: '',
-  gallons: '',
+  fillupDate: today,
+  fillupGallons: '',
+  fillupOdometer: '',
+  fillupTotal: '',
 };
 
 const FillupSchema = Yup.object().shape({
-  gallons: Yup.number().required('Enter the total gallons for this fillup.'),
-  odometer: Yup.number().required('Enter the current odometer reading.'),
-  total: Yup.number().required('Enter the total price for this fillup.'),
+  fillupGallons: Yup.number().required('Enter the total gallons for this fillup.'),
+  fillupOdometer: Yup.number().required('Enter the current odometer reading.'),
+  fillupTotal: Yup.number().required('Enter the total price for this fillup.'),
 });
 
 const NewFillup = () => {
@@ -57,28 +57,28 @@ const NewFillup = () => {
       validationSchema={FillupSchema}
     >
       {({ handleSubmit, values }) => {
-        const hasAllRequired = utils.allHaveValues(['odometer', 'total', 'gallons'], values);
+        const hasAllRequired = utils.allHaveValues(['fillupOdometer', 'fillupTotal', 'fillupGallons'], values);
 
         return (
           <Wrapper centerContent>
-            <DatePicker label="Date" name="date" />
+            <DatePicker label="Date" name="fillupDate" />
             <TextField
-              fieldName="odometer"
+              fieldName="fillupOdometer"
               keyboardType="numeric"
               label="Odometer"
-              name="odometer"
+              name="fillupOdometer"
             />
             <TextField
-              fieldName="total"
+              fieldName="fillupTotal"
               keyboardType="numeric"
               label="Total"
-              name="total"
+              name="fillupTotal"
             />
             <TextField
-              fieldName="gallons"
+              fieldName="fillupGallons"
               keyboardType="numeric"
               label="Gallons"
-              name="gallons"
+              name="fillupGallons"
             />
             {details}
             <Button disabled={!hasAllRequired} label="Save" onPress={handleSubmit} />

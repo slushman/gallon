@@ -146,7 +146,6 @@ const TextField = ({ fieldName, label, ...props }) => {
           <Animated.Text style={labelStyle}>{label}</Animated.Text>
         </Animated.View>
         <TextInput
-          {...field}
           {...props}
           onBlur={handleBlur}
           onChangeText={field.onChange(fieldName)}

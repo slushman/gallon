@@ -3,37 +3,33 @@ import * as Yup from 'yup';
 import { Formik } from 'formik';
 import dayjs from 'dayjs';
 import PropTypes from 'prop-types';
+import * as R from 'ramda';
 
 import Button from '../../components/Button';
 import DatePicker from '../../components/DatePicker';
 import ServicesField from '../../components/ServicesField';
 import TextField from '../../components/TextField';
 import Wrapper from '../../components/Wrapper';
-import * as routes from '../../constants/routes';
 import * as utils from '../../utils';
 
 const today = dayjs();
 
 const initialValues = {
-  date: today,
-  odometer: '',
-  total: '',
+  serviceDate: today,
+  serviceOdometer: '',
   services: [],
+  serviceTotal: '',
 };
 
 const ServiceSchema = Yup.object().shape({
-  gallons: Yup.number().required('Enter the total gallons for this fillup.'),
-  odometer: Yup.number().required('Enter the current odometer reading.'),
-  total: Yup.number().required('Enter the total price for this fillup.'),
+  serviceOdometer: Yup.number().required('Enter the current odometer reading.'),
+  serviceTotal: Yup.number().required('Enter the total price for this fillup.'),
 });
 
-const NewService = ({ navigation: { navigate } }) => {
-  const selectServices = React.useCallback(
-    () => navigate(routes.SELECT_SERVICES),
-    [navigate],
-  );
-
+const NewService = ({ navigation: { navigate }, route }) => {
   const submitForm = React.useCallback((values) => { console.log(values); }, []);
+  const servicesList = R.pathOr([], ['params', 'services'], route);
+  console.log({ servicesList });
 
   return (
     <Formik
@@ -42,24 +38,24 @@ const NewService = ({ navigation: { navigate } }) => {
       validationSchema={ServiceSchema}
     >
       {({ handleSubmit, values }) => {
-        const hasAllRequired = utils.allHaveValues(['odometer', 'total', 'gallons', 'services'], values);
+        const hasAllRequired = utils.allHaveValues(['serviceOdometer', 'serviceTotal', 'services'], values);
 
         return (
           <Wrapper centerContent>
-            <DatePicker label="Date" name="date" />
+            <DatePicker label="Date" name="serviceDate" />
             <TextField
-              fieldName="odometer"
+              fieldName="serviceOdometer"
               keyboardType="numeric"
               label="Odometer"
-              name="odometer"
+              name="serviceOdometer"
             />
             <TextField
-              fieldName="total"
+              fieldName="serviceTotal"
               keyboardType="numeric"
               label="Total"
-              name="total"
+              name="serviceTotal"
             />
-            <ServicesField name="services" navigate={navigate} />
+            <ServicesField name="services" navigate={navigate} servicesList={servicesList} />
             <Button disabled={!hasAllRequired} label="Save" onPress={handleSubmit} />
           </Wrapper>
         );
@@ -72,6 +68,7 @@ NewService.propTypes = {
   navigation: PropTypes.shape({
     navigate: PropTypes.func,
   }).isRequired,
+  route: PropTypes.shape({}),
 };
 
 export default React.memo(NewService);

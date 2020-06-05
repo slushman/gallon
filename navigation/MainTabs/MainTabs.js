@@ -1,6 +1,6 @@
 import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import Icon from 'react-native-vector-icons/Ionicons';
+import MCIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import NewFillup from '../../screens/NewFillup';
 
@@ -8,12 +8,8 @@ import EntriesStack from '../EntriesStack';
 import ServicesStack from '../ServicesStack';
 import Settings from '../../screens/Settings';
 import * as routes from '../../constants/routes';
-import * as utils from '../../utils';
-
-Icon.loadFont();
 
 const Tab = createBottomTabNavigator();
-const prefix = utils.getPrefix();
 
 const MainTabs = () => (
   <Tab.Navigator>
@@ -22,7 +18,7 @@ const MainTabs = () => (
       name={routes.ENTRY_LIST}
       options={{
         tabBarIcon: ({ color, size }) => (
-          <Icon color={color} name={`${prefix}list`} size={size} />
+          <MCIcon color={color} name="format-list-bulleted" size={size} />
         ),
         tabBarLabel: 'Entries',
       }}
@@ -32,7 +28,7 @@ const MainTabs = () => (
       name={routes.NEW_FILLUP}
       options={{
         tabBarIcon: ({ color, size }) => (
-          <Icon color={color} name={`${prefix}add`} size={size} />
+          <MCIcon color={color} name="gas-station" size={size} />
         ),
         tabBarLabel: 'New Fillup',
       }}
@@ -42,7 +38,7 @@ const MainTabs = () => (
       name={routes.NEW_SERVICE}
       options={{
         tabBarIcon: ({ color, size }) => (
-          <Icon color={color} name={`${prefix}build`} size={size} />
+          <MCIcon color={color} name="oil" size={size} />
         ),
         tabBarLabel: 'New Service',
       }}
@@ -52,7 +48,7 @@ const MainTabs = () => (
       name={routes.SETTINGS}
       options={{
         tabBarIcon: ({ color, size }) => (
-          <Icon color={color} name={`${prefix}settings`} size={size} />
+          <MCIcon color={color} name="settings" size={size} />
         ),
         tabBarLabel: 'Settings',
       }}

@@ -1,10 +1,4 @@
 import * as R from 'ramda';
-import { Platform } from 'react-native';
-
-export const getPrefix = () => {
-  const isIOS = Platform.OS === 'ios';
-  return isIOS ? 'ios-' : 'md-';
-};
 
 export const hasValue = R.compose(
   R.not,

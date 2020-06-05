@@ -1,13 +1,9 @@
 import React from 'react';
 import { Text, TouchableOpacity, View } from 'react-native';
 import PropTypes from 'prop-types';
-import Icon from 'react-native-vector-icons/Ionicons';
-import Micon from 'react-native-vector-icons/MaterialIcons';
+import MCIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import * as colors from '../../constants/colors';
-import * as utils from '../../utils';
-
-const prefix = utils.getPrefix();
 
 const iconWrap = {
   justifyContent: 'center',
@@ -20,6 +16,11 @@ const leftContentStyle = {
 
 const leftContentTextStyle = {
   justifyContent: 'center',
+};
+
+const leftContentIconWrap = {
+  justifyContent: 'center',
+  paddingRight: 8,
 };
 
 const listItemWrap = {
@@ -40,6 +41,7 @@ const rightContentTextStyle = {
 const ListItem = ({
   isSelected,
   leftContent,
+  leftIcon,
   onPress,
   rightContent,
   subtitle,
@@ -49,18 +51,45 @@ const ListItem = ({
       if (isSelected) {
         return (
           <View style={iconWrap}>
-            <Micon color={colors.gallonBlue} name="check" size={20} />
+            <MCIcon color={colors.gallonBlue} name="check" size={20} />
           </View>
         );
       }
 
       return (
         <View style={iconWrap}>
-          <Icon color={colors.gallonLightGray} name={`${prefix}arrow-forward`} size={20} />
+          <MCIcon color={colors.gallonLightGray} name="chevron-right" size={20} />
         </View>
       );
     },
     [isSelected],
+  );
+
+  const leftIconContent = React.useMemo(
+    () => {
+      if (!leftIcon) return null;
+      const color = isSelected ? colors.gallonBlue : colors.gallonLightGray;
+
+      return (
+        <View style={leftContentIconWrap}>
+          <MCIcon color={color} name={leftIcon} size={25} />
+        </View>
+      );
+    },
+    [leftIcon, isSelected],
+  );
+
+  const right = React.useMemo(
+    () => {
+      if (!rightContent) return null;
+
+      return (
+        <View style={rightContentTextStyle}>
+          <Text>{rightContent}</Text>
+        </View>
+      );
+    },
+    [rightContent],
   );
 
   const subtitleContent = React.useMemo(
@@ -76,15 +105,14 @@ const ListItem = ({
     <TouchableOpacity onPress={onPress}>
       <View style={listItemWrap}>
         <View style={leftContentStyle}>
+          {leftIconContent}
           <View style={leftContentTextStyle}>
             <Text>{leftContent}</Text>
             {subtitleContent}
           </View>
         </View>
         <View style={rightContentStyle}>
-          <View style={rightContentTextStyle}>
-            <Text>{rightContent}</Text>
-          </View>
+          {right}
           {icon}
         </View>
       </View>
@@ -95,6 +123,7 @@ const ListItem = ({
 ListItem.propTypes = {
   isSelected: PropTypes.bool,
   leftContent: PropTypes.string,
+  leftIcon: PropTypes.string,
   onPress: PropTypes.func.isRequired,
   rightContent: PropTypes.string,
   subtitle: PropTypes.string,
@@ -103,6 +132,7 @@ ListItem.propTypes = {
 ListItem.defaultProps = {
   isSelected: false,
   leftContent: '',
+  leftIcon: undefined,
   rightContent: '',
   subtitle: '',
 };

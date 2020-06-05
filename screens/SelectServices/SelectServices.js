@@ -7,25 +7,24 @@ import Button from '../../components/Button';
 import ListItem from '../../components/ListItem';
 import Wrapper from '../../components/Wrapper';
 
-import * as colors from '../../constants/colors';
+import * as routes from '../../constants/routes';
 import { serviceList } from '../../constants/services';
-import { updateArray } from '../../utils';
+import * as utils from '../../utils';
 
-const SelectServices = ({ route }) => {
-  const { updateValues } = R.prop('params', route);
-  const [services, setServices] = React.useState([]);
+const SelectServices = ({ navigation: { navigate }, route }) => {
+  const selectedServices = R.pathOr([], ['params', 'servicesList'], route);
+  const [services, setServices] = React.useState(selectedServices);
 
   const saveSelectedServices = React.useCallback(
     () => {
-      updateValues(services);
-      console.log('closeSelectServices');
+      navigate(routes.NEW_SERVICE, { services });
     },
-    [services, updateValues],
+    [navigate, services],
   );
 
   const toggleService = React.useCallback(
     (service) => () => {
-      const updated = updateArray(services, service);
+      const updated = utils.updateArray(services, service);
       setServices(updated);
     },
     [services, setServices],
@@ -46,6 +45,12 @@ const SelectServices = ({ route }) => {
       <Button disabled={services.length < 1} label="Save" onPress={saveSelectedServices} />
     </Wrapper>
   );
+};
+
+SelectServices.propTypes = {
+  navigation: PropTypes.shape({
+    navigate: PropTypes.func,
+  }).isRequired,
 };
 
 export default React.memo(SelectServices);

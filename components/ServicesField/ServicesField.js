@@ -27,24 +27,26 @@ const wrapStyle = {
 };
 
 const ServicesField = (props) => {
-  // const [field, { error, touched }, { setTouched }] = useField(props);
-  const [services, setServices] = React.useState([]);
-  // const services = ['Oil change, Rotate tires'];
-  const hasServices = services.length > 0;
-  const { navigate } = props;
-  const [field, { error, touched }, { setTouched }] = useField(props);
+  const [field, meta, { setTouched, setValue }] = useField(props);
+  const { navigate, servicesList } = props;
+  let hasServices = servicesList.length > 0;
 
-  const updateValues = React.useCallback(
-    (value) => {
-      const updatedValues = updateArray(services, value);
-      setServices(updatedValues);
+  React.useEffect(
+    () => {
+      const hasNewServices = R.prop('value', field) !== servicesList;
+      if (hasServices && hasNewServices) {
+        setValue(servicesList);
+      }
     },
-    [services],
+    [field, hasServices, servicesList, setValue],
   );
 
   const goToSelectServices = React.useCallback(
-    () => navigate(routes.SELECT_SERVICES, { updateValues }),
-    [navigate, updateValues],
+    () => {
+      setTouched(true);
+      navigate(routes.SELECT_SERVICES, { servicesList });
+    },
+    [navigate, servicesList, setTouched],
   );
 
   const labelStyle = React.useMemo(
@@ -77,7 +79,7 @@ const ServicesField = (props) => {
         <View style={labelWrapperStyle}>
           <Text style={labelStyle}>Services</Text>
         </View>
-        <Text style={inputStyle}>{hasServices ? R.join(', ', services) : ''}</Text>
+        <Text style={inputStyle}>{hasServices ? R.join(', ', servicesList) : ''}</Text>
       </TouchableOpacity>
     </View>
   );
