@@ -1,0 +1,9 @@
+export const ENTRY = 'entry';
+export const ENTRY_LIST = 'entryList';
+export const FILLUP = 'fillup';
+export const SERVICE = 'service';
+export const NEW_FILLUP = 'newFillup';
+export const NEW_SERVICE = 'newService';
+export const HOME = 'home';
+export const SELECT_SERVICES = 'selectServices';
+export const SETTINGS = 'settings';
