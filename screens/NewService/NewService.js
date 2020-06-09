@@ -11,6 +11,7 @@ import ServicesField from '../../components/ServicesField';
 import TextField from '../../components/TextField';
 import Wrapper from '../../components/Wrapper';
 import * as utils from '../../utils';
+import * as services from '../../constants/services';
 
 const today = dayjs();
 
@@ -29,7 +30,30 @@ const ServiceSchema = Yup.object().shape({
 const NewService = ({ navigation: { navigate }, route }) => {
   const submitForm = React.useCallback((values) => { console.log(values); }, []);
   const servicesList = R.pathOr([], ['params', 'services'], route);
+  const hasOtherService = R.includes(services.OTHER, servicesList);
   console.log({ servicesList });
+  const requiredFields = ['serviceOdometer', 'serviceTotal', 'services'];
+
+  if (hasOtherService) {
+    requiredFields.push('servicesOther');
+  }
+
+  const OtherField = React.useMemo(
+    () => {
+      if (!hasOtherService) return null;
+
+      return (
+        <TextField
+          fieldName="servicesOther"
+          label="Other Details"
+          multiline={true}
+          name="servicesOther"
+          numberOfLines={4}
+        />
+      );
+    },
+    [hasOtherService],
+  );
 
   return (
     <Formik
@@ -38,7 +62,7 @@ const NewService = ({ navigation: { navigate }, route }) => {
       validationSchema={ServiceSchema}
     >
       {({ handleSubmit, values }) => {
-        const hasAllRequired = utils.allHaveValues(['serviceOdometer', 'serviceTotal', 'services'], values);
+        const hasAllRequired = utils.allHaveValues(requiredFields, values);
 
         return (
           <Wrapper centerContent>
@@ -56,6 +80,7 @@ const NewService = ({ navigation: { navigate }, route }) => {
               name="serviceTotal"
             />
             <ServicesField name="services" navigate={navigate} servicesList={servicesList} />
+            {OtherField}
             <Button disabled={!hasAllRequired} label="Save" onPress={handleSubmit} />
           </Wrapper>
         );
