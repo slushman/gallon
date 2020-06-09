@@ -1,3 +1,5 @@
+export const OTHER = 'Other';
+
 export const serviceList = [
   'Air FIlter',
   'Front Driver Tire',
@@ -8,5 +10,5 @@ export const serviceList = [
   'Rear Passenger Tire',
   'Tire Rotation',
   'Transmission Fluid',
-  'Other',
+  OTHER,
 ];

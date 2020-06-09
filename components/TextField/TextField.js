@@ -9,9 +9,10 @@ import * as colors from '../../constants/colors';
 import { HASERROR, ISVALID } from '../../constants/status';
 import { errorTextStyle, inputStyle } from './styles';
 
-const TextField = ({ fieldName, label, ...props }) => {
+const TextField = ({ fieldName, label, multiline, numberOfLines, ...props }) => {
   const [field, { error, touched }, { setTouched }] = useField(props);
   const [isFocused, setIsFocused] = React.useState(false);
+  const hasMultipleLines = multiline && numberOfLines > 1;
   const toValue = isFocused ? 1 : 0;
 
   const fieldAnim = useAnimation({ toValue, ...animationSettings });
@@ -101,6 +102,20 @@ const TextField = ({ fieldName, label, ...props }) => {
     [borderColor],
   );
 
+  const inputStyles = React.useMemo(
+    () => {
+      const calcHeight = 32 * numberOfLines;
+
+      return ({
+        ...inputStyle,
+        alignItems: hasMultipleLines ? 'flex-start' : 'center',
+        height: hasMultipleLines ? calcHeight : 'auto',
+        paddingTop: hasMultipleLines ? 12 : 8,
+      });
+    },
+    [hasMultipleLines, numberOfLines],
+  );
+
   const labelStyle = React.useMemo(
     () => ({
       color: textColor,
@@ -135,9 +150,7 @@ const TextField = ({ fieldName, label, ...props }) => {
     setTouched(true);
   }, [setTouched]);
 
-  const handleFocus = React.useCallback(() => {
-    setIsFocused(true);
-  }, []);
+  const handleFocus = React.useCallback(() => setIsFocused(true), []);
 
   return (
     <View style={wrapStyle}>
@@ -147,10 +160,12 @@ const TextField = ({ fieldName, label, ...props }) => {
         </Animated.View>
         <TextInput
           {...props}
+          multiline={multiline}
+          numberOfLines={numberOfLines}
           onBlur={handleBlur}
           onChangeText={field.onChange(fieldName)}
           onFocus={handleFocus}
-          style={inputStyle}
+          style={inputStyles}
         />
       </Animated.View>
       <ErrorMessage name={fieldName} render={msg => <Text style={errorTextStyle}>{msg}</Text>} />
@@ -159,7 +174,15 @@ const TextField = ({ fieldName, label, ...props }) => {
 };
 
 TextField.propTypes = {
+  fieldName: PropTypes.string.isRequired,
   label: PropTypes.string.isRequired,
+  multiline: PropTypes.bool,
+  numberOfLines: PropTypes.number,
+};
+
+TextField.defaultProps = {
+  multiline: false,
+  numberOfLines: 1,
 };
 
 export default React.memo(TextField);

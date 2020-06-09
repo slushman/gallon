@@ -2,12 +2,11 @@ import React from 'react';
 import { Text, TouchableOpacity, View } from 'react-native';
 import * as R from 'ramda';
 import PropTypes from 'prop-types';
-import { ErrorMessage, useField } from 'formik';
+import { useField } from 'formik';
 
 import * as colors from '../../constants/colors';
 import * as routes from '../../constants/routes';
 import { inputStyle } from '../TextField/styles';
-import { updateArray } from '../../utils';
 
 const labelWrapStyle = {
   backgroundColor: 'white',
@@ -21,9 +20,8 @@ const wrapStyle = {
   borderRadius: 5,
   borderStyle: 'solid',
   borderWidth: 1,
-  marginBottom: 30,
+  marginBottom: 20,
   marginHorizontal: 20,
-  padding: 5,
 };
 
 const ServicesField = (props) => {
