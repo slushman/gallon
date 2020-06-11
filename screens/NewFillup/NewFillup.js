@@ -1,10 +1,7 @@
 import React from 'react';
 import { Formik } from 'formik';
 import dayjs from 'dayjs';
-import Collapsible from 'react-native-collapsible';
 import * as Yup from 'yup';
-import { View } from 'react-native';
-import * as R from 'ramda';
 
 import Button from '../../components/Button';
 import DatePicker from '../../components/DatePicker';
@@ -28,27 +25,7 @@ const FillupSchema = Yup.object().shape({
 });
 
 const NewFillup = () => {
-  const isSubscriber = false;
-  const [detailsVisible, setDetailsVisible] = React.useState(false);
-
-  const closeDetails = React.useCallback(() => setDetailsVisible(false), []);
-
-  const openDetails = React.useCallback(() => setDetailsVisible(true), []);
-
   const submitForm = React.useCallback((values) => { console.log(values); }, []);
-
-  const details = React.useMemo(() => {
-    if (!isSubscriber) return null;
-
-    return (
-      <View>
-        <Button label="Enter Details" onPress={openDetails} />
-        <Collapsible collapsed={!detailsVisible}>
-          <Button label="Cancel" onPress={closeDetails} />
-        </Collapsible>
-      </View>
-    );
-  }, [closeDetails, detailsVisible, isSubscriber, openDetails]);
 
   return (
     <Formik
@@ -80,10 +57,9 @@ const NewFillup = () => {
               label="Gallons"
               name="fillupGallons"
             />
-            {details}
             <Button disabled={!hasAllRequired} label="Save" onPress={handleSubmit} />
           </Wrapper>
-        )
+        );
     }}
     </Formik>
   );
