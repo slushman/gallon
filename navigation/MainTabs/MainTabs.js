@@ -7,6 +7,7 @@ import NewFillup from '../../screens/NewFillup';
 import EntriesStack from '../EntriesStack';
 import ServicesStack from '../ServicesStack';
 import Settings from '../../screens/Settings';
+import NewVehicle from '../../screens/NewVehicle';
 import * as routes from '../../constants/routes';
 
 const Tab = createBottomTabNavigator();
@@ -44,7 +45,7 @@ const MainTabs = () => (
       }}
     />
     <Tab.Screen
-      component={Settings}
+      component={NewVehicle}
       name={routes.SETTINGS}
       options={{
         tabBarIcon: ({ color, size }) => (
