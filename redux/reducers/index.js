@@ -1,7 +1,9 @@
 import { combineReducers } from 'redux';
 
-import { modalReducers } from './modals';
+import { modals } from './modals';
+import { settings } from './settings';
 
 export const rootReducer = combineReducers({
-  modalReducers,
+  modals,
+  settings,
 });
