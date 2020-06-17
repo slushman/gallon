@@ -5,7 +5,7 @@ const initialState = {
   settingsModal: false,
 };
 
-export const modalReducers = (state = initialState, action) => {
+export const modals = (state = initialState, action) => {
   switch (action.type) {
     case reduxConsts.SETTINGS_MODAL:
       return {
