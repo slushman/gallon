@@ -5,6 +5,7 @@ import * as R from 'ramda';
 import dayjs from 'dayjs';
 import LocalizedFormat from 'dayjs/plugin/localizedFormat';
 
+import Fabs from '../../components/Fabs';
 import ListItem from '../../components/ListItem';
 import Wrapper from '../../components/Wrapper';
 import * as routes from '../../constants/routes';
@@ -49,7 +50,7 @@ const EntryList = ({ navigation: { navigate } }) => {
   // fetch data from Mongo/Realm
 
   const handleEntryPress = React.useCallback(
-    (entry) => () => { navigate(routes.ENTRY, entry); },
+    (entry) => () => navigate(routes.ENTRY, entry),
     [navigate],
   );
 
@@ -72,6 +73,7 @@ const EntryList = ({ navigation: { navigate } }) => {
           );
         })}
       </ScrollView>
+      <Fabs />
     </Wrapper>
   );
 };

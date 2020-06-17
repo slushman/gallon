@@ -1,0 +1,2 @@
+export const FABS_EXPANDED = 'FABS_EXPANDED';
+export const SETTINGS_MODAL = 'SETTINGS_MODAL';

@@ -1,9 +1,14 @@
 export const duration = 250;
-export const animationType = 'timing';
 export const useNativeDriver = false;
 
-export const animationSettings = {
+export const springSettings = {
   duration,
-  type: animationType,
+  type: 'spring',
+  useNativeDriver,
+};
+
+export const timingSettings = {
+  duration,
+  type: 'timing',
   useNativeDriver,
 };

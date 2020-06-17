@@ -4,7 +4,7 @@ import { ErrorMessage, useField } from 'formik';
 import { Animated, Text, TextInput, View } from 'react-native';
 import { useAnimation } from 'react-native-animation-hooks';
 
-import { animationSettings } from '../../constants/animation';
+import { timingSettings } from '../../constants/animation';
 import * as colors from '../../constants/colors';
 import { HASERROR, ISVALID } from '../../constants/status';
 import { errorTextStyle, inputStyle } from './styles';
@@ -15,7 +15,7 @@ const TextField = ({ fieldName, label, multiline, numberOfLines, ...props }) => 
   const hasMultipleLines = multiline && numberOfLines > 1;
   const toValue = isFocused ? 1 : 0;
 
-  const fieldAnim = useAnimation({ toValue, ...animationSettings });
+  const fieldAnim = useAnimation({ toValue, ...timingSettings });
 
   const fieldStatus = React.useMemo(() => {
     if (touched && !error && field.value) {
