@@ -31,7 +31,6 @@ const NewService = ({ navigation: { navigate }, route }) => {
   const submitForm = React.useCallback((values) => { console.log(values); }, []);
   const servicesList = R.pathOr([], ['params', 'services'], route);
   const hasOtherService = R.includes(services.OTHER, servicesList);
-  console.log({ servicesList });
   const requiredFields = ['serviceOdometer', 'serviceTotal', 'services'];
 
   if (hasOtherService) {
