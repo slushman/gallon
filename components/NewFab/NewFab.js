@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import Fab from '../Fab';
 
-const NewFab = ({ expandFabs, fabsExpanded }, props) => {
+const NewFab = ({ expandFabs, fabsExpanded }) => {
   const handlePress = React.useCallback(
     () => expandFabs(!fabsExpanded),
     [expandFabs, fabsExpanded],
@@ -13,7 +13,8 @@ const NewFab = ({ expandFabs, fabsExpanded }, props) => {
     <Fab
       iconName="plus"
       onPress={handlePress}
-      {...props}
+      rotate={fabsExpanded}
+      rotationEnd="45deg"
     />
   );
 };
