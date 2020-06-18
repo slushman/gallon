@@ -1,6 +1,7 @@
 import React from 'react';
 import { Text, View } from 'react-native';
 import * as R from 'ramda';
+import PropTypes from 'prop-types';
 
 import Wrapper from '../../components/Wrapper';
 
@@ -15,6 +16,10 @@ const Entry = ({ route }) => {
       </View>
     </Wrapper>
   );
+};
+
+Entry.propTypes = {
+  route: PropTypes.object,
 };
 
 export default React.memo(Entry);

@@ -2,10 +2,10 @@ import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import * as R from 'ramda';
 
-import Entry from '../../screens/Entry';
-import EntryList from '../../screens/EntryList';
-import SelectServices from '../../screens/SelectServices';
-import * as routes from '../../constants/routes';
+import Entry from '../screens/Entry';
+import EntryList from '../screens/EntryList';
+import SelectServices from '../screens/SelectServices';
+import * as routes from '../constants/routes';
 
 const Stack = createStackNavigator();
 

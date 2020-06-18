@@ -4,60 +4,30 @@ import PropTypes from 'prop-types';
 import MCIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import * as colors from '../../constants/colors';
-
-const iconWrap = {
-  justifyContent: 'center',
-  padding: 16,
-};
-
-const leftContentStyle = {
-  flexDirection: 'row',
-};
-
-const leftContentTextStyle = {
-  justifyContent: 'center',
-};
-
-const leftContentIconWrap = {
-  justifyContent: 'center',
-  paddingRight: 8,
-};
-
-const listItemWrap = {
-  flexDirection: 'row',
-  justifyContent: 'space-between',
-  paddingLeft: 16,
-  paddingVertical: 8,
-};
-
-const rightContentStyle = {
-  flexDirection: 'row',
-};
-
-const rightContentTextStyle = {
-  justifyContent: 'center',
-};
+import * as styles from './styles';
 
 const ListItem = ({
   isSelected,
   leftContent,
   leftIcon,
+  noPadding,
   onPress,
   rightContent,
+  shortItem,
   subtitle,
 }) => {
   const icon = React.useMemo(
     () => {
       if (isSelected) {
         return (
-          <View style={iconWrap}>
+          <View style={styles.iconWrap}>
             <MCIcon color={colors.gallonBlue} name="check" size={20} />
           </View>
         );
       }
 
       return (
-        <View style={iconWrap}>
+        <View style={styles.iconWrap}>
           <MCIcon color={colors.gallonLightGray} name="chevron-right" size={20} />
         </View>
       );
@@ -71,7 +41,7 @@ const ListItem = ({
       const color = isSelected ? colors.gallonBlue : colors.gallonLightGray;
 
       return (
-        <View style={leftContentIconWrap}>
+        <View style={styles.leftContentIconWrap}>
           <MCIcon color={color} name={leftIcon} size={25} />
         </View>
       );
@@ -79,12 +49,38 @@ const ListItem = ({
     [leftIcon, isSelected],
   );
 
+  const listItemWrapStyle = React.useMemo(
+    () => {
+      let style = {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+      };
+
+      if (!noPadding) {
+        style = {
+          ...style,
+          paddingLeft: 16,
+        };
+
+        if (!shortItem) {
+          style = {
+            ...style,
+            paddingVertical: 8,
+          };
+        }
+      }
+
+      return style;
+    },
+    [noPadding, shortItem],
+  );
+
   const right = React.useMemo(
     () => {
       if (!rightContent) return null;
 
       return (
-        <View style={rightContentTextStyle}>
+        <View style={styles.rightContentTextStyle}>
           <Text>{rightContent}</Text>
         </View>
       );
@@ -102,19 +98,17 @@ const ListItem = ({
   );
 
   return (
-    <TouchableOpacity onPress={onPress}>
-      <View style={listItemWrap}>
-        <View style={leftContentStyle}>
-          {leftIconContent}
-          <View style={leftContentTextStyle}>
-            <Text>{leftContent}</Text>
-            {subtitleContent}
-          </View>
+    <TouchableOpacity onPress={onPress} style={listItemWrapStyle}>
+      <View style={styles.leftContentStyle}>
+        {leftIconContent}
+        <View style={styles.leftContentTextStyle}>
+          <Text>{leftContent}</Text>
+          {subtitleContent}
         </View>
-        <View style={rightContentStyle}>
-          {right}
-          {icon}
-        </View>
+      </View>
+      <View style={styles.rightContentStyle}>
+        {right}
+        {icon}
       </View>
     </TouchableOpacity>
   );
@@ -124,8 +118,10 @@ ListItem.propTypes = {
   isSelected: PropTypes.bool,
   leftContent: PropTypes.string,
   leftIcon: PropTypes.string,
+  noPadding: PropTypes.bool,
   onPress: PropTypes.func.isRequired,
   rightContent: PropTypes.string,
+  shortItem: PropTypes.bool,
   subtitle: PropTypes.string,
 };
 
@@ -133,7 +129,9 @@ ListItem.defaultProps = {
   isSelected: false,
   leftContent: '',
   leftIcon: undefined,
+  noPadding: false,
   rightContent: '',
+  shortItem: false,
   subtitle: '',
 };
 

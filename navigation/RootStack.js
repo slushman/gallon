@@ -1,11 +1,11 @@
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 
-import MainStackScreen from '../MainStack';
-import NewFillup from '../../screens/NewFillup';
-import NewService from '../../screens/NewService';
-import Settings from '../../screens/Settings';
-import * as routes from '../../constants/routes';
+import MainStackScreen from './MainStack';
+import SettingsStackScreen from './SettingsStack';
+import NewFillup from '../screens/NewFillup';
+import NewService from '../screens/NewService';
+import * as routes from '../constants/routes';
 
 const Stack = createStackNavigator();
 
@@ -17,8 +17,9 @@ const RootStack = () => (
       options={{ headerShown: false }}
     />
     <Stack.Screen
-      component={Settings}
+      component={SettingsStackScreen}
       name={routes.SETTINGS}
+      options={{ headerShown: false }}
     />
     <Stack.Screen
       component={NewFillup}
