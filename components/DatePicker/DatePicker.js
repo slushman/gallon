@@ -58,7 +58,7 @@ const DatePicker = ({ label, ...props }) => {
     <View style={pickerWrapStyle}>
       <TouchableOpacity onPress={openPicker} style={touchWrapStyle}>
         <View style={labelWrapStyle}>
-          <Text style={labelStyle}>Date</Text>
+          <Text style={labelStyle}>{label}</Text>
         </View>
         <View style={fieldStyle}>
           <Text style={placeholderStyle}>
@@ -75,7 +75,11 @@ const DatePicker = ({ label, ...props }) => {
 };
 
 DatePicker.propTypes = {
-  label: PropTypes.string.isRequired,
+  label: PropTypes.string,
+};
+
+DatePicker.defaultProps = {
+  label: 'Date',
 };
 
 export default React.memo(DatePicker);

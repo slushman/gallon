@@ -3,7 +3,6 @@ import * as Yup from 'yup';
 import { Formik } from 'formik';
 import dayjs from 'dayjs';
 import PropTypes from 'prop-types';
-import * as R from 'ramda';
 
 import Button from '../../components/Button';
 import DatePicker from '../../components/DatePicker';
@@ -76,7 +75,7 @@ const NewVehicle = ({ navigation: { navigate }, route }) => {
               name="vehicleOdometer"
             />
             <Expandable labelMain="Optional Settings">
-              <DatePicker label="Purchased Date" name="vehiclePurchaseDate" />
+              <DatePicker label="Purchase Date" name="vehiclePurchaseDate" />
               <TextField
                 fieldName="vehicleLicensePlate"
                 label="License Plate"

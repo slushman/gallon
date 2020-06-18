@@ -34,15 +34,27 @@ const Button = ({
     onPress();
   }, [onPress]);
 
+  const ButtonLabel = React.useMemo(
+    () => {
+      if (!R.is(String, label)) return label;
+
+      return (<Text style={buttonTextStyle}>{label}</Text>);
+    },
+    [buttonTextStyle, label],
+  );
+
   return (
     <TouchableOpacity onPress={handlePress} style={buttonStyles}>
-      <Text style={buttonTextStyle}>{label}</Text>
+      {ButtonLabel}
     </TouchableOpacity>
   );
 };
 
 Button.propTypes = {
-  label: PropTypes.string,
+  label: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.node,
+  ]),
   onPress: PropTypes.func,
 };
 
