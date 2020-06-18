@@ -5,9 +5,12 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
+import { useAnimation } from 'react-native-animation-hooks';
 import MCIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import PropTypes from 'prop-types';
+import * as Animated from 'react-native-animatable';
 
+import { timingSettings } from '../../constants/animation';
 import * as styles from './styles';
 
 const Expandable = ({
@@ -18,6 +21,17 @@ const Expandable = ({
   startExpanded,
 }) => {
   const [expanded, setExpanded] = React.useState(startExpanded);
+  const rotateValue = expanded ? 1 : 0;
+  const rotateAnim = useAnimation({ toValue: rotateValue, ...timingSettings });
+  const childContent = expanded ? children : null;
+  const text = expanded ? labelOpen : labelClosed;
+
+  const iconRotation = React.useMemo(() => {
+    return rotateAnim.interpolate({
+      inputRange: [0, 1],
+      outputRange: ['0deg', '180deg' ],
+    });
+  }, [rotateAnim]);
 
   const expandChildren = React.useCallback(
     () => {
@@ -27,9 +41,10 @@ const Expandable = ({
     [expanded],
   );
 
-  const childContent = expanded ? children : null;
-  const icon = expanded ? 'chevron-up' : 'chevron-down';
-  const text = expanded ? labelOpen : labelClosed;
+  const iconWrap = React.useMemo(
+    () => ({ transform: [{ rotate: iconRotation }] }),
+    [iconRotation],
+  );
 
   return (
     <View style={styles.expandableWrap}>
@@ -41,7 +56,9 @@ const Expandable = ({
           <View style={styles.expandableTextWrap}>
             <Text>{text}</Text>
           </View>
-          <MCIcon color="black" name={icon} size={25} />
+          <Animated.View style={iconWrap}>
+            <MCIcon color="black" name="chevron-down" size={25} />
+          </Animated.View>
         </View>
       </TouchableOpacity>
       {childContent}

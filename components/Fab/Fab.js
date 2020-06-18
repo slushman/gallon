@@ -15,11 +15,15 @@ const Fab = ({
   iconSize,
   onPress,
   positionBottom,
+  rotate,
+  rotationEnd,
   visible,
 }) => {
   const toValue = visible ? 1 : 0;
+  const rotateValue = rotate ? 1 : 0;
   const fabSize = 48;
   const fabAnim = useAnimation({ toValue, ...timingSettings });
+  const rotateAnim = useAnimation({ toValue: rotateValue, ...timingSettings });
 
   const handlePress = React.useCallback(
     () => {
@@ -44,12 +48,20 @@ const Fab = ({
     });
   }, [fabAnim]);
 
+  const iconRotation = React.useMemo(() => {
+    return rotateAnim.interpolate({
+      inputRange: [0, 1],
+      outputRange: ['0deg', rotationEnd ],
+    });
+  }, [rotateAnim, rotationEnd]);
+
   const fabWrapStyle = React.useMemo(
     () => ({
       height: buttonHeight,
       opacity: buttonOpacity,
+      transform: [{ rotate: iconRotation }],
     }),
-    [buttonHeight, buttonOpacity],
+    [buttonHeight, buttonOpacity, iconRotation],
   );
 
   const iconStyle = React.useMemo(
@@ -119,6 +131,8 @@ Fab.propTypes = {
   iconSize: PropTypes.number,
   onPress: PropTypes.func.isRequired,
   positionBottom: PropTypes.number,
+  rotate: PropTypes.bool,
+  rotationEnd: PropTypes.string,
   visible: PropTypes.bool,
 };
 
@@ -126,6 +140,8 @@ Fab.defaultProps = {
   handPref: RIGHT,
   iconSize: undefined,
   positionBottom: undefined,
+  rotate: false,
+  rotationEnd: '0deg',
   visible: true,
 };
 
