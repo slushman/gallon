@@ -6,14 +6,9 @@ import DateTimePicker from '@react-native-community/datetimepicker';
 import dayjs from 'dayjs';
 import Collapsible from 'react-native-collapsible';
 
-import * as colors from '../../constants/colors';
 import Button from '../Button';
-import {
-  labelWrapStyle,
-  pickerWrapStyle,
-  placeholderStyle,
-  touchWrapStyle,
-} from './styles';
+import * as colors from '../../constants/colors';
+import * as styles from './styles';
 
 const DatePicker = ({ label, ...props }) => {
   const [pickerVisible, setPickerVisible] = React.useState(false);
@@ -55,13 +50,13 @@ const DatePicker = ({ label, ...props }) => {
   const openPicker = React.useCallback(() => setPickerVisible(true), []);
 
   return (
-    <View style={pickerWrapStyle}>
-      <TouchableOpacity onPress={openPicker} style={touchWrapStyle}>
-        <View style={labelWrapStyle}>
+    <View style={styles.pickerWrapStyle}>
+      <TouchableOpacity onPress={openPicker} style={styles.touchWrapStyle}>
+        <View style={styles.labelWrapStyle}>
           <Text style={labelStyle}>{label}</Text>
         </View>
         <View style={fieldStyle}>
-          <Text style={placeholderStyle}>
+          <Text style={styles.placeholderStyle}>
             {dayjs(date).format('MMMM D, YYYY')}
           </Text>
         </View>
