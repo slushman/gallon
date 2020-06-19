@@ -6,6 +6,7 @@ import * as Yup from 'yup';
 import Button from '../../components/Button';
 import DatePicker from '../../components/DatePicker';
 import TextField from '../../components/TextField';
+import VehicleChooser from '../../components/VehicleChooser';
 import Wrapper from '../../components/Wrapper';
 import * as utils from '../../utils';
 
@@ -16,6 +17,7 @@ const initialValues = {
   fillupGallons: '',
   fillupOdometer: '',
   fillupTotal: '',
+  fillupVehicle: 0,
 };
 
 const FillupSchema = Yup.object().shape({
@@ -34,10 +36,11 @@ const NewFillup = () => {
       validationSchema={FillupSchema}
     >
       {({ handleSubmit, values }) => {
-        const hasAllRequired = utils.allHaveValues(['fillupOdometer', 'fillupTotal', 'fillupGallons'], values);
+        const hasAllRequired = utils.allHaveValues(['fillupOdometer', 'fillupTotal', 'fillupGallons', 'fillupVehicle'], values);
 
         return (
           <Wrapper centerContent>
+            <VehicleChooser name="fillupVehicle" />
             <DatePicker label="Date" name="fillupDate" />
             <TextField
               fieldName="fillupOdometer"

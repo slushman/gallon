@@ -9,6 +9,7 @@ import Button from '../../components/Button';
 import DatePicker from '../../components/DatePicker';
 import ServicesField from '../../components/ServicesField';
 import TextField from '../../components/TextField';
+import VehicleChooser from '../../components/VehicleChooser';
 import Wrapper from '../../components/Wrapper';
 import * as utils from '../../utils';
 import * as services from '../../constants/services';
@@ -20,6 +21,7 @@ const initialValues = {
   serviceOdometer: '',
   services: [],
   serviceTotal: '',
+  serviceVehicle: 0,
 };
 
 const ServiceSchema = Yup.object().shape({
@@ -31,7 +33,7 @@ const NewService = ({ navigation: { navigate }, route }) => {
   const submitForm = React.useCallback((values) => { console.log(values); }, []);
   const servicesList = R.pathOr([], ['params', 'services'], route);
   const hasOtherService = R.includes(services.OTHER, servicesList);
-  const requiredFields = ['serviceOdometer', 'serviceTotal', 'services'];
+  const requiredFields = ['serviceOdometer', 'serviceTotal', 'services', 'serviceVehicle'];
 
   if (hasOtherService) {
     requiredFields.push('servicesOther');
@@ -65,6 +67,7 @@ const NewService = ({ navigation: { navigate }, route }) => {
 
         return (
           <Wrapper centerContent>
+            <VehicleChooser name="serviceVehicle" />
             <DatePicker label="Date" name="serviceDate" />
             <TextField
               fieldName="serviceOdometer"
