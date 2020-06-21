@@ -12,13 +12,15 @@ const VehicleSegment = ({
 }) => {
   const { onChange, value } = field;
   const { setValue } = helpers;
-  const getVehicleName = R.pluck('vehicleName');
-  const values = getVehicleName(options);
+  const values = R.pluck('vehicleName', options);
+  const index = R.indexOf(value, values);
+  const selectedIndex = index >= 0 ? index : 0;
 
   const handleSelect = React.useCallback(
     (event) => {
+      const segmentValue = R.path(['nativeEvent', 'value'], event);
       onChange('fillupVehicle');
-      setValue(R.path(['nativeEvent', 'selectedSegmentIndex'], event));
+      setValue(segmentValue);
     },
     [onChange, setValue],
   );
@@ -28,7 +30,7 @@ const VehicleSegment = ({
       <Text style={styles.settingLabel}>Choose Vehicle</Text>
       <SegmentedControl
         onChange={handleSelect}
-        selectedIndex={value}
+        selectedIndex={selectedIndex || 0}
         values={values}
       />
     </View>

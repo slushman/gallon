@@ -35,7 +35,6 @@ const Settings = ({
 
   const handleHandPref = React.useCallback(
     (event) => {
-      console.log('handleHandPref: ', event.nativeEvent);
       setHandPreference(R.path(['nativeEvent', 'selectedSegmentIndex'], event));
     },
     [setHandPreference],

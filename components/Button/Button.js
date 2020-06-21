@@ -36,9 +36,9 @@ const Button = ({
 
   const ButtonLabel = React.useMemo(
     () => {
-      if (!R.is(String, label)) return label;
+      if (R.is(String, label)) return (<Text style={buttonTextStyle}>{label}</Text>);
 
-      return (<Text style={buttonTextStyle}>{label}</Text>);
+      return label;
     },
     [buttonTextStyle, label],
   );
