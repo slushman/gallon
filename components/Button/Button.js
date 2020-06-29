@@ -11,7 +11,7 @@ const Button = ({
   onPress,
 }) => {
   const buttonStyles = React.useMemo(() => ({
-    backgroundColor: 'transparent',
+    backgroundColor: colors.transparent,
     borderColor: disabled ? colors.gallonLightGray : colors.gallonBlue,
     borderRadius: 5,
     borderStyle: 'solid',

@@ -4,74 +4,90 @@ import PropTypes from 'prop-types';
 import * as R from 'ramda';
 import dayjs from 'dayjs';
 import LocalizedFormat from 'dayjs/plugin/localizedFormat';
+import * as ReactRedux from 'react-redux';
 
 import Fabs from '../../components/Fabs';
 import ListItem from '../../components/ListItem';
 import Wrapper from '../../components/Wrapper';
+import * as maps from '../../constants/maps';
 import * as routes from '../../constants/routes';
+import * as selectors from '../../redux/selectors';
 import * as types from '../../constants/types';
+import { entries } from '../../constants/data';
 
 dayjs.extend(LocalizedFormat);
 
-const entries = [
-  { id: 1234, type: types.FILLUP, total: '25.46', date: '2020-04-01', odometer: '123456'},
-  { id: 1235, type: types.SERVICE, total: '21.66', date: '2020-03-27', odometer: '123456'},
-  { id: 1236, type: types.FILLUP, total: '26.72', date: '2020-03-21', odometer: '123456'},
-  { id: 1237, type: types.SERVICE, total: '24.33', date: '2020-03-15', odometer: '123456'},
-  { id: 1238, type: types.FILLUP, total: '20.79', date: '2020-03-08', odometer: '123456'},
-  { id: 1239, type: types.SERVICE, total: '25.46', date: '2020-04-01', odometer: '123456'},
-  { id: 1245, type: types.FILLUP, total: '21.66', date: '2020-03-27', odometer: '123456'},
-  { id: 1246, type: types.SERVICE, total: '26.72', date: '2020-03-21', odometer: '123456'},
-  { id: 1247, type: types.FILLUP, total: '24.33', date: '2020-03-15', odometer: '123456'},
-  { id: 1248, type: types.SERVICE, total: '20.79', date: '2020-03-08', odometer: '123456'},
-  { id: 1254, type: types.FILLUP, total: '25.46', date: '2020-04-01', odometer: '123456'},
-  { id: 1255, type: types.FILLUP, total: '21.66', date: '2020-03-27', odometer: '123456'},
-  { id: 1256, type: types.FILLUP, total: '26.72', date: '2020-03-21', odometer: '123456'},
-  { id: 1257, type: types.FILLUP, total: '24.33', date: '2020-03-15', odometer: '123456'},
-  { id: 1258, type: types.FILLUP, total: '20.79', date: '2020-03-08', odometer: '123456'},
-  { id: 1264, type: types.FILLUP, total: '25.46', date: '2020-04-01', odometer: '123456'},
-  { id: 1265, type: types.FILLUP, total: '21.66', date: '2020-03-27', odometer: '123456'},
-  { id: 1266, type: types.FILLUP, total: '26.72', date: '2020-03-21', odometer: '123456'},
-  { id: 1267, type: types.FILLUP, total: '24.33', date: '2020-03-15', odometer: '123456'},
-  { id: 1268, type: types.FILLUP, total: '20.79', date: '2020-03-08', odometer: '123456'},
-  { id: 1274, type: types.FILLUP, total: '25.46', date: '2020-04-01', odometer: '123456'},
-  { id: 1275, type: types.FILLUP, total: '21.66', date: '2020-03-27', odometer: '123456'},
-  { id: 1276, type: types.FILLUP, total: '26.72', date: '2020-03-21', odometer: '123456'},
-  { id: 1277, type: types.FILLUP, total: '24.33', date: '2020-03-15', odometer: '123456'},
-  { id: 1278, type: types.FILLUP, total: '20.79', date: '2020-03-08', odometer: '123456'},
-];
-
-const iconMap = {
-  [types.FILLUP]: 'gas-station',
-  [types.SERVICE]: 'oil',
-};
-
-const EntryList = ({ navigation: { navigate } }) => {
-  // fetch data from Mongo/Realm
+const EntryList = ({
+  navigation: {
+    navigate,
+  },
+}) => {
+  const showGallons = ReactRedux.useSelector(selectors.showGallonsSelector);
+  const showPrice = ReactRedux.useSelector(selectors.showPriceSelector);
 
   const handleEntryPress = React.useCallback(
     (entry) => () => navigate(routes.ENTRY, entry),
     [navigate],
   );
 
+  const getMPG = React.useCallback(
+    (entry) => {
+      const { gallons, odometer, previousOdometer } = entry;
+
+      if (!previousOdometer) return '';
+
+      return `${((odometer - previousOdometer) / gallons).toFixed(1)} mpg`;
+    },
+    [],
+  );
+
+  const getSubtitleContent = React.useCallback(
+    (entry) => {
+      let content = [];
+
+      if (R.prop('type', entry) === types.FILLUP) {
+        if (showGallons) {
+          content.push(`${R.prop('gallons', entry)} gallons`);
+        }
+
+        if (showPrice) {
+          content.push(`$${R.prop('total', entry)}`);
+        }
+      }
+
+      if (R.prop('type', entry) === types.SERVICE) {
+        content = R.prop('services', entry);
+      }
+
+      return R.join(', ', content);
+    },
+    [showGallons, showPrice],
+  );
+
+  const EntryListItem = React.useCallback(
+    (entry, index) => {
+      const date = dayjs(R.prop('date', entry)).format('LLL');
+      const type = R.prop('type', entry);
+
+      return (
+        <ListItem
+          key={index}
+          leftContent={date}
+          leftIcon={maps.iconMap[type]}
+          onPress={handleEntryPress(entry)}
+          pressData={entry}
+          rightContent={getMPG(entry)}
+          subtitle={getSubtitleContent(entry)}
+        />
+      );
+    },
+    [getMPG, getSubtitleContent, handleEntryPress],
+  );
+
   return (
     <Wrapper>
       <ScrollView>
-        {entries.map((entry, index) => {
-          const date = dayjs(R.prop('date', entry)).format('LLL');
-          const type = R.prop('type', entry);
-
-          return (
-            <ListItem
-              key={index}
-              leftContent={date}
-              leftIcon={iconMap[type]}
-              onPress={handleEntryPress(entry)}
-              pressData={entry}
-              rightContent={`$${R.prop('total', entry)}`}
-            />
-          );
-        })}
+        {entries.map(EntryListItem)}
       </ScrollView>
       <Fabs />
     </Wrapper>

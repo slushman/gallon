@@ -49,7 +49,7 @@ const ServicesField = (props) => {
 
   const labelStyle = React.useMemo(
     () => ({
-      color: hasServices ? 'black' : colors.gallonLightGray,
+      color: hasServices ? colors.gallonBlack : colors.gallonLightGray,
       fontSize: hasServices ? 14 : 20,
     }),
     [hasServices],
@@ -65,7 +65,7 @@ const ServicesField = (props) => {
 
   const wrapperStyle = React.useMemo(
     () => ({
-      borderColor: hasServices ? 'black' : 'transparent',
+      borderColor: hasServices ? colors.gallonBlack : colors.transparent,
       ...wrapStyle,
     }),
     [hasServices],

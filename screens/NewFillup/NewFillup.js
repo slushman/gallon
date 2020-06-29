@@ -2,6 +2,7 @@ import React from 'react';
 import { Formik } from 'formik';
 import dayjs from 'dayjs';
 import * as Yup from 'yup';
+import * as R from 'ramda';
 
 import Button from '../../components/Button';
 import DatePicker from '../../components/DatePicker';
@@ -27,6 +28,16 @@ const FillupSchema = Yup.object().shape({
 });
 
 const NewFillup = () => {
+  const getOdometer = React.useCallback(
+    () => {
+      // get previous entry
+      // If there is one, get the odometer reading and add it to this entry
+      // If there isn't one, get the vehicle once it's chosen,
+      //    get its odometer, then add it to this entry
+    },
+    []
+  );
+
   const submitForm = React.useCallback((values) => { console.log(values); }, []);
 
   return (
@@ -38,8 +49,12 @@ const NewFillup = () => {
       {({ handleSubmit, values }) => {
         const hasAllRequired = utils.allHaveValues(['fillupOdometer', 'fillupTotal', 'fillupGallons', 'fillupVehicle'], values);
 
+        if (utils.hasValue(R.prop('fillupVehicle', values))) {
+          getOdometer();
+        }
+
         return (
-          <Wrapper centerContent>
+          <Wrapper>
             <VehicleChooser name="fillupVehicle" />
             <DatePicker label="Date" name="fillupDate" />
             <TextField

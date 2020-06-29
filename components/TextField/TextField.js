@@ -36,7 +36,7 @@ const TextField = ({ fieldName, label, multiline, numberOfLines, ...props }) => 
 
     return fieldAnim.interpolate({
       inputRange: [0, 1],
-      outputRange: ['rgba(255, 255, 255, 0)', 'rgba(255, 255, 255, 1)'],
+      outputRange: [colors.transparent, colors.white],
     });
   }, [fieldStatus, fieldAnim]);
 
@@ -46,12 +46,12 @@ const TextField = ({ fieldName, label, multiline, numberOfLines, ...props }) => 
     }
 
     if (fieldStatus === ISVALID) {
-      return 'black';
+      return colors.gallonBlack;
     }
 
     return fieldAnim.interpolate({
       inputRange: [0, 1],
-      outputRange: ['transparent', colors.gallonBlue],
+      outputRange: [colors.transparent, colors.gallonBlue],
     });
   }, [fieldStatus, fieldAnim]);
 
@@ -72,7 +72,7 @@ const TextField = ({ fieldName, label, multiline, numberOfLines, ...props }) => 
     }
 
     if (fieldStatus === ISVALID) {
-      return 'black';
+      return colors.gallonBlack;
     }
 
     return fieldAnim.interpolate({

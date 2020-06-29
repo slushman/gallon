@@ -6,7 +6,6 @@ import * as R from 'ramda';
 import Button from '../../components/Button';
 import ListItem from '../../components/ListItem';
 import Wrapper from '../../components/Wrapper';
-
 import * as routes from '../../constants/routes';
 import { serviceList } from '../../constants/services';
 import * as utils from '../../utils';
@@ -39,6 +38,7 @@ const SelectServices = ({ navigation: { navigate }, route }) => {
             key={index}
             leftContent={service}
             onPress={toggleService(service)}
+            shortItem
           />
         ))}
       </ScrollView>

@@ -11,6 +11,7 @@ import PropTypes from 'prop-types';
 import * as Animated from 'react-native-animatable';
 
 import { timingSettings } from '../../constants/animation';
+import * as colors from '../../constants/colors';
 import * as styles from './styles';
 
 const Expandable = ({
@@ -57,7 +58,7 @@ const Expandable = ({
             <Text>{text}</Text>
           </View>
           <Animated.View style={iconWrap}>
-            <MCIcon color="black" name="chevron-down" size={25} />
+            <MCIcon color={colors.gallonBlack} name="chevron-down" size={25} />
           </Animated.View>
         </View>
       </TouchableOpacity>

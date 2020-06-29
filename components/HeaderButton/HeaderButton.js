@@ -1,19 +1,17 @@
 import React from 'react';
-import { Text, TouchableOpacity } from 'react-native';
+import { Text, TouchableOpacity, Platform } from 'react-native';
 import PropTypes from 'prop-types';
 import { useNavigation } from '@react-navigation/native';
+import Ionicon from 'react-native-vector-icons/Ionicons';
 
 import * as colors from '../../constants/colors';
-import { LEFT, RIGHT } from '../../constants/settings';
 
-const textStyle = {
-  color: colors.gallonBlue,
-  fontSize: 16,
-};
+const prefix = Platform.OS === 'ios' ? 'ios' : 'md';
 
 const HeaderButton = ({
+  leftIconName,
+  rightIconName,
   route,
-  side,
   text,
 }) => {
   const { navigate } = useNavigation();
@@ -23,30 +21,63 @@ const HeaderButton = ({
     [navigate, route],
   );
 
+  const LeftIcon = React.useMemo(
+    () => {
+      if (!leftIconName) return null;
+
+      return (<Ionicon color={colors.gallonBlue} name={`${prefix}-${leftIconName}`} size={32} />);
+    },
+    [leftIconName],
+  );
+
+  const RightIcon = React.useMemo(
+    () => {
+      if (!rightIconName) return null;
+
+      return (<Ionicon color={colors.gallonBlue} name={`${prefix}-${rightIconName}`} size={32} />);
+    },
+    [rightIconName],
+  );
+
+  const textStyle = React.useMemo(
+    () => ({
+      color: colors.gallonBlue,
+      fontSize: 18,
+      marginLeft: leftIconName ? 8 : undefined,
+      marginRight: rightIconName ? 8 : undefined,
+    }),
+    [leftIconName, rightIconName],
+  );
+
   const touchableStyle = React.useMemo(
     () => ({
-      marginLeft: side === LEFT ? 16 : undefined,
-      marginRight: side === RIGHT ? 16 : undefined,
+      alignItems: 'center',
+      flexDirection: 'row',
+      marginLeft: leftIconName || text ? 8 : undefined,
+      marginRight: rightIconName || text ? 8 : undefined,
     }),
-    [side],
+    [leftIconName, rightIconName, text],
   );
 
   return (
     <TouchableOpacity onPress={handlePress} style={touchableStyle}>
+      {LeftIcon}
       <Text style={textStyle}>{text}</Text>
+      {RightIcon}
     </TouchableOpacity>
   );
 };
 
 HeaderButton.propTypes = {
-  iconName: PropTypes.string,
+  leftIconName: PropTypes.string,
+  rightIconName: PropTypes.string,
   route: PropTypes.string,
-  side: PropTypes.oneOf([LEFT, RIGHT]),
   text: PropTypes.string,
 };
 
 HeaderButton.defaultProps = {
-  iconName: '',
+  leftIconName: undefined,
+  rightIconName: undefined,
   route: '',
   text: '',
 };

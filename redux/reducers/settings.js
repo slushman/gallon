@@ -1,10 +1,13 @@
 import * as R from 'ramda';
 
 import * as reduxConsts from '../../constants/redux';
-import { RIGHT, values } from '../../constants/settings';
+import { RIGHT } from '../../constants/settings';
 
 const initialState = {
-  handPreference: R.indexOf(RIGHT, values),
+  handPreference: RIGHT,
+  showGallons: false,
+  showOdometer: false,
+  showPrice: false,
 };
 
 export const settings = (state = initialState, action) => {
@@ -13,6 +16,21 @@ export const settings = (state = initialState, action) => {
       return {
         ...state,
         handPreference: action.handPreference,
+      };
+    case reduxConsts.SHOW_GALLONS:
+      return {
+        ...state,
+        showGallons: action.showGallons,
+      };
+    case reduxConsts.SHOW_ODOMETER:
+      return {
+        ...state,
+        showOdometer: action.showOdometer,
+      };
+    case reduxConsts.SHOW_PRICE:
+      return {
+        ...state,
+        showPrice: action.showPrice,
       };
     default:
       return state;
