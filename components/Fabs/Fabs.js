@@ -8,7 +8,7 @@ import NewFillupFab from '../NewFillupFab';
 import NewServiceFab from '../NewServiceFab';
 import SettingsFab from '../SettingsFab';
 import { springSettings } from '../../constants/animation';
-import { leftIndex, rightIndex } from '../../constants/settings';
+import { LEFT, RIGHT } from '../../constants/settings';
 
 const Fabs = ({ fabsExpanded, handPref }) => {
   const toValue = fabsExpanded ? 1 : 0;
@@ -27,9 +27,9 @@ const Fabs = ({ fabsExpanded, handPref }) => {
       flexDirection: 'column-reverse',
       height: height,
       justifyContent: 'space-between',
-      left: handPref === leftIndex ? 16 : undefined,
+      left: handPref === LEFT ? 16 : undefined,
       position: 'absolute',
-      right: handPref === rightIndex ? 16 : undefined,
+      right: handPref === RIGHT ? 16 : undefined,
     }),
     [handPref, height],
   );

@@ -1,10 +1,11 @@
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
+import * as R from 'ramda';
 
 import MainStackScreen from './MainStack';
 import SettingsStackScreen from './SettingsStack';
+import NewServiceStackScreen from './NewServiceStack';
 import NewFillup from '../screens/NewFillup';
-import NewService from '../screens/NewService';
 import * as routes from '../constants/routes';
 
 const Stack = createStackNavigator();
@@ -26,8 +27,11 @@ const RootStack = () => (
       name={routes.NEW_FILLUP}
     />
     <Stack.Screen
-      component={NewService}
+      component={NewServiceStackScreen}
       name={routes.NEW_SERVICE}
+      options={({ route }) => ({
+        headerShown: !R.pathEq(['state', 'index'], 1, route),
+      })}
     />
   </Stack.Navigator>
 );

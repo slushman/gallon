@@ -1,4 +1,1 @@
-import Settings from './Settings';
-import connect from './connectSettings';
-
-export default connect(Settings);
+export { default } from './Settings';

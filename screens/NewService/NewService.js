@@ -66,7 +66,7 @@ const NewService = ({ navigation: { navigate }, route }) => {
         const hasAllRequired = utils.allHaveValues(requiredFields, values);
 
         return (
-          <Wrapper centerContent>
+          <Wrapper>
             <VehicleChooser name="serviceVehicle" />
             <DatePicker label="Date" name="serviceDate" />
             <TextField

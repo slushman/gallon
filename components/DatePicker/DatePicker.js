@@ -20,7 +20,7 @@ const DatePicker = ({ label, ...props }) => {
 
   const fieldStyle = React.useMemo(
     () => ({
-      borderColor: pickerVisible ? colors.gallonBlue : 'black',
+      borderColor: pickerVisible ? colors.gallonBlue : colors.gallonBlack,
       borderRadius: 5,
       borderStyle: 'solid',
       borderWidth: 1,
@@ -30,7 +30,7 @@ const DatePicker = ({ label, ...props }) => {
 
   const labelStyle = React.useMemo(
     () => ({
-      color: pickerVisible ? colors.gallonBlue : 'black',
+      color: pickerVisible ? colors.gallonBlue : colors.gallonBlack,
       fontSize: 14,
       paddingHorizontal: 2,
     }),

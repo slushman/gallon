@@ -47,7 +47,7 @@ const NewVehicle = ({ navigation: { navigate }, route }) => {
         const hasAllRequired = utils.allHaveValues(requiredFields, values);
 
         return (
-          <Wrapper centerContent>
+          <Wrapper>
             <TextField
               fieldName="vehicleName"
               label="Name"

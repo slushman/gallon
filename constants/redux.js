@@ -1,3 +1,6 @@
 export const FABS_EXPANDED = 'FABS_EXPANDED';
 export const HAND_PREFERENCE = 'HAND_PREFERENCE';
 export const SETTINGS_MODAL = 'SETTINGS_MODAL';
+export const SHOW_GALLONS = 'SHOW_GALLONS';
+export const SHOW_ODOMETER = 'SHOW_ODOMETER';
+export const SHOW_PRICE = 'SHOW_PRICE';

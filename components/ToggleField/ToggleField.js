@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Switch, Text, View } from 'react-native';
-import * as R from 'ramda';
 
 import { LEFT, RIGHT } from '../../constants/settings';
 
@@ -24,15 +23,6 @@ const ToggleField = ({
   labelPosition,
   onToggle,
 }) => {
-  const [toggleValue, setToggleValue] = React.useState(initialValue);
-  const handleToggle = React.useCallback(
-    (value) => {
-      setToggleValue(value);
-      onToggle();
-    },
-    [onToggle],
-  );
-
   const LeftLabel = React.useMemo(
     () => {
       if (!label || labelPosition !== LEFT) return null;
@@ -55,8 +45,8 @@ const ToggleField = ({
     <View style={wrapStyle}>
       {LeftLabel}
       <Switch
-        onValueChange={handleToggle}
-        value={toggleValue}
+        onValueChange={onToggle}
+        value={initialValue}
       />
       {RightLabel}
     </View>
@@ -67,14 +57,13 @@ ToggleField.propTypes = {
   initialValue: PropTypes.any,
   label: PropTypes.string,
   labelPosition: PropTypes.oneOf([LEFT, RIGHT]),
-  onToggle: PropTypes.func,
+  onToggle: PropTypes.func.isRequired,
 };
 
 ToggleField.defaultProps = {
   initialValue: null,
   label: '',
   labelPosition: LEFT,
-  onToggle: R.identity,
 };
 
 export default React.memo(ToggleField);

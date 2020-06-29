@@ -92,7 +92,7 @@ const ListItem = ({
     () => {
       if (!subtitle) return null;
 
-      return (<Text>{subtitle}</Text>);
+      return (<Text style={{ color: colors.gallonMedGray }}>{subtitle}</Text>);
     },
     [subtitle],
   );
@@ -102,7 +102,7 @@ const ListItem = ({
       <View style={styles.leftContentStyle}>
         {leftIconContent}
         <View style={styles.leftContentTextStyle}>
-          <Text>{leftContent}</Text>
+          <Text style={{ fontSize: 16 }}>{leftContent}</Text>
           {subtitleContent}
         </View>
       </View>

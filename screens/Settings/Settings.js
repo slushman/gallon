@@ -1,24 +1,20 @@
 import React from 'react';
 import { Text, View } from 'react-native';
-import SegmentedControl from '@react-native-community/segmented-control';
-import * as R from 'ramda';
 import MCIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { useNavigation } from '@react-navigation/native';
 
 import Button from '../../components/Button';
+import EntriesShowSettings from '../../components/EntriesShowSettings';
+import HandPreferenceSetting from '../../components/HandPreferenceSetting';
 import HeaderButton from '../../components/HeaderButton';
 import Heading from '../../components/Heading';
 import VehicleList from '../../components/VehicleList';
 import Wrapper from '../../components/Wrapper';
 import * as colors from '../../constants/colors';
 import * as routes from '../../constants/routes';
-import { RIGHT, values } from '../../constants/settings';
 import * as styles from './styles';
 
-const Settings = ({
-  handPreference,
-  setHandPreference,
-}) => {
+const Settings = () => {
   const { navigate, setOptions } = useNavigation();
 
   React.useLayoutEffect(() => {
@@ -26,19 +22,11 @@ const Settings = ({
       headerRight: () => (
         <HeaderButton
           route={routes.ENTRY_LIST}
-          side={RIGHT}
           text="Close"
         />
       ),
     });
   }, [setOptions]);
-
-  const handleHandPref = React.useCallback(
-    (event) => {
-      setHandPreference(R.path(['nativeEvent', 'selectedSegmentIndex'], event));
-    },
-    [setHandPreference],
-  );
 
   const handleNewVehicle = React.useCallback(
     () => navigate(routes.NEW_VEHICLE),
@@ -63,14 +51,8 @@ const Settings = ({
         <Button label={NewVehicleButtonLabel} onPress={handleNewVehicle} />
       </View>
       <Heading label="Preferences" />
-      <View style={styles.settingWrap}>
-        <Text style={styles.settingLabel}>Which is your dominant hand?</Text>
-        <SegmentedControl
-          onChange={handleHandPref}
-          selectedIndex={handPreference}
-          values={values}
-        />
-      </View>
+      <HandPreferenceSetting />
+      <EntriesShowSettings />
     </Wrapper>
   );
 };
