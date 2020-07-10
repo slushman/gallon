@@ -1,17 +1,21 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { SafeAreaView, View } from 'react-native';
+import * as colors from '../../constants/colors';
+import { useDarkmode } from '../../hooks/useDarkMode';
 
 const Wrapper = ({ centerContent, children }) => {
+  const isDarkMode = useDarkmode();
+
   const safeViewStyle = React.useMemo(
     () => ({
-      backgroundColor: 'white',
+      backgroundColor: isDarkMode ? colors.gallonBlack : colors.white,
       height: '100%',
       justifyContent: centerContent ? 'center' : 'flex-start',
       paddingBottom: 20,
       width: '100%',
     }),
-    [centerContent],
+    [centerContent, isDarkMode],
   );
 
   return (

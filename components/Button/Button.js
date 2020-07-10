@@ -1,34 +1,67 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import * as R from 'ramda';
-import { Text, TouchableOpacity } from 'react-native';
+import { TouchableOpacity } from 'react-native';
 
+import Text from '../../components/Text';
 import * as colors from '../../constants/colors';
+import { useDarkmode } from '../../hooks/useDarkMode';
 
 const Button = ({
   disabled,
   label,
   onPress,
 }) => {
-  const buttonStyles = React.useMemo(() => ({
-    backgroundColor: colors.transparent,
-    borderColor: disabled ? colors.gallonLightGray : colors.gallonBlue,
-    borderRadius: 5,
-    borderStyle: 'solid',
-    borderWidth: 1,
-    marginBottom: 20,
-    marginHorizontal: '15%',
-    marginTop: 0,
-    padding: 8,
-  }), [disabled]);
+  const isDarkMode = useDarkmode();
 
-  const buttonTextStyle = React.useMemo(() => ({
-    color: disabled ? colors.gallonLightGray : colors.gallonBlue,
-    fontSize: 20,
-    justifyContent: 'center',
-    textAlign: 'center',
-    width: '100%',
-  }), [disabled]);
+  const buttonStyles = React.useMemo(
+    () => {
+      let borderColor = colors.gallonBlack;
+
+      if (isDarkMode && disabled) {
+        borderColor = colors.darkGallonBlue;
+      } else if (isDarkMode && !disabled) {
+        borderColor = colors.gallonLightGray;
+      } else if (!isDarkMode && disabled) {
+        borderColor = colors.gallonBlue;
+      }
+
+      return ({
+        borderColor,
+        borderRadius: 5,
+        borderStyle: 'solid',
+        borderWidth: 1,
+        marginBottom: 20,
+        marginHorizontal: '15%',
+        marginTop: 0,
+        padding: 8,
+      });
+     },
+    [disabled, isDarkMode],
+  );
+
+  const buttonTextStyle = React.useMemo(
+    () => {
+      let color = colors.gallonBlack;
+
+      if (isDarkMode && disabled) {
+        color = colors.darkGallonBlue;
+      } else if (isDarkMode && !disabled) {
+        color = colors.gallonLightGray;
+      } else if (!isDarkMode && disabled) {
+        color = colors.gallonBlue;
+      }
+
+      return {
+        color,
+        fontSize: 20,
+        justifyContent: 'center',
+        textAlign: 'center',
+        width: '100%',
+      };
+    },
+    [disabled, isDarkMode],
+  );
 
   const handlePress = React.useCallback(() => {
     onPress();
@@ -51,6 +84,7 @@ const Button = ({
 };
 
 Button.propTypes = {
+  disabled: PropTypes.bool,
   label: PropTypes.oneOfType([
     PropTypes.string,
     PropTypes.node,
@@ -59,6 +93,7 @@ Button.propTypes = {
 };
 
 Button.defaultProps = {
+  disabled: false,
   label: 'Submit',
   onPress: R.identity(),
 };

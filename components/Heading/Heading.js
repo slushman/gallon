@@ -1,6 +1,8 @@
 import React from 'react';
-import { Text, View } from 'react-native';
+import { View } from 'react-native';
 import PropTypes from 'prop-types';
+
+import Text from '../../components/Text';
 
 const Heading = ({
   label,

@@ -1,8 +1,9 @@
 import React from 'react';
-import { Text, TouchableOpacity, View } from 'react-native';
+import { TouchableOpacity, View } from 'react-native';
 import PropTypes from 'prop-types';
 import MCIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 
+import Text from '../../components/Text';
 import * as colors from '../../constants/colors';
 import * as styles from './styles';
 
@@ -16,6 +17,8 @@ const ListItem = ({
   shortItem,
   subtitle,
 }) => {
+  const isDarkMode = true; // useDarkMode();
+
   const icon = React.useMemo(
     () => {
       if (isSelected) {
@@ -75,6 +78,14 @@ const ListItem = ({
     [noPadding, shortItem],
   );
 
+  const leftContentTextStyle = React.useMemo(
+    () => ({
+      color: isDarkMode ? colors.gallonLightGray : colors.white,
+      fontSize: 16,
+    }),
+    [isDarkMode],
+  );
+
   const right = React.useMemo(
     () => {
       if (!rightContent) return null;
@@ -92,7 +103,7 @@ const ListItem = ({
     () => {
       if (!subtitle) return null;
 
-      return (<Text style={{ color: colors.gallonMedGray }}>{subtitle}</Text>);
+      return (<Text style={styles.subtitleTextStyle}>{subtitle}</Text>);
     },
     [subtitle],
   );
@@ -101,8 +112,8 @@ const ListItem = ({
     <TouchableOpacity onPress={onPress} style={listItemWrapStyle}>
       <View style={styles.leftContentStyle}>
         {leftIconContent}
-        <View style={styles.leftContentTextStyle}>
-          <Text style={{ fontSize: 16 }}>{leftContent}</Text>
+        <View style={styles.leftContentTextWrapStyle}>
+          <Text style={leftContentTextStyle}>{leftContent}</Text>
           {subtitleContent}
         </View>
       </View>

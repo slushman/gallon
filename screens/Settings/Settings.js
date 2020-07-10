@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, View } from 'react-native';
+import { View } from 'react-native';
 import MCIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { useNavigation } from '@react-navigation/native';
 
@@ -8,13 +8,16 @@ import EntriesShowSettings from '../../components/EntriesShowSettings';
 import HandPreferenceSetting from '../../components/HandPreferenceSetting';
 import HeaderButton from '../../components/HeaderButton';
 import Heading from '../../components/Heading';
+import Text from '../../components/Text';
 import VehicleList from '../../components/VehicleList';
 import Wrapper from '../../components/Wrapper';
 import * as colors from '../../constants/colors';
 import * as routes from '../../constants/routes';
 import * as styles from './styles';
+import { useDarkmode } from '../../hooks/useDarkMode';
 
 const Settings = () => {
+  const isDarkMode = useDarkmode();
   const { navigate, setOptions } = useNavigation();
 
   React.useLayoutEffect(() => {
@@ -36,11 +39,11 @@ const Settings = () => {
   const NewVehicleButtonLabel = React.useMemo(
     () => (
       <View style={styles.vehicleButtonLabel}>
-        <MCIcon color={colors.gallonBlue} name="plus" size={20} />
-        <Text style={styles.vehicleButtonLabelText}>Add New Vehicle</Text>
+        <MCIcon color={isDarkMode ? colors.gallonLightGray : colors.gallonBlue} name="plus" size={20} />
+        <Text>Add New Vehicle</Text>
       </View>
     ),
-    [],
+    [isDarkMode],
   );
 
   return (

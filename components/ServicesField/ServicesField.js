@@ -1,33 +1,20 @@
 import React from 'react';
-import { Text, TouchableOpacity, View } from 'react-native';
+import { TouchableOpacity, View } from 'react-native';
 import * as R from 'ramda';
 import PropTypes from 'prop-types';
 import { useField } from 'formik';
 
+import Text from '../../components/Text';
 import * as colors from '../../constants/colors';
 import * as routes from '../../constants/routes';
 import { inputStyle } from '../TextField/styles';
-
-const labelWrapStyle = {
-  backgroundColor: 'white',
-  elevation: 100000,
-  left: 3,
-  paddingHorizontal: 2,
-  position: 'absolute',
-};
-
-const wrapStyle = {
-  borderRadius: 5,
-  borderStyle: 'solid',
-  borderWidth: 1,
-  marginBottom: 20,
-  marginHorizontal: 20,
-};
+import { useDarkmode } from '../../hooks/useDarkMode';
 
 const ServicesField = (props) => {
   const [field, meta, { setTouched, setValue }] = useField(props);
   const { navigate, servicesList } = props;
   let hasServices = servicesList.length > 0;
+  const isDarkMode = useDarkmode();
 
   React.useEffect(
     () => {
@@ -48,38 +35,71 @@ const ServicesField = (props) => {
   );
 
   const labelStyle = React.useMemo(
-    () => ({
-      color: hasServices ? colors.gallonBlack : colors.gallonLightGray,
-      fontSize: hasServices ? 14 : 20,
-    }),
-    [hasServices],
+    () => {
+      let color = colors.gallonBlack;
+
+      if (isDarkMode && hasServices) {
+        color = colors.darkGallonBlue;
+      } else if (isDarkMode && !hasServices) {
+        color = colors.gallonLightGray;
+      } else if (!isDarkMode && hasServices) {
+        color = colors.gallonBlue;
+      }
+
+      return {
+        color,
+        fontSize: hasServices ? 14 : 20,
+      };
+    },
+    [hasServices, isDarkMode],
   );
 
   const labelWrapperStyle = React.useMemo(
     () => ({
+      backgroundColor: isDarkMode ? colors.gallonBlack : colors.gallonLightGray,
+      elevation: 100000,
+      left: 3,
+      marginLeft: hasServices ? 4 : undefined,
+      paddingHorizontal: hasServices ? 2 : 7,
+      paddingTop: 6,
+      position: 'absolute',
       top: hasServices ? -15 : 3,
-      ...labelWrapStyle,
     }),
-    [hasServices],
+    [hasServices, isDarkMode],
   );
 
   const wrapperStyle = React.useMemo(
-    () => ({
-      borderColor: hasServices ? colors.gallonBlack : colors.transparent,
-      ...wrapStyle,
-    }),
-    [hasServices],
+    () => {
+      let borderColor = colors.gallonBlack;
+
+      if (isDarkMode && hasServices) {
+        borderColor = colors.darkGallonBlue;
+      } else if (isDarkMode && !hasServices) {
+        borderColor = colors.gallonLightGray;
+      } else if (!isDarkMode && hasServices) {
+        borderColor = colors.gallonBlue;
+      }
+
+      return {
+        borderColor,
+        borderRadius: 5,
+        borderStyle: 'solid',
+        borderWidth: 1,
+        marginBottom: 20,
+        marginHorizontal: 20,
+        padding: hasServices ? 1 : 4,
+      };
+    },
+    [hasServices, isDarkMode],
   );
 
   return (
-    <View style={wrapperStyle}>
-      <TouchableOpacity onPress={goToSelectServices}>
-        <View style={labelWrapperStyle}>
-          <Text style={labelStyle}>Services</Text>
-        </View>
-        <Text style={inputStyle}>{hasServices ? R.join(', ', servicesList) : ''}</Text>
-      </TouchableOpacity>
-    </View>
+    <TouchableOpacity onPress={goToSelectServices} style={wrapperStyle}>
+      <View style={labelWrapperStyle}>
+        <Text style={labelStyle}>Services</Text>
+      </View>
+      <Text style={inputStyle}>{hasServices ? R.join(', ', servicesList) : ''}</Text>
+    </TouchableOpacity>
   );
 };
 

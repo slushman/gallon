@@ -1,9 +1,10 @@
 import React from 'react';
-import { Text, TouchableOpacity, Platform } from 'react-native';
+import { TouchableOpacity, Platform } from 'react-native';
 import PropTypes from 'prop-types';
 import { useNavigation } from '@react-navigation/native';
 import Ionicon from 'react-native-vector-icons/Ionicons';
 
+import Text from '../../components/Text';
 import * as colors from '../../constants/colors';
 
 const prefix = Platform.OS === 'ios' ? 'ios' : 'md';

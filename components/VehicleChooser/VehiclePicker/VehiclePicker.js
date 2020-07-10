@@ -1,9 +1,10 @@
 import React from 'react';
 import { Picker } from '@react-native-community/picker';
-import { Text, TouchableOpacity, View } from 'react-native';
+import { TouchableOpacity, View } from 'react-native';
 import Collapsible from 'react-native-collapsible';
 import * as R from 'ramda';
 
+import Text from '../../Text';
 import * as colors from '../../../constants/colors';
 import * as styles from '../../DatePicker/styles';
 

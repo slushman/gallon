@@ -18,7 +18,3 @@ export const vehicleButtonLabel = {
   flexDirection: 'row',
   justifyContent: 'center',
 };
-
-export const vehicleButtonLabelText = {
-  color: colors.gallonBlue,
-};

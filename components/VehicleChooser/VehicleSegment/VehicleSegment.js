@@ -1,8 +1,9 @@
 import React from 'react';
-import { Text, View } from 'react-native';
+import { View } from 'react-native';
 import SegmentedControl from '@react-native-community/segmented-control';
 import * as R from 'ramda';
 
+import Text from '../../Text';
 import * as styles from '../../../screens/Settings/styles';
 
 const VehicleSegment = ({
