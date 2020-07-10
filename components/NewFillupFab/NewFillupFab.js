@@ -17,8 +17,8 @@ const NewFillupFab = ({ expandFabs, fabsExpanded }) => {
 
   return (
     <Fab
-      iconName="gas-station"
-      iconSize={32}
+      iconName="fuel"
+      iconSize={30}
       onPress={handlePress}
       visible={fabsExpanded}
     />

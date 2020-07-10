@@ -12,6 +12,7 @@ const NewFab = ({ expandFabs, fabsExpanded }) => {
   return (
     <Fab
       iconName="plus"
+      iconSize={42}
       onPress={handlePress}
       rotate={fabsExpanded}
       rotationEnd="45deg"

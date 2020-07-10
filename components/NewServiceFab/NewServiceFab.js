@@ -17,8 +17,8 @@ const NewServiceFab = ({ expandFabs, fabsExpanded }) => {
 
   return (
     <Fab
-      iconName="oil"
-      iconSize={32}
+      iconName="tools"
+      iconSize={30}
       onPress={handlePress}
       visible={fabsExpanded}
     />

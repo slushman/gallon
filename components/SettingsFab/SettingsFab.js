@@ -17,7 +17,8 @@ const SettingsFab = ({ expandFabs }) => {
 
   return (
     <Fab
-      iconName="settings"
+      iconName="cog"
+      iconSize={36}
       onPress={handlePress}
     />
   );
