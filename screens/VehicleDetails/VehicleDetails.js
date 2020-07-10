@@ -1,8 +1,9 @@
 import React from 'react';
-import { Text, View } from 'react-native';
+import { View } from 'react-native';
 import PropTypes from 'prop-types';
 import * as R from 'ramda';
 
+import Text from '../../components/Text';
 import Wrapper from '../../components/Wrapper';
 
 const VehicleDetails = ({ route }) => {

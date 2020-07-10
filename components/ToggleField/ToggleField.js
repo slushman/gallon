@@ -1,7 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Switch, Text, View } from 'react-native';
+import { Switch, View } from 'react-native';
 
+import Text from '../../components/Text';
 import { LEFT, RIGHT } from '../../constants/settings';
 
 const leftLabelStyle = {

@@ -10,4 +10,4 @@ export const showGallonsSelector = R.pathOr(false, ['settings', 'showGallons']);
 
 export const showPriceSelector = R.pathOr(false, ['settings', 'showPrice']);
 
-export const vehicleListSelector = R.pathOr([], ['vehicles', 'vehicles']);
+export const vehicleListSelector = R.pathOr([], ['vehicles', 'vehicleList']);

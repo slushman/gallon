@@ -1,9 +1,10 @@
 import React from 'react';
-import { Text, View } from 'react-native';
+import { View } from 'react-native';
 import SegmentedControl from '@react-native-community/segmented-control';
 import * as R from 'ramda';
 import * as ReactRedux from 'react-redux';
 
+import Text from '../../components/Text';
 import { values } from '../../constants/settings';
 import * as actions from '../../redux/actions';
 import * as selectors from '../../redux/selectors';

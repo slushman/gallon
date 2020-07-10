@@ -1,12 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { ErrorMessage, useField } from 'formik';
-import { Animated, Text, TextInput, View } from 'react-native';
+import { Animated, TextInput, View } from 'react-native';
 import { useAnimation } from 'react-native-animation-hooks';
 
+import Text from '../../components/Text';
 import { timingSettings } from '../../constants/animation';
 import * as colors from '../../constants/colors';
 import { HASERROR, ISVALID } from '../../constants/status';
+import { useDarkmode } from '../../hooks/useDarkMode';
 import { errorTextStyle, inputStyle } from './styles';
 
 const TextField = ({ fieldName, label, multiline, numberOfLines, ...props }) => {
@@ -14,6 +16,7 @@ const TextField = ({ fieldName, label, multiline, numberOfLines, ...props }) => 
   const [isFocused, setIsFocused] = React.useState(false);
   const hasMultipleLines = multiline && numberOfLines > 1;
   const toValue = isFocused ? 1 : 0;
+  const isDarkMode = useDarkmode();
 
   const fieldAnim = useAnimation({ toValue, ...timingSettings });
 
@@ -30,30 +33,34 @@ const TextField = ({ fieldName, label, multiline, numberOfLines, ...props }) => 
   }, [error, field, touched]);
 
   const backgroundColor = React.useMemo(() => {
+    const finalColor = isDarkMode ? colors.gallonBlack : colors.white;
     if (fieldStatus === HASERROR || fieldStatus === ISVALID) {
-      return 'white';
+      return finalColor;
     }
 
     return fieldAnim.interpolate({
       inputRange: [0, 1],
-      outputRange: [colors.transparent, colors.white],
+      outputRange: [colors.transparent, finalColor],
     });
-  }, [fieldStatus, fieldAnim]);
+  }, [fieldStatus, fieldAnim, isDarkMode]);
 
-  const borderColor = React.useMemo(() => {
+  const borderAndTextColor = React.useMemo(() => {
     if (fieldStatus === HASERROR) {
-      return colors.gallonRed;
+      return isDarkMode ? colors.darkGallonRed : colors.gallonRed;
     }
 
     if (fieldStatus === ISVALID) {
-      return colors.gallonBlack;
+      return isDarkMode ? colors.gallonLightGray : colors.gallonBlack;
     }
+
+    const startColor = isDarkMode ? colors.gallonLightGray : colors.transparent;
+    const finalColor = isDarkMode ? colors.darkGallonBlue : colors.gallonBlue;
 
     return fieldAnim.interpolate({
       inputRange: [0, 1],
-      outputRange: [colors.transparent, colors.gallonBlue],
+      outputRange: [startColor, finalColor],
     });
-  }, [fieldStatus, fieldAnim]);
+  }, [fieldStatus, fieldAnim, isDarkMode]);
 
   const fontSize = React.useMemo(() => {
     if (fieldStatus === HASERROR || fieldStatus === ISVALID) {
@@ -63,21 +70,6 @@ const TextField = ({ fieldName, label, multiline, numberOfLines, ...props }) => 
     return fieldAnim.interpolate({
       inputRange: [0, 1],
       outputRange: [20, 14],
-    });
-  }, [fieldStatus, fieldAnim]);
-
-  const textColor = React.useMemo(() => {
-    if (fieldStatus === HASERROR) {
-      return colors.gallonRed;
-    }
-
-    if (fieldStatus === ISVALID) {
-      return colors.gallonBlack;
-    }
-
-    return fieldAnim.interpolate({
-      inputRange: [0, 1],
-      outputRange: [colors.gallonLightGray, colors.gallonBlue],
     });
   }, [fieldStatus, fieldAnim]);
 
@@ -94,12 +86,12 @@ const TextField = ({ fieldName, label, multiline, numberOfLines, ...props }) => 
 
   const fieldStyle = React.useMemo(
     () => ({
-      borderColor: borderColor,
+      borderColor: borderAndTextColor,
       borderRadius: 5,
       borderStyle: 'solid',
       borderWidth: 1,
     }),
-    [borderColor],
+    [borderAndTextColor],
   );
 
   const inputStyles = React.useMemo(
@@ -118,15 +110,15 @@ const TextField = ({ fieldName, label, multiline, numberOfLines, ...props }) => 
 
   const labelStyle = React.useMemo(
     () => ({
-      color: textColor,
+      color: borderAndTextColor,
       fontSize: fontSize,
     }),
-    [fontSize, textColor],
+    [borderAndTextColor, fontSize],
   );
 
   const labelWrapStyle = React.useMemo(
     () => ({
-      backgroundColor: backgroundColor,
+      backgroundColor: isDarkMode ? colors.gallonBlack : backgroundColor,
       elevation: 100000,
       left: 8,
       paddingHorizontal: 2,
@@ -134,7 +126,7 @@ const TextField = ({ fieldName, label, multiline, numberOfLines, ...props }) => 
       top: topPosition,
       zIndex: 100,
     }),
-    [backgroundColor, topPosition],
+    [backgroundColor, isDarkMode, topPosition],
   );
 
   const wrapStyle = React.useMemo(

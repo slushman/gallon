@@ -1,12 +1,13 @@
 import React from 'react';
-import { Text, View } from 'react-native';
+import { View } from 'react-native';
 import * as R from 'ramda';
 import PropTypes from 'prop-types';
 
+import Text from '../../components/Text';
 import Wrapper from '../../components/Wrapper';
 
 const Entry = ({ route }) => {
-  const { date, id, odometer, total, type } = R.prop('params', route);
+  const { date, id, odometer, previousOdometer, total, type } = R.prop('params', route);
   return (
     <Wrapper centerContents>
       <View>

@@ -1,3 +1,5 @@
+import * as colors from '../../constants/colors';
+
 export const iconWrap = {
   justifyContent: 'center',
   padding: 16,
@@ -7,7 +9,7 @@ export const leftContentStyle = {
   flexDirection: 'row',
 };
 
-export const leftContentTextStyle = {
+export const leftContentTextWrapStyle = {
   justifyContent: 'center',
 };
 
@@ -22,4 +24,8 @@ export const rightContentStyle = {
 
 export const rightContentTextStyle = {
   justifyContent: 'center',
+};
+
+export const subtitleTextStyle = {
+  color: colors.gallonMedGray,
 };

@@ -1,7 +1,6 @@
 import React from 'react';
 import {
   LayoutAnimation,
-  Text,
   TouchableOpacity,
   View,
 } from 'react-native';
@@ -10,6 +9,7 @@ import MCIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import PropTypes from 'prop-types';
 import * as Animated from 'react-native-animatable';
 
+import Text from '../../components/Text';
 import { timingSettings } from '../../constants/animation';
 import * as colors from '../../constants/colors';
 import * as styles from './styles';
