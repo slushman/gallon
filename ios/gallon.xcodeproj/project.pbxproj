@@ -9,17 +9,16 @@
 /* Begin PBXBuildFile section */
 		00E356F31AD99517003FC87E /* gallonTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* gallonTests.m */; };
 		13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
-		13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB11A68108700A75B9A /* LaunchScreen.xib */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		2D02E4BC1E0B4A80006451C7 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		2D02E4BD1E0B4A84006451C7 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		2D02E4BF1E0B4AB3006451C7 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		2DCD954D1E0B4F2C00145EB5 /* gallonTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* gallonTests.m */; };
-		72E9212419FA29C145743E90 /* libPods-gallon-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = EE207FC5A7311701F8904510 /* libPods-gallon-tvOS.a */; };
-		83352F5931C55A841BCFB2F8 /* libPods-gallon-gallonTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9F5E264AA1193C9BBA94E4D6 /* libPods-gallon-gallonTests.a */; };
-		9729E51179E6196FF9F0D2A1 /* libPods-gallon-tvOSTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 642BFBDE6A2EC0FBE1B08FFC /* libPods-gallon-tvOSTests.a */; };
-		EB38BF73C2F16D108C5B6EAA /* libPods-gallon.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D0F25B9D0C9988E2DB83483D /* libPods-gallon.a */; };
+		5212FCABB1E18574D3D8E672 /* libPods-gallon.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D0F25B9D0C9988E2DB83483D /* libPods-gallon.a */; };
+		65985104D1ABFFC396FEAA6C /* libPods-gallon-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = EE207FC5A7311701F8904510 /* libPods-gallon-tvOS.a */; };
+		A89E97AAF283B394BD908AF2 /* libPods-gallon-tvOSTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 642BFBDE6A2EC0FBE1B08FFC /* libPods-gallon-tvOSTests.a */; };
+		C8C400E19FC27BE0072A9127 /* libPods-gallon-gallonTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9F5E264AA1193C9BBA94E4D6 /* libPods-gallon-gallonTests.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -74,7 +73,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				83352F5931C55A841BCFB2F8 /* libPods-gallon-gallonTests.a in Frameworks */,
+				C8C400E19FC27BE0072A9127 /* libPods-gallon-gallonTests.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -82,7 +81,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EB38BF73C2F16D108C5B6EAA /* libPods-gallon.a in Frameworks */,
+				5212FCABB1E18574D3D8E672 /* libPods-gallon.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -90,7 +89,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				72E9212419FA29C145743E90 /* libPods-gallon-tvOS.a in Frameworks */,
+				65985104D1ABFFC396FEAA6C /* libPods-gallon-tvOS.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -98,7 +97,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9729E51179E6196FF9F0D2A1 /* libPods-gallon-tvOSTests.a in Frameworks */,
+				A89E97AAF283B394BD908AF2 /* libPods-gallon-tvOSTests.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -200,12 +199,12 @@
 			sourceTree = "<group>";
 		};
 		DE4DCB80C1F94D4A85B54B64 /* Resources */ = {
-			isa = "PBXGroup";
+			isa = PBXGroup;
 			children = (
 			);
 			name = Resources;
-			sourceTree = "<group>";
 			path = "";
+			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
@@ -350,7 +349,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
-				13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -423,6 +421,7 @@
 				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/Octicons.ttf",
 				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/SimpleLineIcons.ttf",
 				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/Zocial.ttf",
+				"${PODS_CONFIGURATION_BUILD_DIR}/React-Core/AccessibilityResources.bundle",
 			);
 			name = "[CP] Copy Pods Resources";
 			outputPaths = (
@@ -442,6 +441,7 @@
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/Octicons.ttf",
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/SimpleLineIcons.ttf",
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/Zocial.ttf",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/AccessibilityResources.bundle",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -559,6 +559,7 @@
 				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/Octicons.ttf",
 				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/SimpleLineIcons.ttf",
 				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/Zocial.ttf",
+				"${PODS_CONFIGURATION_BUILD_DIR}/React-Core/AccessibilityResources.bundle",
 			);
 			name = "[CP] Copy Pods Resources";
 			outputPaths = (
@@ -578,6 +579,7 @@
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/Octicons.ttf",
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/SimpleLineIcons.ttf",
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/Zocial.ttf",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/AccessibilityResources.bundle",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;

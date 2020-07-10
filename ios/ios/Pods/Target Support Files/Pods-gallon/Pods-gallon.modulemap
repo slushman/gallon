@@ -1,0 +1,6 @@
+module Pods_gallon {
+  umbrella header "Pods-gallon-umbrella.h"
+
+  export *
+  module * { export * }
+}
