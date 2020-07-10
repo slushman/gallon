@@ -1,5 +1,5 @@
 import React from 'react';
-import { TouchableOpacity, View } from 'react-native';
+import { Pressable, View } from 'react-native';
 import * as R from 'ramda';
 import PropTypes from 'prop-types';
 import { useField } from 'formik';
@@ -94,12 +94,12 @@ const ServicesField = (props) => {
   );
 
   return (
-    <TouchableOpacity onPress={goToSelectServices} style={wrapperStyle}>
+    <Pressable onPress={goToSelectServices} style={wrapperStyle}>
       <View style={labelWrapperStyle}>
         <Text style={labelStyle}>Services</Text>
       </View>
       <Text style={inputStyle}>{hasServices ? R.join(', ', servicesList) : ''}</Text>
-    </TouchableOpacity>
+    </Pressable>
   );
 };
 

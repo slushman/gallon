@@ -1,5 +1,5 @@
 import React from 'react';
-import { TouchableOpacity, View } from 'react-native';
+import { Pressable, View } from 'react-native';
 import PropTypes from 'prop-types';
 import MCIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import * as Animated from 'react-native-animatable';
@@ -84,7 +84,7 @@ const Fab = ({
     [fabSize, iconSize],
   );
 
-  const touchableStyle = React.useMemo(
+  const pressableStyle = React.useMemo(
     () => {
       let style = {
         backgroundColor: colors.gallonBlue,
@@ -109,11 +109,11 @@ const Fab = ({
 
   return (
     <Animated.View pointerEvents={visible ? undefined : 'none' } style={fabWrapStyle}>
-      <TouchableOpacity onPress={handlePress} style={touchableStyle}>
+      <Pressable onPress={handlePress} style={pressableStyle}>
         <View style={iconWrap}>
           <MCIcon color="white" name={iconName} size={size} />
         </View>
-      </TouchableOpacity>
+      </Pressable>
     </Animated.View>
   );
 };

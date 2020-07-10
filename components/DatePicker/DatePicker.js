@@ -1,5 +1,5 @@
 import React from 'react';
-import { TouchableOpacity, View } from 'react-native';
+import { Pressable, View } from 'react-native';
 import PropTypes from 'prop-types';
 import { useField } from 'formik';
 import DateTimePicker from '@react-native-community/datetimepicker';
@@ -90,7 +90,7 @@ const DatePicker = ({ label, ...props }) => {
 
   return (
     <View style={styles.pickerWrapStyle}>
-      <TouchableOpacity onPress={openPicker} style={styles.touchWrapStyle}>
+      <Pressable onPress={openPicker} style={styles.touchWrapStyle}>
         <View style={labelWrapStyle}>
           <Text style={labelStyle}>{label}</Text>
         </View>
@@ -99,7 +99,7 @@ const DatePicker = ({ label, ...props }) => {
             {dayjs(date).format('MMMM D, YYYY')}
           </Text>
         </View>
-      </TouchableOpacity>
+      </Pressable>
       <Collapsible collapsed={!pickerVisible}>
         <DateTimePicker mode="date" onChange={handleChange} value={date} />
         <Button label="Cancel" onPress={closePicker} />
