@@ -1,5 +1,5 @@
 import React from 'react';
-import { TouchableOpacity, View } from 'react-native';
+import { Pressable, View } from 'react-native';
 import PropTypes from 'prop-types';
 import MCIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 
@@ -109,7 +109,7 @@ const ListItem = ({
   );
 
   return (
-    <TouchableOpacity onPress={onPress} style={listItemWrapStyle}>
+    <Pressable onPress={onPress} style={listItemWrapStyle}>
       <View style={styles.leftContentStyle}>
         {leftIconContent}
         <View style={styles.leftContentTextWrapStyle}>
@@ -121,7 +121,7 @@ const ListItem = ({
         {right}
         {icon}
       </View>
-    </TouchableOpacity>
+    </Pressable>
   );
 };
 

@@ -1,7 +1,7 @@
 import React from 'react';
 import {
   LayoutAnimation,
-  TouchableOpacity,
+  Pressable,
   View,
 } from 'react-native';
 import { useAnimation } from 'react-native-animation-hooks';
@@ -49,7 +49,7 @@ const Expandable = ({
 
   return (
     <View style={styles.expandableWrap}>
-      <TouchableOpacity onPress={expandChildren} style={styles.expandableTouch}>
+      <Pressable onPress={expandChildren} style={styles.expandableTouch}>
         <View style={styles.expandableTextWrap}>
           <Text style={styles.mainLabel}>{labelMain}</Text>
         </View>
@@ -61,7 +61,7 @@ const Expandable = ({
             <MCIcon color={colors.gallonBlack} name="chevron-down" size={25} />
           </Animated.View>
         </View>
-      </TouchableOpacity>
+      </Pressable>
       {childContent}
     </View>
   );

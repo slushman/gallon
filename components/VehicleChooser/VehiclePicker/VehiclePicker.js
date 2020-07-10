@@ -1,6 +1,6 @@
 import React from 'react';
 import { Picker } from '@react-native-community/picker';
-import { TouchableOpacity, View } from 'react-native';
+import { Pressable, View } from 'react-native';
 import Collapsible from 'react-native-collapsible';
 import * as R from 'ramda';
 
@@ -64,14 +64,14 @@ const VehiclePicker = ({
 
   return (
     <View style={styles.pickerWrapStyle}>
-      <TouchableOpacity onPress={openPicker} style={styles.touchWrapStyle}>
+      <Pressable onPress={openPicker} style={styles.touchWrapStyle}>
         <View style={styles.labelWrapStyle}>
           <Text style={labelStyle}>Choose Vehicle</Text>
         </View>
         <View style={fieldStyle}>
           <Text style={styles.placeholderStyle}>{getVehicleName}</Text>
         </View>
-      </TouchableOpacity>
+      </Pressable>
       <Collapsible collapsed={!pickerVisible}>
         <Picker
           onValueChange={handleSelection}

@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import * as R from 'ramda';
-import { TouchableOpacity } from 'react-native';
+import { Pressable } from 'react-native';
 
 import Text from '../../components/Text';
 import * as colors from '../../constants/colors';
@@ -77,9 +77,9 @@ const Button = ({
   );
 
   return (
-    <TouchableOpacity onPress={handlePress} style={buttonStyles}>
+    <Pressable onPress={handlePress} style={buttonStyles}>
       {ButtonLabel}
-    </TouchableOpacity>
+    </Pressable>
   );
 };
 

@@ -1,5 +1,5 @@
 import React from 'react';
-import { TouchableOpacity, Platform } from 'react-native';
+import { Pressable, Platform } from 'react-native';
 import PropTypes from 'prop-types';
 import { useNavigation } from '@react-navigation/native';
 import Ionicon from 'react-native-vector-icons/Ionicons';
@@ -50,7 +50,7 @@ const HeaderButton = ({
     [leftIconName, rightIconName],
   );
 
-  const touchableStyle = React.useMemo(
+  const pressableStyle = React.useMemo(
     () => ({
       alignItems: 'center',
       flexDirection: 'row',
@@ -61,11 +61,11 @@ const HeaderButton = ({
   );
 
   return (
-    <TouchableOpacity onPress={handlePress} style={touchableStyle}>
+    <Pressable onPress={handlePress} style={pressableStyle}>
       {LeftIcon}
       <Text style={textStyle}>{text}</Text>
       {RightIcon}
-    </TouchableOpacity>
+    </Pressable>
   );
 };
 
