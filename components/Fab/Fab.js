@@ -64,13 +64,6 @@ const Fab = ({
     [buttonHeight, buttonOpacity, iconRotation],
   );
 
-  const iconStyle = React.useMemo(
-    () => ({
-      paddingTop: fabSize / 12,
-    }),
-    [fabSize],
-  );
-
   const iconWrap = React.useMemo(
     () => ({
       alignItems: 'center',
@@ -118,7 +111,7 @@ const Fab = ({
     <Animated.View pointerEvents={visible ? undefined : 'none' } style={fabWrapStyle}>
       <TouchableOpacity onPress={handlePress} style={touchableStyle}>
         <View style={iconWrap}>
-          <MCIcon color="white" name={iconName} size={size} style={iconStyle} />
+          <MCIcon color="white" name={iconName} size={size} />
         </View>
       </TouchableOpacity>
     </Animated.View>

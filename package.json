@@ -8,13 +8,15 @@
     "start": "react-native start",
     "test": "jest",
     "lint": "eslint .",
-    "pods": "cd ios && pod install && cd .."
+    "pods": "cd ios && pod install && cd ..",
+    "reinstall": "rm -rf node_modules && rm -rf ios/pods && yarn install && yarn pods"
   },
   "dependencies": {
     "@react-native-community/datetimepicker": "^2.3.2",
     "@react-native-community/masked-view": "^0.1.10",
     "@react-native-community/picker": "^1.6.3",
     "@react-native-community/segmented-control": "^2.0.0",
+    "@react-native-community/toolbar-android": "^0.1.0-rc.2",
     "@react-navigation/bottom-tabs": "^5.3.4",
     "@react-navigation/native": "^5.2.4",
     "@react-navigation/stack": "^5.4.1",
@@ -53,7 +55,8 @@
     "eslint-plugin-react-hooks": "^4.0.4",
     "jest": "^25.5.4",
     "metro-react-native-babel-preset": "^0.59.0",
-    "react-test-renderer": "16.11.0"
+    "react-test-renderer": "16.11.0",
+    "typescript": "^3.9.6"
   },
   "jest": {
     "preset": "react-native"
