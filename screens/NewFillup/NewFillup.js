@@ -6,6 +6,7 @@ import * as R from 'ramda';
 
 import Button from '../../components/Button';
 import DatePicker from '../../components/DatePicker';
+import ScrollView from '../../components/ScrollView';
 import TextField from '../../components/TextField';
 import VehicleChooser from '../../components/VehicleChooser';
 import Wrapper from '../../components/Wrapper';
@@ -55,27 +56,29 @@ const NewFillup = () => {
 
         return (
           <Wrapper>
-            <VehicleChooser name="fillupVehicle" />
-            <DatePicker label="Date" name="fillupDate" />
-            <TextField
-              fieldName="fillupOdometer"
-              keyboardType="numeric"
-              label="Odometer"
-              name="fillupOdometer"
-            />
-            <TextField
-              fieldName="fillupTotal"
-              keyboardType="numeric"
-              label="Total"
-              name="fillupTotal"
-            />
-            <TextField
-              fieldName="fillupGallons"
-              keyboardType="numeric"
-              label="Gallons"
-              name="fillupGallons"
-            />
-            <Button disabled={!hasAllRequired} label="Save" onPress={handleSubmit} />
+            <ScrollView>
+              <VehicleChooser name="fillupVehicle" />
+              <DatePicker label="Date" name="fillupDate" />
+              <TextField
+                fieldName="fillupOdometer"
+                keyboardType="numeric"
+                label="Odometer"
+                name="fillupOdometer"
+              />
+              <TextField
+                fieldName="fillupTotal"
+                keyboardType="numeric"
+                label="Total"
+                name="fillupTotal"
+              />
+              <TextField
+                fieldName="fillupGallons"
+                keyboardType="numeric"
+                label="Gallons"
+                name="fillupGallons"
+              />
+              <Button disabled={!hasAllRequired} label="Save" onPress={handleSubmit} />
+            </ScrollView>
           </Wrapper>
         );
     }}

@@ -7,6 +7,7 @@ import PropTypes from 'prop-types';
 import Button from '../../components/Button';
 import DatePicker from '../../components/DatePicker';
 import Expandable from '../../components/Expandable/Expandable';
+import ScrollView from '../../components/ScrollView';
 import TextField from '../../components/TextField';
 import Wrapper from '../../components/Wrapper';
 import * as utils from '../../utils';
@@ -48,46 +49,48 @@ const NewVehicle = ({ navigation: { navigate }, route }) => {
 
         return (
           <Wrapper>
-            <TextField
-              fieldName="vehicleName"
-              label="Name"
-              name="vehicleName"
-            />
-            <TextField
-              fieldName="vehicleYear"
-              keyboardType="numeric"
-              label="Year"
-              name="vehicleYear"
-            />
-            <TextField
-              fieldName="vehicleMake"
-              label="Make"
-              name="vehicleMake"
-            />
-            <TextField
-              fieldName="vehicleModel"
-              label="Model"
-              name="vehicleModel"
-            />
-            <TextField
-              fieldName="vehicleOdometer"
-              label="Odometer"
-              name="vehicleOdometer"
-            />
-            <Expandable labelMain="Optional Settings">
-              <DatePicker label="Purchase Date" name="vehiclePurchaseDate" />
+            <ScrollView>
               <TextField
-                fieldName="vehicleLicensePlate"
-                label="License Plate"
-                name="vehicleLicensePlate"
+                fieldName="vehicleName"
+                label="Name"
+                name="vehicleName"
               />
               <TextField
-                fieldName="vehicleVIN"
-                label="VIN"
-                name="vehicleVIN"
+                fieldName="vehicleYear"
+                keyboardType="numeric"
+                label="Year"
+                name="vehicleYear"
               />
-            </Expandable>
-            <Button disabled={!hasAllRequired} label="Save" onPress={handleSubmit} />
+              <TextField
+                fieldName="vehicleMake"
+                label="Make"
+                name="vehicleMake"
+              />
+              <TextField
+                fieldName="vehicleModel"
+                label="Model"
+                name="vehicleModel"
+              />
+              <TextField
+                fieldName="vehicleOdometer"
+                label="Odometer"
+                name="vehicleOdometer"
+              />
+              <Expandable labelMain="Optional Settings">
+                <DatePicker label="Purchase Date" name="vehiclePurchaseDate" />
+                <TextField
+                  fieldName="vehicleLicensePlate"
+                  label="License Plate"
+                  name="vehicleLicensePlate"
+                />
+                <TextField
+                  fieldName="vehicleVIN"
+                  label="VIN"
+                  name="vehicleVIN"
+                />
+              </Expandable>
+              <Button disabled={!hasAllRequired} label="Save" onPress={handleSubmit} />
+            </ScrollView>
           </Wrapper>
         );
       }}

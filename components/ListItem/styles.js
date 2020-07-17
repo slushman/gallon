@@ -27,5 +27,5 @@ export const rightContentTextStyle = {
 };
 
 export const subtitleTextStyle = {
-  color: colors.gallonMedGray,
+  color: colors.perfectGray,
 };

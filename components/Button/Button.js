@@ -3,9 +3,9 @@ import PropTypes from 'prop-types';
 import * as R from 'ramda';
 import { Pressable } from 'react-native';
 
-import Text from '../../components/Text';
 import * as colors from '../../constants/colors';
 import { useDarkmode } from '../../hooks/useDarkMode';
+import Text from '../../components/Text';
 
 const Button = ({
   disabled,
@@ -13,54 +13,32 @@ const Button = ({
   onPress,
 }) => {
   const isDarkMode = useDarkmode();
+  const bgContrast = colors.getBgContrast(isDarkMode);
+  const disabledColor = disabled ? colors.perfectGray : bgContrast;
 
   const buttonStyles = React.useMemo(
-    () => {
-      let borderColor = colors.gallonBlack;
-
-      if (isDarkMode && disabled) {
-        borderColor = colors.darkGallonBlue;
-      } else if (isDarkMode && !disabled) {
-        borderColor = colors.gallonLightGray;
-      } else if (!isDarkMode && disabled) {
-        borderColor = colors.gallonBlue;
-      }
-
-      return ({
-        borderColor,
-        borderRadius: 5,
-        borderStyle: 'solid',
-        borderWidth: 1,
-        marginBottom: 20,
-        marginHorizontal: '15%',
-        marginTop: 0,
-        padding: 8,
-      });
-     },
-    [disabled, isDarkMode],
+    () => ({
+      borderColor: disabledColor,
+      borderRadius: 5,
+      borderStyle: 'solid',
+      borderWidth: 1,
+      marginBottom: 20,
+      marginHorizontal: '15%',
+      marginTop: 0,
+      padding: 8,
+    }),
+    [disabledColor],
   );
 
   const buttonTextStyle = React.useMemo(
-    () => {
-      let color = colors.gallonBlack;
-
-      if (isDarkMode && disabled) {
-        color = colors.darkGallonBlue;
-      } else if (isDarkMode && !disabled) {
-        color = colors.gallonLightGray;
-      } else if (!isDarkMode && disabled) {
-        color = colors.gallonBlue;
-      }
-
-      return {
-        color,
-        fontSize: 20,
-        justifyContent: 'center',
-        textAlign: 'center',
-        width: '100%',
-      };
-    },
-    [disabled, isDarkMode],
+    () => ({
+      color: disabledColor,
+      fontSize: 20,
+      justifyContent: 'center',
+      textAlign: 'center',
+      width: '100%',
+    }),
+    [disabledColor],
   );
 
   const handlePress = React.useCallback(() => {

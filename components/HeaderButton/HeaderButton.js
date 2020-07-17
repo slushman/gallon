@@ -6,6 +6,7 @@ import Ionicon from 'react-native-vector-icons/Ionicons';
 
 import Text from '../../components/Text';
 import * as colors from '../../constants/colors';
+import { useDarkmode } from '../../hooks/useDarkMode';
 
 const prefix = Platform.OS === 'ios' ? 'ios' : 'md';
 
@@ -16,6 +17,8 @@ const HeaderButton = ({
   text,
 }) => {
   const { navigate } = useNavigation();
+  const isDarkMode = useDarkmode();
+  const gallonBlue = colors.getBlue(isDarkMode);
 
   const handlePress = React.useCallback(
     () => navigate(route),
@@ -26,28 +29,28 @@ const HeaderButton = ({
     () => {
       if (!leftIconName) return null;
 
-      return (<Ionicon color={colors.gallonBlue} name={`${prefix}-${leftIconName}`} size={32} />);
+      return (<Ionicon color={gallonBlue} name={`${prefix}-${leftIconName}`} size={32} />);
     },
-    [leftIconName],
+    [gallonBlue, leftIconName],
   );
 
   const RightIcon = React.useMemo(
     () => {
       if (!rightIconName) return null;
 
-      return (<Ionicon color={colors.gallonBlue} name={`${prefix}-${rightIconName}`} size={32} />);
+      return (<Ionicon color={gallonBlue} name={`${prefix}-${rightIconName}`} size={32} />);
     },
-    [rightIconName],
+    [gallonBlue, rightIconName],
   );
 
   const textStyle = React.useMemo(
     () => ({
-      color: colors.gallonBlue,
+      color: gallonBlue,
       fontSize: 18,
       marginLeft: leftIconName ? 8 : undefined,
       marginRight: rightIconName ? 8 : undefined,
     }),
-    [leftIconName, rightIconName],
+    [gallonBlue, leftIconName, rightIconName],
   );
 
   const pressableStyle = React.useMemo(

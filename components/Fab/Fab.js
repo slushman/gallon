@@ -8,6 +8,7 @@ import { useAnimation } from 'react-native-animation-hooks';
 import { timingSettings } from '../../constants/animation';
 import * as colors from '../../constants/colors';
 import { LEFT, RIGHT } from '../../constants/settings';
+import { useDarkmode } from '../../hooks/useDarkMode';
 
 const Fab = ({
   handPref,
@@ -24,6 +25,8 @@ const Fab = ({
   const fabSize = 48;
   const fabAnim = useAnimation({ toValue, ...timingSettings });
   const rotateAnim = useAnimation({ toValue: rotateValue, ...timingSettings });
+  const isDarkMode = useDarkmode();
+  const gallonBlue = colors.getBlue(isDarkMode);
 
   const handlePress = React.useCallback(
     () => {
@@ -87,7 +90,7 @@ const Fab = ({
   const pressableStyle = React.useMemo(
     () => {
       let style = {
-        backgroundColor: colors.gallonBlue,
+        backgroundColor: gallonBlue,
         borderRadius: fabSize / 2,
         height: fabSize,
         width: fabSize,
@@ -104,7 +107,7 @@ const Fab = ({
       }
       return style;
     },
-    [fabSize, handPref, positionBottom],
+    [fabSize, gallonBlue, handPref, positionBottom],
   );
 
   return (

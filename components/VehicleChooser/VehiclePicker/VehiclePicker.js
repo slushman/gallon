@@ -7,6 +7,7 @@ import * as R from 'ramda';
 import Text from '../../Text';
 import * as colors from '../../../constants/colors';
 import * as styles from '../../DatePicker/styles';
+import { useDarkmode } from '../../../hooks/useDarkMode';
 
 const VehiclePicker = ({
   field,
@@ -16,26 +17,29 @@ const VehiclePicker = ({
   const [pickerVisible, setPickerVisible] = React.useState(false);
   const { onChange, value } = field;
   const { setValue } = helpers;
+  const isDarkMode = useDarkmode();
+  const gallonBlue = colors.getBlue(isDarkMode);
+  const pickerColor = pickerVisible ? gallonBlue : colors.gallonBlack;
 
   const getVehicleName = R.prop('vehicleName', R.find(R.propEq('vehicleId', value), options));
 
   const fieldStyle = React.useMemo(
     () => ({
-      borderColor: pickerVisible ? colors.gallonBlue : colors.gallonBlack,
+      borderColor: pickerColor,
       borderRadius: 5,
       borderStyle: 'solid',
       borderWidth: 1,
     }),
-    [pickerVisible],
+    [pickerColor],
   );
 
   const labelStyle = React.useMemo(
     () => ({
-      color: pickerVisible ? colors.gallonBlue : colors.gallonBlack,
+      color: pickerColor,
       fontSize: 14,
       paddingHorizontal: 2,
     }),
-    [pickerVisible],
+    [ pickerColor],
   );
 
   const closePicker = React.useCallback(() => setPickerVisible(false), []);
@@ -76,7 +80,6 @@ const VehiclePicker = ({
         <Picker
           onValueChange={handleSelection}
           selectedValue={value}
-          style={{}}
         >
           {options.map(PickerItem)}
         </Picker>

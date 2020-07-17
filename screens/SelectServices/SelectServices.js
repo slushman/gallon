@@ -1,10 +1,10 @@
 import React from 'react';
-import { ScrollView } from 'react-native';
 import PropTypes from 'prop-types';
 import * as R from 'ramda';
 
 import Button from '../../components/Button';
 import ListItem from '../../components/ListItem';
+import ScrollView from '../../components/ScrollView';
 import Wrapper from '../../components/Wrapper';
 import * as routes from '../../constants/routes';
 import { serviceList } from '../../constants/services';
@@ -30,8 +30,8 @@ const SelectServices = ({ navigation: { navigate }, route }) => {
   );
 
   return (
-    <Wrapper centerContent>
-      <ScrollView>
+    <Wrapper>
+      <ScrollView noPadding>
         {serviceList.map((service, index) => (
           <ListItem
             isSelected={R.includes(service, services)}

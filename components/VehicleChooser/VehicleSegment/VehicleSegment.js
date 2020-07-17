@@ -27,7 +27,7 @@ const VehicleSegment = ({
   );
 
   return (
-    <View style={styles.settingWrap}>
+    <View style={styles.settingHorzWrap}>
       <Text style={styles.settingLabel}>Choose Vehicle</Text>
       <SegmentedControl
         onChange={handleSelect}

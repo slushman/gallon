@@ -13,6 +13,7 @@ import Text from '../../components/Text';
 import { timingSettings } from '../../constants/animation';
 import * as colors from '../../constants/colors';
 import * as styles from './styles';
+import { useDarkmode } from '../../hooks/useDarkMode';
 
 const Expandable = ({
   children,
@@ -21,6 +22,8 @@ const Expandable = ({
   labelOpen,
   startExpanded,
 }) => {
+  const isDarkMode = useDarkmode();
+  const bgContrast = colors.getBgContrast(isDarkMode);
   const [expanded, setExpanded] = React.useState(startExpanded);
   const rotateValue = expanded ? 1 : 0;
   const rotateAnim = useAnimation({ toValue: rotateValue, ...timingSettings });
@@ -58,7 +61,7 @@ const Expandable = ({
             <Text>{text}</Text>
           </View>
           <Animated.View style={iconWrap}>
-            <MCIcon color={colors.gallonBlack} name="chevron-down" size={25} />
+            <MCIcon color={bgContrast} name="chevron-down" size={25} />
           </Animated.View>
         </View>
       </Pressable>

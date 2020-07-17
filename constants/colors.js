@@ -1,14 +1,13 @@
-export const gallonBlack = 'rgba(18, 18, 18, 1)';
-export const gallonBlue = 'rgba(0, 108, 247, 1)';
-export const gallonGreen = 'rgba(0, 133, 57, 1)';
-export const gallonLightGray = 'rgba(204, 204, 204, 1)';
-export const gallonMedGray = 'rgba(153, 153, 153, 1)';
-export const gallonRed = 'rgba(235, 16, 0, 1)';
+export const gallonBlack = 'rgba(28, 28, 30, 1)';
 export const transparent = 'rgba(255, 255, 255, 0)';
 export const white = 'rgba(255, 255, 255, 1)';
 
-export const darkGallonBlue = 'rgba(49, 136, 247, 1)';
-export const darkGallonRed = 'rgba(235, 60, 47, 1)';
-export const darkMediumGray = 'rgba(86, 86, 86, 1)'; // a11y under gallonLightGray
-export const darkDarkGray = 'rgba(50, 50, 50, 1)';
-export const darkCharcoal = 'rgba(25, 25, 25, 1)';
+export const lightGray = 'rgba(242, 242, 247, 1)';
+export const perfectGray = 'rgba(117, 117, 117, 1)';
+export const darkGray = 'rgba(72, 72, 74, 1)';
+
+export const getBlue = (isDarkMode) => (isDarkMode ? 'rgb(10, 132, 255)' : 'rgba(0, 109, 247, 1)');
+export const getGreen = (isDarkMode) => (isDarkMode ? 'rgba(52, 199, 89, 1)' : 'rgba(0, 135, 57, 1)');
+export const getRed = (isDarkMode) => (isDarkMode ? 'rgba(255, 40, 20, 1)' : 'rgba(235, 20, 10, 1)');
+export const getBgColor = (isDarkMode) => (isDarkMode ? gallonBlack : white);
+export const getBgContrast = (isDarkMode) => (isDarkMode ? lightGray : gallonBlack);

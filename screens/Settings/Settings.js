@@ -8,6 +8,7 @@ import EntriesShowSettings from '../../components/EntriesShowSettings';
 import HandPreferenceSetting from '../../components/HandPreferenceSetting';
 import HeaderButton from '../../components/HeaderButton';
 import Heading from '../../components/Heading';
+import ScrollView from '../../components/ScrollView';
 import Text from '../../components/Text';
 import VehicleList from '../../components/VehicleList';
 import Wrapper from '../../components/Wrapper';
@@ -18,6 +19,7 @@ import { useDarkmode } from '../../hooks/useDarkMode';
 
 const Settings = () => {
   const isDarkMode = useDarkmode();
+  const bgContrast = colors.getBgContrast(isDarkMode);
   const { navigate, setOptions } = useNavigation();
 
   React.useLayoutEffect(() => {
@@ -39,23 +41,25 @@ const Settings = () => {
   const NewVehicleButtonLabel = React.useMemo(
     () => (
       <View style={styles.vehicleButtonLabel}>
-        <MCIcon color={isDarkMode ? colors.gallonLightGray : colors.gallonBlue} name="plus" size={20} />
+        <MCIcon color={bgContrast} name="plus" size={20} />
         <Text>Add New Vehicle</Text>
       </View>
     ),
-    [isDarkMode],
+    [bgContrast],
   );
 
   return (
     <Wrapper>
-      <View style={styles.settingWrap}>
-        <Heading label="Manage Vehicles" noPadding={true} />
-        <VehicleList />
-        <Button label={NewVehicleButtonLabel} onPress={handleNewVehicle} />
-      </View>
-      <Heading label="Preferences" />
-      <HandPreferenceSetting />
-      <EntriesShowSettings />
+      <ScrollView>
+        <View style={styles.vehiclesWrap}>
+          <Heading label="Manage Vehicles" noPadding={true} />
+          <VehicleList />
+          <Button label={NewVehicleButtonLabel} onPress={handleNewVehicle} />
+        </View>
+        <Heading label="Preferences" />
+        <HandPreferenceSetting />
+        <EntriesShowSettings />
+      </ScrollView>
     </Wrapper>
   );
 };

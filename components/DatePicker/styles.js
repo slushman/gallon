@@ -1,14 +1,5 @@
 import * as colors from '../../constants/colors';
 
-export const labelWrapStyle = {
-  backgroundColor: colors.gallonBlue,
-  elevation: 100000,
-  left: 28,
-  position: 'absolute',
-  top: -10,
-  zIndex: 100,
-};
-
 export const pickerWrapStyle = {
   marginBottom: 20,
 };
