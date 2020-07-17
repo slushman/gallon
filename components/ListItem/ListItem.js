@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import MCIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import Text from '../../components/Text';
+import { useDarkmode } from '../../hooks/useDarkMode';
 import * as colors from '../../constants/colors';
 import * as styles from './styles';
 
@@ -17,31 +18,33 @@ const ListItem = ({
   shortItem,
   subtitle,
 }) => {
-  const isDarkMode = true; // useDarkMode();
+  const isDarkMode = useDarkmode();
+  const bgContrast = colors.getBgContrast(isDarkMode);
+  const gallonBlue = colors.getBlue(isDarkMode);
 
   const icon = React.useMemo(
     () => {
       if (isSelected) {
         return (
           <View style={styles.iconWrap}>
-            <MCIcon color={colors.gallonBlue} name="check" size={20} />
+            <MCIcon color={gallonBlue} name="check" size={20} />
           </View>
         );
       }
 
       return (
         <View style={styles.iconWrap}>
-          <MCIcon color={colors.gallonLightGray} name="chevron-right" size={20} />
+          <MCIcon color={colors.perfectGray} name="chevron-right" size={20} />
         </View>
       );
     },
-    [isSelected],
+    [gallonBlue, isSelected],
   );
 
   const leftIconContent = React.useMemo(
     () => {
       if (!leftIcon) return null;
-      const color = isSelected ? colors.gallonBlue : colors.gallonLightGray;
+      const color = isSelected ? gallonBlue : colors.perfectGray;
 
       return (
         <View style={styles.leftContentIconWrap}>
@@ -49,7 +52,7 @@ const ListItem = ({
         </View>
       );
     },
-    [leftIcon, isSelected],
+    [gallonBlue, leftIcon, isSelected],
   );
 
   const listItemWrapStyle = React.useMemo(
@@ -80,10 +83,10 @@ const ListItem = ({
 
   const leftContentTextStyle = React.useMemo(
     () => ({
-      color: isDarkMode ? colors.gallonLightGray : colors.white,
+      color: bgContrast,
       fontSize: 16,
     }),
-    [isDarkMode],
+    [bgContrast],
   );
 
   const right = React.useMemo(

@@ -7,6 +7,7 @@ import * as R from 'ramda';
 
 import Button from '../../components/Button';
 import DatePicker from '../../components/DatePicker';
+import ScrollView from '../../components/ScrollView';
 import ServicesField from '../../components/ServicesField';
 import TextField from '../../components/TextField';
 import VehicleChooser from '../../components/VehicleChooser';
@@ -67,23 +68,25 @@ const NewService = ({ navigation: { navigate }, route }) => {
 
         return (
           <Wrapper>
-            <VehicleChooser name="serviceVehicle" />
-            <DatePicker label="Date" name="serviceDate" />
-            <TextField
-              fieldName="serviceOdometer"
-              keyboardType="numeric"
-              label="Odometer"
-              name="serviceOdometer"
-            />
-            <TextField
-              fieldName="serviceTotal"
-              keyboardType="numeric"
-              label="Total"
-              name="serviceTotal"
-            />
-            <ServicesField name="services" navigate={navigate} servicesList={servicesList} />
-            {OtherField}
-            <Button disabled={!hasAllRequired} label="Save" onPress={handleSubmit} />
+            <ScrollView>
+              <VehicleChooser name="serviceVehicle" />
+              <DatePicker label="Date" name="serviceDate" />
+              <TextField
+                fieldName="serviceOdometer"
+                keyboardType="numeric"
+                label="Odometer"
+                name="serviceOdometer"
+              />
+              <TextField
+                fieldName="serviceTotal"
+                keyboardType="numeric"
+                label="Total"
+                name="serviceTotal"
+              />
+              <ServicesField name="services" navigate={navigate} servicesList={servicesList} />
+              {OtherField}
+              <Button disabled={!hasAllRequired} label="Save" onPress={handleSubmit} />
+            </ScrollView>
           </Wrapper>
         );
       }}

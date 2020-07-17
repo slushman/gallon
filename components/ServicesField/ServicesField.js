@@ -15,6 +15,8 @@ const ServicesField = (props) => {
   const { navigate, servicesList } = props;
   let hasServices = servicesList.length > 0;
   const isDarkMode = useDarkmode();
+  const bgColor = colors.getBgColor(isDarkMode);
+  const bgContrast = colors.getBgContrast(isDarkMode);
 
   React.useEffect(
     () => {
@@ -35,28 +37,16 @@ const ServicesField = (props) => {
   );
 
   const labelStyle = React.useMemo(
-    () => {
-      let color = colors.gallonBlack;
-
-      if (isDarkMode && hasServices) {
-        color = colors.darkGallonBlue;
-      } else if (isDarkMode && !hasServices) {
-        color = colors.gallonLightGray;
-      } else if (!isDarkMode && hasServices) {
-        color = colors.gallonBlue;
-      }
-
-      return {
-        color,
-        fontSize: hasServices ? 14 : 20,
-      };
-    },
-    [hasServices, isDarkMode],
+    () => ({
+      color: bgContrast,
+      fontSize: hasServices ? 14 : 20,
+    }),
+    [bgContrast, hasServices],
   );
 
   const labelWrapperStyle = React.useMemo(
     () => ({
-      backgroundColor: isDarkMode ? colors.gallonBlack : colors.gallonLightGray,
+      backgroundColor: bgColor,
       elevation: 100000,
       left: 3,
       marginLeft: hasServices ? 4 : undefined,
@@ -65,32 +55,20 @@ const ServicesField = (props) => {
       position: 'absolute',
       top: hasServices ? -15 : 3,
     }),
-    [hasServices, isDarkMode],
+    [bgColor, hasServices],
   );
 
   const wrapperStyle = React.useMemo(
-    () => {
-      let borderColor = colors.gallonBlack;
-
-      if (isDarkMode && hasServices) {
-        borderColor = colors.darkGallonBlue;
-      } else if (isDarkMode && !hasServices) {
-        borderColor = colors.gallonLightGray;
-      } else if (!isDarkMode && hasServices) {
-        borderColor = colors.gallonBlue;
-      }
-
-      return {
-        borderColor,
-        borderRadius: 5,
-        borderStyle: 'solid',
-        borderWidth: 1,
-        marginBottom: 20,
-        marginHorizontal: 20,
-        padding: hasServices ? 1 : 4,
-      };
-    },
-    [hasServices, isDarkMode],
+    () => ({
+      borderColor: bgContrast,
+      borderRadius: 5,
+      borderStyle: 'solid',
+      borderWidth: 1,
+      marginBottom: 20,
+      marginHorizontal: 20,
+      padding: hasServices ? 1 : 4,
+    }),
+    [bgContrast, hasServices],
   );
 
   return (

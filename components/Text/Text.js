@@ -6,13 +6,14 @@ import { useDarkmode } from '../../hooks/useDarkMode';
 
 const Text = ({ children, style }) => {
   const isDarkMode = useDarkmode();
+  const bgContrast = colors.getBgContrast(isDarkMode);
 
   const textStyles = React.useMemo(
     () => ({
-      color: isDarkMode ? colors.gallonLightGray : colors.gallonBlack,
+      color: bgContrast,
       ...style,
     }),
-    [isDarkMode, style],
+    [bgContrast, style],
   );
 
   return (<RNText style={textStyles}>{ children }</RNText>);

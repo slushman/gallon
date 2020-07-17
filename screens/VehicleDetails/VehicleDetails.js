@@ -1,8 +1,8 @@
 import React from 'react';
-import { View } from 'react-native';
 import PropTypes from 'prop-types';
 import * as R from 'ramda';
 
+import ScrollView from '../../components/ScrollView';
 import Text from '../../components/Text';
 import Wrapper from '../../components/Wrapper';
 
@@ -15,13 +15,13 @@ const VehicleDetails = ({ route }) => {
   } = R.path(['params', 'vehicle'], route);
 
   return (
-    <Wrapper centerContents>
-      <View>
+    <Wrapper>
+      <ScrollView>
         <Text>{vehicleName}</Text>
         <Text>{vehicleYear}</Text>
         <Text>{vehicleMake}</Text>
         <Text>{vehicleModel}</Text>
-      </View>
+      </ScrollView>
     </Wrapper>
   );
 };

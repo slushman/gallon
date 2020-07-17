@@ -18,62 +18,41 @@ const DatePicker = ({ label, ...props }) => {
   const value = dayjs.isDayjs(field.value) ? field.value.toDate() : field.value;
   const [date, setDate] = React.useState(value);
   const isDarkMode = useDarkmode();
+  const bgColor = colors.getBgColor(isDarkMode);
+  const bgContrast = colors.getBgContrast(isDarkMode);
+  const gallonBlue = colors.getBlue(isDarkMode);
 
   const closePicker = React.useCallback(() => setPickerVisible(false), []);
 
   const fieldStyle = React.useMemo(
-    () => {
-      let borderColor = colors.gallonBlack;
-
-      if (isDarkMode && pickerVisible) {
-        borderColor = colors.darkGallonBlue;
-      } else if (isDarkMode && !pickerVisible) {
-        borderColor = colors.gallonLightGray;
-      } else if (!isDarkMode && pickerVisible) {
-        borderColor = colors.gallonBlue;
-      }
-
-      return ({
-        borderColor,
-        borderRadius: 5,
-        borderStyle: 'solid',
-        borderWidth: 1,
-      });
-    },
-    [isDarkMode, pickerVisible],
+    () => ({
+      borderColor: pickerVisible ? gallonBlue : bgContrast,
+      borderRadius: 5,
+      borderStyle: 'solid',
+      borderWidth: 1,
+    }),
+    [bgContrast, gallonBlue, pickerVisible],
   );
 
   const labelStyle = React.useMemo(
-    () => {
-      let color = colors.gallonBlack;
-
-      if (isDarkMode && pickerVisible) {
-        color = colors.darkGallonBlue;
-      } else if (isDarkMode && !pickerVisible) {
-        color = colors.gallonLightGray;
-      } else if (!isDarkMode && pickerVisible) {
-        color = colors.gallonBlue;
-      }
-
-      return ({
-        color,
-        fontSize: 14,
-        paddingHorizontal: 2,
-      });
-    },
-    [isDarkMode, pickerVisible],
+    () => ({
+      color: pickerVisible ? gallonBlue : bgContrast,
+      fontSize: 14,
+      paddingHorizontal: 2,
+    }),
+    [bgContrast, gallonBlue, pickerVisible],
   );
 
   const labelWrapStyle = React.useMemo(
     () => ({
-      backgroundColor: isDarkMode ? colors.gallonBlack : colors.white,
+      backgroundColor: bgColor,
       elevation: 100000,
       left: 28,
       position: 'absolute',
       top: -10,
       zIndex: 100,
     }),
-    [isDarkMode],
+    [bgColor],
   );
 
   const handleChange = React.useCallback(

@@ -1,5 +1,4 @@
 import React from 'react';
-import { ScrollView } from 'react-native';
 import PropTypes from 'prop-types';
 import * as R from 'ramda';
 import dayjs from 'dayjs';
@@ -8,6 +7,7 @@ import * as ReactRedux from 'react-redux';
 
 import Fabs from '../../components/Fabs';
 import ListItem from '../../components/ListItem';
+import ScrollView from '../../components/ScrollView';
 import Wrapper from '../../components/Wrapper';
 import * as maps from '../../constants/maps';
 import * as routes from '../../constants/routes';
@@ -86,7 +86,7 @@ const EntryList = ({
 
   return (
     <Wrapper>
-      <ScrollView>
+      <ScrollView noPadding>
         {entries.map(EntryListItem)}
       </ScrollView>
       <Fabs />
