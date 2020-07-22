@@ -12,17 +12,28 @@ const prefix = Platform.OS === 'ios' ? 'ios' : 'md';
 
 const HeaderButton = ({
   leftIconName,
+  onPress,
   rightIconName,
   route,
+  routeParams,
   text,
 }) => {
   const { navigate } = useNavigation();
   const isDarkMode = useDarkmode();
   const gallonBlue = colors.getBlue(isDarkMode);
 
+  console.log(routeParams);
+
   const handlePress = React.useCallback(
-    () => navigate(route),
-    [navigate, route],
+    () => {
+      if (onPress !== null) {
+        onPress(routeParams);
+        return;
+      }
+
+      navigate(route, routeParams);
+    },
+    [navigate, onPress, route, routeParams],
   );
 
   const LeftIcon = React.useMemo(
@@ -74,6 +85,7 @@ const HeaderButton = ({
 
 HeaderButton.propTypes = {
   leftIconName: PropTypes.string,
+  onPress: PropTypes.func,
   rightIconName: PropTypes.string,
   route: PropTypes.string,
   text: PropTypes.string,
@@ -81,6 +93,7 @@ HeaderButton.propTypes = {
 
 HeaderButton.defaultProps = {
   leftIconName: undefined,
+  onPress: null,
   rightIconName: undefined,
   route: '',
   text: '',

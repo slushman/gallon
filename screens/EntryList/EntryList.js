@@ -14,6 +14,7 @@ import * as routes from '../../constants/routes';
 import * as selectors from '../../redux/selectors';
 import * as types from '../../constants/types';
 import { entries } from '../../constants/data';
+import { getMPG } from '../../utils/mpg';
 
 dayjs.extend(LocalizedFormat);
 
@@ -26,19 +27,13 @@ const EntryList = ({
   const showPrice = ReactRedux.useSelector(selectors.showPriceSelector);
 
   const handleEntryPress = React.useCallback(
-    (entry) => () => navigate(routes.ENTRY, entry),
-    [navigate],
-  );
-
-  const getMPG = React.useCallback(
-    (entry) => {
-      const { gallons, odometer, previousOdometer } = entry;
-
-      if (!previousOdometer) return '';
-
-      return `${((odometer - previousOdometer) / gallons).toFixed(1)} mpg`;
+    (entry) => () => {
+      const route = R.prop('type', entry) === types.FILLUP
+        ? routes.FILLUP_DETAILS
+        : routes.SERVICE_DETAILS;
+      navigate(route, { ...entry });
     },
-    [],
+    [navigate],
   );
 
   const getSubtitleContent = React.useCallback(
@@ -81,7 +76,7 @@ const EntryList = ({
         />
       );
     },
-    [getMPG, getSubtitleContent, handleEntryPress],
+    [getSubtitleContent, handleEntryPress],
   );
 
   return (

@@ -12,29 +12,33 @@ import ServicesField from '../../components/ServicesField';
 import TextField from '../../components/TextField';
 import VehicleChooser from '../../components/VehicleChooser';
 import Wrapper from '../../components/Wrapper';
+import * as serviceTypes from '../../constants/services';
 import * as utils from '../../utils';
-import * as services from '../../constants/services';
 
 const today = dayjs();
-
-const initialValues = {
-  serviceDate: today,
-  serviceOdometer: '',
-  services: [],
-  serviceTotal: '',
-  serviceVehicle: 0,
-};
 
 const ServiceSchema = Yup.object().shape({
   serviceOdometer: Yup.number().required('Enter the current odometer reading.'),
   serviceTotal: Yup.number().required('Enter the total price for this fillup.'),
 });
 
-const NewService = ({ navigation: { navigate }, route }) => {
+const ServiceForm = ({ navigation: { navigate }, route }) => {
+  const { date, odometer, services, total, vehicle } = R.path(['params', 'entry'], route);
+
   const submitForm = React.useCallback((values) => { console.log(values); }, []);
-  const servicesList = R.pathOr([], ['params', 'services'], route);
-  const hasOtherService = R.includes(services.OTHER, servicesList);
+  const hasOtherService = R.includes(serviceTypes.OTHER, services);
   const requiredFields = ['serviceOdometer', 'serviceTotal', 'services', 'serviceVehicle'];
+
+  const initialValues = React.useMemo(
+    () => ({
+      serviceDate: dayjs(date).toISOString() || today,
+      serviceOdometer: odometer || '',
+      services: services || [],
+      serviceTotal: total || '',
+      serviceVehicle: vehicle || 0,
+    }),
+    [date, odometer, services, total, vehicle],
+  );
 
   if (hasOtherService) {
     requiredFields.push('servicesOther');
@@ -83,7 +87,11 @@ const NewService = ({ navigation: { navigate }, route }) => {
                 label="Total"
                 name="serviceTotal"
               />
-              <ServicesField name="services" navigate={navigate} servicesList={servicesList} />
+              <ServicesField
+                name="services"
+                navigate={navigate}
+                servicesList={services}
+              />
               {OtherField}
               <Button disabled={!hasAllRequired} label="Save" onPress={handleSubmit} />
             </ScrollView>
@@ -94,11 +102,11 @@ const NewService = ({ navigation: { navigate }, route }) => {
   );
 };
 
-NewService.propTypes = {
+ServiceForm.propTypes = {
   navigation: PropTypes.shape({
     navigate: PropTypes.func,
   }).isRequired,
   route: PropTypes.shape({}),
 };
 
-export default React.memo(NewService);
+export default React.memo(ServiceForm);

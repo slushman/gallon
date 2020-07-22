@@ -1,10 +1,10 @@
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
-import * as R from 'ramda';
 
-import Entry from '../screens/Entry';
 import EntryList from '../screens/EntryList';
+import FillupDetails from '../screens/FillupDetails';
 import SelectServices from '../screens/SelectServices';
+import ServiceDetails from '../screens/ServiceDetails';
 import * as routes from '../constants/routes';
 
 const Stack = createStackNavigator();
@@ -16,9 +16,12 @@ const MainStackScreen = () => (
       name={routes.ENTRY_LIST}
     />
     <Stack.Screen
-      component={Entry}
-      name={routes.ENTRY}
-      options={({ route }) => ({ title: R.path(['params', 'name'], route) })}
+      component={ServiceDetails}
+      name={routes.SERVICE_DETAILS}
+    />
+    <Stack.Screen
+      component={FillupDetails}
+      name={routes.FILLUP_DETAILS}
     />
     <Stack.Screen
       component={SelectServices}

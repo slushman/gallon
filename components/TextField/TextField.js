@@ -3,11 +3,12 @@ import PropTypes from 'prop-types';
 import { ErrorMessage, useField } from 'formik';
 import { Animated, TextInput, View } from 'react-native';
 import { useAnimation } from 'react-native-animation-hooks';
+import * as R from 'ramda';
 
 import Text from '../../components/Text';
 import { timingSettings } from '../../constants/animation';
 import * as colors from '../../constants/colors';
-import { HASERROR, ISVALID } from '../../constants/status';
+import * as status from '../../constants/status';
 import { useDarkmode } from '../../hooks/useDarkMode';
 import * as styles from './styles';
 
@@ -25,19 +26,23 @@ const TextField = ({ fieldName, label, multiline, numberOfLines, ...props }) => 
   const fieldAnim = useAnimation({ toValue, ...timingSettings });
 
   const fieldStatus = React.useMemo(() => {
-    if (touched && !error && field.value) {
-      return ISVALID;
+    if (touched && !error && R.has('value', field)) {
+      return status.ISVALID;
     }
 
     if (touched && error) {
-      return HASERROR;
+      return status.HASERROR;
+    }
+
+    if (!touched && R.has('value', field)) {
+      return status.HASVALUE;
     }
 
     return null;
   }, [error, field, touched]);
 
   const backgroundColor = React.useMemo(() => {
-    if (fieldStatus === HASERROR || fieldStatus === ISVALID) {
+    if (R.contains(fieldStatus, [status.HASERROR, status.ISVALID, status.HASVALUE])) {
       return bgColor;
     }
 
@@ -48,11 +53,11 @@ const TextField = ({ fieldName, label, multiline, numberOfLines, ...props }) => 
   }, [fieldStatus, fieldAnim, bgColor]);
 
   const borderAndTextColor = React.useMemo(() => {
-    if (fieldStatus === HASERROR) {
+    if (fieldStatus === status.HASERROR) {
       return gallonRed;
     }
 
-    if (fieldStatus === ISVALID) {
+    if (R.contains(fieldStatus, [status.ISVALID, status.HASVALUE])) {
       return bgContrast;
     }
 
@@ -68,7 +73,7 @@ const TextField = ({ fieldName, label, multiline, numberOfLines, ...props }) => 
   }), [gallonRed]);
 
   const fontSize = React.useMemo(() => {
-    if (fieldStatus === HASERROR || fieldStatus === ISVALID) {
+    if (R.contains(fieldStatus, [status.HASERROR, status.ISVALID, status.HASVALUE])) {
       return 14;
     }
 
@@ -79,7 +84,7 @@ const TextField = ({ fieldName, label, multiline, numberOfLines, ...props }) => 
   }, [fieldStatus, fieldAnim]);
 
   const topPosition = React.useMemo(() => {
-    if (fieldStatus === HASERROR || fieldStatus === ISVALID) {
+    if (R.contains(fieldStatus, [status.HASERROR, status.ISVALID, status.HASVALUE])) {
       return -10;
     }
 
@@ -106,11 +111,12 @@ const TextField = ({ fieldName, label, multiline, numberOfLines, ...props }) => 
       return ({
         ...styles.inputStyle,
         alignItems: hasMultipleLines ? 'flex-start' : 'center',
+        color: borderAndTextColor,
         height: hasMultipleLines ? calcHeight : 'auto',
         paddingTop: hasMultipleLines ? 12 : 8,
       });
     },
-    [hasMultipleLines, numberOfLines],
+    [borderAndTextColor, hasMultipleLines, numberOfLines],
   );
 
   const labelStyle = React.useMemo(
@@ -134,14 +140,6 @@ const TextField = ({ fieldName, label, multiline, numberOfLines, ...props }) => 
     [backgroundColor, bgColor, isDarkMode, topPosition],
   );
 
-  const wrapStyle = React.useMemo(
-    () => ({
-      marginBottom: 20,
-      marginHorizontal: 20,
-    }),
-    [],
-  );
-
   const handleBlur = React.useCallback(() => {
     setIsFocused(false);
     setTouched(true);
@@ -150,12 +148,13 @@ const TextField = ({ fieldName, label, multiline, numberOfLines, ...props }) => 
   const handleFocus = React.useCallback(() => setIsFocused(true), []);
 
   return (
-    <View style={wrapStyle}>
+    <View style={styles.wrapStyle}>
       <Animated.View style={fieldStyle}>
         <Animated.View pointerEvents="none" style={labelWrapStyle}>
           <Animated.Text style={labelStyle}>{label}</Animated.Text>
         </Animated.View>
         <TextInput
+          {...field}
           {...props}
           multiline={multiline}
           numberOfLines={numberOfLines}

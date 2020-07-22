@@ -14,21 +14,27 @@ import * as utils from '../../utils';
 
 const today = dayjs();
 
-const initialValues = {
-  fillupDate: today,
-  fillupGallons: '',
-  fillupOdometer: '',
-  fillupTotal: '',
-  fillupVehicle: 0,
-};
-
 const FillupSchema = Yup.object().shape({
   fillupGallons: Yup.number().required('Enter the total gallons for this fillup.'),
   fillupOdometer: Yup.number().required('Enter the current odometer reading.'),
   fillupTotal: Yup.number().required('Enter the total price for this fillup.'),
 });
 
-const NewFillup = () => {
+const FillupForm = ({ navigation, route }) => {
+  const { date, gallons, odometer, total, vehicle } = R.path(['params', 'entry'], route);
+  const requiredFields = ['fillupOdometer', 'fillupTotal', 'fillupGallons', 'fillupVehicle'];
+
+  const initialValues = React.useMemo(
+    () => ({
+      fillupDate: dayjs(date).toISOString() || today,
+      fillupGallons: gallons || '',
+      fillupOdometer: odometer || '',
+      fillupTotal: total || '',
+      fillupVehicle: vehicle || 0,
+    }),
+    [date, gallons, odometer, total, vehicle ],
+  );
+
   const getOdometer = React.useCallback(
     () => {
       // get previous entry
@@ -36,7 +42,14 @@ const NewFillup = () => {
       // If there isn't one, get the vehicle once it's chosen,
       //    get its odometer, then add it to this entry
     },
-    []
+    [],
+  );
+
+  const submitButton = React.useMemo(
+    (handleSubmit, disabled) => () => (
+      <Button disabled={disabled} label="Save" onPress={handleSubmit} />
+    ),
+    [],
   );
 
   const submitForm = React.useCallback((values) => { console.log(values); }, []);
@@ -48,7 +61,8 @@ const NewFillup = () => {
       validationSchema={FillupSchema}
     >
       {({ handleSubmit, values }) => {
-        const hasAllRequired = utils.allHaveValues(['fillupOdometer', 'fillupTotal', 'fillupGallons', 'fillupVehicle'], values);
+        const hasAllRequired = utils.allHaveValues(requiredFields, values);
+        console.log({ hasAllRequired });
 
         if (utils.hasValue(R.prop('fillupVehicle', values))) {
           getOdometer();
@@ -77,7 +91,7 @@ const NewFillup = () => {
                 label="Gallons"
                 name="fillupGallons"
               />
-              <Button disabled={!hasAllRequired} label="Save" onPress={handleSubmit} />
+              {submitButton(handleSubmit, !hasAllRequired)}
             </ScrollView>
           </Wrapper>
         );
@@ -86,4 +100,4 @@ const NewFillup = () => {
   );
 };
 
-export default React.memo(NewFillup);
+export default React.memo(FillupForm);

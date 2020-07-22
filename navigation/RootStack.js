@@ -5,7 +5,7 @@ import * as R from 'ramda';
 import MainStackScreen from './MainStack';
 import SettingsStackScreen from './SettingsStack';
 import NewServiceStackScreen from './NewServiceStack';
-import NewFillup from '../screens/NewFillup';
+import FillupForm from '../screens/FillupForm';
 import * as routes from '../constants/routes';
 
 const Stack = createStackNavigator();
@@ -23,8 +23,12 @@ const RootStack = () => (
       options={{ headerShown: false }}
     />
     <Stack.Screen
-      component={NewFillup}
+      component={FillupForm}
       name={routes.NEW_FILLUP}
+    />
+    <Stack.Screen
+      component={FillupForm}
+      name={routes.EDIT_FILLUP}
     />
     <Stack.Screen
       component={NewServiceStackScreen}

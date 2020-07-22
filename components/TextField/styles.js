@@ -4,3 +4,8 @@ export const inputStyle = {
   position: 'relative',
   width: '100%',
 };
+
+export const wrapStyle = {
+  marginBottom: 20,
+  marginHorizontal: 20,
+};
