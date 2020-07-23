@@ -6,7 +6,7 @@ import ToggleField from '../ToggleField';
 import { RIGHT } from '../../constants/settings';
 import * as actions from '../../redux/actions';
 import * as selectors from '../../redux/selectors';
-import * as styles from '../../screens/Settings/styles';
+import * as uniStyles from '../../utils/styles';
 
 const EntriesShowSettings = () => {
   const dispatch = ReactRedux.useDispatch();
@@ -25,7 +25,7 @@ const EntriesShowSettings = () => {
 
   return (
     <>
-      <View style={styles.settingWrap}>
+      <View style={uniStyles.settingWrap}>
         <ToggleField
           initialValue={showGallons}
           label="Show Gallons"
@@ -33,7 +33,7 @@ const EntriesShowSettings = () => {
           onToggle={handleSetShowGallons}
         />
       </View>
-      <View style={styles.settingWrap}>
+      <View style={uniStyles.settingWrap}>
         <ToggleField
           initialValue={showPrice}
           label="Show Price"

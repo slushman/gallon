@@ -5,7 +5,7 @@ import { useField } from 'formik';
 import VehiclePicker from './VehiclePicker';
 import VehicleSegment from './VehicleSegment';
 
-const VehicleChooser = ({ name, options }) => {
+const VehicleChooser = ({ fieldLabel, name, options }) => {
   const [field, meta, helpers] = useField(name);
 
   if (options.length === 1) return null;

@@ -8,7 +8,7 @@ import Text from '../../components/Text';
 import { values } from '../../constants/settings';
 import * as actions from '../../redux/actions';
 import * as selectors from '../../redux/selectors';
-import * as styles from '../../screens/Settings/styles';
+import * as uniStyles from '../../utils/styles';
 
 const HandPreferenceSetting = () => {
   const dispatch = ReactRedux.useDispatch();
@@ -25,8 +25,8 @@ const HandPreferenceSetting = () => {
   );
 
   return (
-    <View style={styles.settingWrap}>
-      <Text style={styles.settingLabel}>Which is your dominant hand?</Text>
+    <View style={uniStyles.settingWrap}>
+      <Text style={uniStyles.settingLabel}>Which is your dominant hand?</Text>
       <SegmentedControl
         onChange={handleHandPref}
         selectedIndex={selectedIndex}

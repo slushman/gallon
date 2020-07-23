@@ -2,7 +2,7 @@ import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import * as R from 'ramda';
 
-import NewService from '../screens/NewService';
+import ServiceForm from '../screens/ServiceForm';
 import SelectServices from '../screens/SelectServices';
 import * as routes from '../constants/routes';
 
@@ -11,8 +11,13 @@ const Stack = createStackNavigator();
 const NewServiceStackScreen = () => (
   <Stack.Navigator initialRouteName={routes.NEW_SERVICE}>
     <Stack.Screen
-      component={NewService}
+      component={ServiceForm}
       name={routes.NEW_SERVICE}
+      options={{ headerShown: false }}
+    />
+    <Stack.Screen
+      component={ServiceForm}
+      name={routes.EDIT_SERVICE}
       options={{ headerShown: false }}
     />
     <Stack.Screen

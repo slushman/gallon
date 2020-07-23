@@ -4,7 +4,7 @@ import SegmentedControl from '@react-native-community/segmented-control';
 import * as R from 'ramda';
 
 import Text from '../../Text';
-import * as styles from '../../../screens/Settings/styles';
+import * as uniStyles from '../../../utils/styles';
 
 const VehicleSegment = ({
   field,
@@ -27,8 +27,8 @@ const VehicleSegment = ({
   );
 
   return (
-    <View style={styles.settingHorzWrap}>
-      <Text style={styles.settingLabel}>Choose Vehicle</Text>
+    <View style={uniStyles.settingHorzWrap}>
+      <Text style={uniStyles.settingLabel}>Choose Vehicle</Text>
       <SegmentedControl
         onChange={handleSelect}
         selectedIndex={selectedIndex || 0}

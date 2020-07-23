@@ -1,11 +1,15 @@
+export const EDIT_FILLUP = 'Edit Fillup';
+export const EDIT_SERVICE = 'Edit Service';
 export const ENTRY = 'Entry';
 export const ENTRY_LIST = 'Entries';
 export const FILLUP = 'Fill-up';
+export const FILLUP_DETAILS = 'Fill-up Details';
 export const HOME = 'Home';
 export const NEW_FILLUP = 'New Fill-up';
 export const NEW_SERVICE = 'New Service';
 export const NEW_VEHICLE = 'New Vehicle';
 export const SELECT_SERVICES = 'Select Services';
 export const SERVICE = 'Service';
+export const SERVICE_DETAILS = 'Service Details';
 export const SETTINGS = 'Settings';
 export const VEHICLE_DETAILS = 'Vehicle Details';

@@ -7,7 +7,7 @@ import { useField } from 'formik';
 import Text from '../../components/Text';
 import * as colors from '../../constants/colors';
 import * as routes from '../../constants/routes';
-import { inputStyle } from '../TextField/styles';
+import * as uniStyles from '../../utils/styles';
 import { useDarkmode } from '../../hooks/useDarkMode';
 
 const ServicesField = (props) => {
@@ -76,7 +76,7 @@ const ServicesField = (props) => {
       <View style={labelWrapperStyle}>
         <Text style={labelStyle}>Services</Text>
       </View>
-      <Text style={inputStyle}>{hasServices ? R.join(', ', servicesList) : ''}</Text>
+      <Text style={uniStyles.inputStyle}>{hasServices ? R.join(', ', servicesList) : ''}</Text>
     </Pressable>
   );
 };
