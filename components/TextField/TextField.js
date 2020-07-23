@@ -11,6 +11,7 @@ import * as colors from '../../constants/colors';
 import * as status from '../../constants/status';
 import { useDarkmode } from '../../hooks/useDarkMode';
 import * as styles from './styles';
+import * as uniStyles from '../../utils/styles';
 
 const TextField = ({ fieldName, label, multiline, numberOfLines, ...props }) => {
   const [field, { error, touched }, { setTouched }] = useField(props);
@@ -109,7 +110,7 @@ const TextField = ({ fieldName, label, multiline, numberOfLines, ...props }) => 
       const calcHeight = 32 * numberOfLines;
 
       return ({
-        ...styles.inputStyle,
+        ...uniStyles.inputStyle,
         alignItems: hasMultipleLines ? 'flex-start' : 'center',
         color: borderAndTextColor,
         height: hasMultipleLines ? calcHeight : 'auto',

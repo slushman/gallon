@@ -21,12 +21,16 @@ const FillupSchema = Yup.object().shape({
 });
 
 const FillupForm = ({ navigation, route }) => {
-  const { date, gallons, odometer, total, vehicle } = R.path(['params', 'entry'], route);
+  const date = R.pathOr('', ['params', 'entry', 'date'], route);
+  const gallons = R.pathOr('', ['params', 'entry', 'gallons'], route);
+  const odometer = R.pathOr('', ['params', 'entry', 'odometer'], route);
+  const total = R.pathOr('', ['params', 'entry', 'total'], route);
+  const vehicle = R.pathOr('', ['params', 'entry', 'vehicle'], route);
   const requiredFields = ['fillupOdometer', 'fillupTotal', 'fillupGallons', 'fillupVehicle'];
 
   const initialValues = React.useMemo(
     () => ({
-      fillupDate: dayjs(date).toISOString() || today,
+      fillupDate: date === '' ? today : dayjs(date).toISOString(),
       fillupGallons: gallons || '',
       fillupOdometer: odometer || '',
       fillupTotal: total || '',

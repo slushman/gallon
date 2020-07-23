@@ -9,7 +9,7 @@ import Collapsible from 'react-native-collapsible';
 import Button from '../Button';
 import Text from '../../components/Text';
 import * as colors from '../../constants/colors';
-import * as styles from './styles';
+import * as uniStyles from '../../utils/styles';
 import { useDarkmode } from '../../hooks/useDarkMode';
 
 const DatePicker = ({ label, ...props }) => {
@@ -68,13 +68,13 @@ const DatePicker = ({ label, ...props }) => {
   const openPicker = React.useCallback(() => setPickerVisible(true), []);
 
   return (
-    <View style={styles.pickerWrapStyle}>
-      <Pressable onPress={openPicker} style={styles.touchWrapStyle}>
+    <View style={uniStyles.pickerWrapStyle}>
+      <Pressable onPress={openPicker} style={uniStyles.touchWrapStyle}>
         <View style={labelWrapStyle}>
           <Text style={labelStyle}>{label}</Text>
         </View>
         <View style={fieldStyle}>
-          <Text style={styles.placeholderStyle}>
+          <Text style={uniStyles.placeholderStyle}>
             {dayjs(date).format('MMMM D, YYYY')}
           </Text>
         </View>

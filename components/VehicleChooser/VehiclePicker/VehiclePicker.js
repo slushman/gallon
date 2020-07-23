@@ -6,7 +6,7 @@ import * as R from 'ramda';
 
 import Text from '../../Text';
 import * as colors from '../../../constants/colors';
-import * as styles from '../../DatePicker/styles';
+import * as uniStyles from '../../../utils/styles';
 import { useDarkmode } from '../../../hooks/useDarkMode';
 
 const VehiclePicker = ({
@@ -18,6 +18,7 @@ const VehiclePicker = ({
   const { onChange, value } = field;
   const { setValue } = helpers;
   const isDarkMode = useDarkmode();
+  const bgColor = colors.getBgColor(isDarkMode);
   const gallonBlue = colors.getBlue(isDarkMode);
   const pickerColor = pickerVisible ? gallonBlue : colors.gallonBlack;
 
@@ -40,6 +41,18 @@ const VehiclePicker = ({
       paddingHorizontal: 2,
     }),
     [ pickerColor],
+  );
+
+  const labelWrapStyle = React.useMemo(
+    () => ({
+      backgroundColor: bgColor,
+      elevation: 100000,
+      left: 28,
+      position: 'absolute',
+      top: -10,
+      zIndex: 100,
+    }),
+    [bgColor],
   );
 
   const closePicker = React.useCallback(() => setPickerVisible(false), []);
@@ -67,13 +80,13 @@ const VehiclePicker = ({
   );
 
   return (
-    <View style={styles.pickerWrapStyle}>
-      <Pressable onPress={openPicker} style={styles.touchWrapStyle}>
-        <View style={styles.labelWrapStyle}>
+    <View style={uniStyles.pickerWrapStyle}>
+      <Pressable onPress={openPicker} style={uniStyles.touchWrapStyle}>
+        <View style={labelWrapStyle}>
           <Text style={labelStyle}>Choose Vehicle</Text>
         </View>
         <View style={fieldStyle}>
-          <Text style={styles.placeholderStyle}>{getVehicleName}</Text>
+          <Text style={uniStyles.placeholderStyle}>{getVehicleName}</Text>
         </View>
       </Pressable>
       <Collapsible collapsed={!pickerVisible}>

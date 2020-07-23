@@ -1,18 +1,16 @@
 import React from 'react';
-import { Text, View } from 'react-native';
+import { View } from 'react-native';
 import * as R from 'ramda';
 import dayjs from 'dayjs';
 
 import HeaderButton from '../../components/HeaderButton';
 import ScrollView from '../../components/ScrollView';
+import Text from '../../components/Text';
 import Wrapper from '../../components/Wrapper';
-import { useDarkmode } from '../../hooks/useDarkMode';
-import * as colors from '../../constants/colors';
 import * as routes from '../../constants/routes';
-import * as styles from './styles';
+import * as uniStyles from '../../utils/styles';
 
 const ServiceDetails = ({ navigation: { setOptions }, route }) => {
-  const isDarkMode = useDarkmode();
   const entry = R.prop('params', route);
   const { date, odometer, services, total, vehicle } = R.prop('params', route);
 
@@ -45,47 +43,28 @@ const ServiceDetails = ({ navigation: { setOptions }, route }) => {
     [date],
   );
 
-  const detailsText = React.useMemo(
-    () => ({
-      color: colors.getBgContrast(isDarkMode),
-      flex: 1,
-      flexWrap: 'wrap',
-      fontSize: 20,
-    }),
-    [isDarkMode],
-  );
-
-  const labelText = React.useMemo(
-    () => ({
-      color: colors.getBgContrast(isDarkMode),
-      fontSize: 20,
-      width: '33%',
-    }),
-    [isDarkMode],
-  );
-
   return (
     <Wrapper>
       <ScrollView>
-        <View style={styles.dataRow}>
-          <Text style={labelText}>Vehicle:</Text>
-          <Text style={detailsText}>{vehicle}</Text>
+        <View style={uniStyles.dataRow}>
+          <Text style={uniStyles.labelText}>Vehicle:</Text>
+          <Text style={uniStyles.detailsText}>{vehicle}</Text>
         </View>
-        <View style={styles.dataRow}>
-          <Text style={labelText}>Date:</Text>
-          <Text style={detailsText}>{getDate()}</Text>
+        <View style={uniStyles.dataRow}>
+          <Text style={uniStyles.labelText}>Date:</Text>
+          <Text style={uniStyles.detailsText}>{getDate()}</Text>
         </View>
-        <View style={styles.dataRow}>
-          <Text style={labelText}>Odometer:</Text>
-          <Text style={detailsText}>{odometer}</Text>
+        <View style={uniStyles.dataRow}>
+          <Text style={uniStyles.labelText}>Odometer:</Text>
+          <Text style={uniStyles.detailsText}>{odometer}</Text>
         </View>
-        <View style={styles.dataRow}>
-          <Text style={labelText}>Total Price:</Text>
-          <Text style={detailsText}>{total}</Text>
+        <View style={uniStyles.dataRow}>
+          <Text style={uniStyles.labelText}>Total Price:</Text>
+          <Text style={uniStyles.detailsText}>{total}</Text>
         </View>
-        <View style={styles.dataRow}>
-          <Text style={labelText}>Services:</Text>
-          <Text numberOfLines={3} style={detailsText}>{R.join(', ', services)}</Text>
+        <View style={uniStyles.dataRow}>
+          <Text style={uniStyles.labelText}>Services:</Text>
+          <Text numberOfLines={3} style={uniStyles.detailsText}>{R.join(', ', services)}</Text>
         </View>
       </ScrollView>
     </Wrapper>

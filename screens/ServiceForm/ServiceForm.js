@@ -23,7 +23,12 @@ const ServiceSchema = Yup.object().shape({
 });
 
 const ServiceForm = ({ navigation: { navigate }, route }) => {
-  const { date, odometer, services, total, vehicle } = R.path(['params', 'entry'], route);
+  const date = R.pathOr('', ['params', 'entry', 'date'], route);
+  const odometer = R.pathOr('', ['params', 'entry', 'odometer'], route);
+  const serviceList = R.pathOr([], ['params', 'services'], route);
+  const services = R.pathOr(serviceList, ['params', 'entry', 'services'], route);
+  const total = R.pathOr('', ['params', 'entry', 'total'], route);
+  const vehicle = R.pathOr(0, ['params', 'entry', 'vehicle'], route);
 
   const submitForm = React.useCallback((values) => { console.log(values); }, []);
   const hasOtherService = R.includes(serviceTypes.OTHER, services);
@@ -31,11 +36,11 @@ const ServiceForm = ({ navigation: { navigate }, route }) => {
 
   const initialValues = React.useMemo(
     () => ({
-      serviceDate: dayjs(date).toISOString() || today,
-      serviceOdometer: odometer || '',
-      services: services || [],
-      serviceTotal: total || '',
-      serviceVehicle: vehicle || 0,
+      serviceDate: date === '' ? today : dayjs(date).toISOString(),
+      serviceOdometer: odometer,
+      services: services,
+      serviceTotal: total,
+      serviceVehicle: vehicle,
     }),
     [date, odometer, services, total, vehicle],
   );
