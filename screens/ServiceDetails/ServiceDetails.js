@@ -26,7 +26,7 @@ const ServiceDetails = ({ navigation: { setOptions }, route }) => {
     setOptions({
       headerRight: () => (
         <HeaderButton
-          route={routes.NEW_SERVICE}
+          route={routes.SERVICE_STACK}
           routeParams={headerButtonParams}
           text="Edit"
         />

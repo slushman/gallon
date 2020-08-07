@@ -1,16 +1,17 @@
+import * as services from './services';
 import * as types from './types';
 
 export const entries = [
   { id: 1234, vehicle: 'Willie Wagon', gallons: '16.75', type: types.FILLUP, total: '25.46', date: '2020-04-01T19:20:30.45', odometer: '128251', previousOdometer: '128052' },
-  { id: 1235, vehicle: 'Scooby', gallons: '16.75', type: types.SERVICE, total: '21.66', date: '2020-03-27T19:20:30.45', odometer: '128052', services: ['oil change', 'tire rotation', 'air filter'] },
+  { id: 1235, vehicle: 'Scooby', gallons: '16.75', type: types.SERVICE, total: '21.66', date: '2020-03-27T19:20:30.45', odometer: '128052', services: [services.OIL_CHANGE, services.TIRE_ROTATION, services.AIR_FILTER] },
   { id: 1236, vehicle: 'Willie Wagon', gallons: '16.75', type: types.FILLUP, total: '26.72', date: '2020-03-21T19:20:30.45', odometer: '127854', previousOdometer: '127654' },
-  { id: 1237, vehicle: 'Scooby', gallons: '16.75', type: types.SERVICE, total: '24.33', date: '2020-03-15T19:20:30.45', odometer: '127654', services: ['oil change', 'tire rotation', 'air filter'] },
+  { id: 1237, vehicle: 'Scooby', gallons: '16.75', type: types.SERVICE, total: '24.33', date: '2020-03-15T19:20:30.45', odometer: '127654', services: [services.OIL_CHANGE, services.TIRE_ROTATION, services.AIR_FILTER] },
   { id: 1238, vehicle: 'Willie Wagon', gallons: '16.75', type: types.FILLUP, total: '20.79', date: '2020-03-08T19:20:30.45', odometer: '127456', previousOdometer: '127258' },
-  { id: 1239, vehicle: 'Scooby', gallons: '16.75', type: types.SERVICE, total: '25.46', date: '2020-04-01T19:20:30.45', odometer: '127258', services: ['oil change', 'tire rotation', 'air filter'] },
+  { id: 1239, vehicle: 'Scooby', gallons: '16.75', type: types.SERVICE, total: '25.46', date: '2020-04-01T19:20:30.45', odometer: '127258', services: [services.OIL_CHANGE, services.TIRE_ROTATION, services.AIR_FILTER] },
   { id: 1245, vehicle: 'Willie Wagon', gallons: '16.75', type: types.FILLUP, total: '21.66', date: '2020-03-27T19:20:30.45', odometer: '127056', previousOdometer: '126852' },
-  { id: 1246, vehicle: 'Scooby', gallons: '16.75', type: types.SERVICE, total: '26.72', date: '2020-03-21T19:20:30.45', odometer: '126852', services: ['oil change', 'tire rotation', 'air filter'] },
+  { id: 1246, vehicle: 'Scooby', gallons: '16.75', type: types.SERVICE, total: '26.72', date: '2020-03-21T19:20:30.45', odometer: '126852', services: [services.OIL_CHANGE, services.TIRE_ROTATION, services.AIR_FILTER] },
   { id: 1247, vehicle: 'Willie Wagon', gallons: '16.75', type: types.FILLUP, total: '24.33', date: '2020-03-15T19:20:30.45', odometer: '126653', previousOdometer: '126455' },
-  { id: 1248, vehicle: 'Scooby', gallons: '16.75', type: types.SERVICE, total: '20.79', date: '2020-03-08T19:20:30.45', odometer: '126455', services: ['oil change', 'tire rotation', 'air filter'] },
+  { id: 1248, vehicle: 'Scooby', gallons: '16.75', type: types.SERVICE, total: '20.79', date: '2020-03-08T19:20:30.45', odometer: '126455', services: [services.OIL_CHANGE, services.TIRE_ROTATION, services.AIR_FILTER] },
   { id: 1254, vehicle: 'Willie Wagon', gallons: '16.75', type: types.FILLUP, total: '25.46', date: '2020-04-01T19:20:30.45', odometer: '126253', previousOdometer: '126059' },
   { id: 1255, vehicle: 'Scooby', gallons: '16.75', type: types.FILLUP, total: '21.66', date: '2020-03-27T19:20:30.45', odometer: '126059', previousOdometer: '125854' },
   { id: 1256, vehicle: 'Willie Wagon', gallons: '16.75', type: types.FILLUP, total: '26.72', date: '2020-03-21T19:20:30.45', odometer: '125854', previousOdometer: '125656' },

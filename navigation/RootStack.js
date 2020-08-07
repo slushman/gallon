@@ -32,9 +32,11 @@ const RootStack = () => (
     />
     <Stack.Screen
       component={NewServiceStackScreen}
-      name={routes.NEW_SERVICE}
+      name={routes.SERVICE_STACK}
       options={({ route }) => ({
-        headerShown: !R.pathEq(['state', 'index'], 1, route),
+        headerShown: (!R.propEq('name', routes.SERVICE_STACK, route) && !R.pathEq(['params', 'screen'], routes.SELECT_SERVICES, route))
+          || (!R.propEq('name', routes.SERVICE_STACK, route) && !R.pathEq(['params', 'screen'], routes.NEW_SERVICE, route))
+          || (!R.propEq('name', routes.SERVICE_STACK, route) && !R.pathEq(['params', 'screen'], routes.EDIT_SERVICE, route)),
       })}
     />
   </Stack.Navigator>

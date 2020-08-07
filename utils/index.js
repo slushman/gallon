@@ -18,3 +18,5 @@ export const updateArray = (array, value) => {
     return R.append(value, array);
   }
 };
+
+export const noop = () => {};

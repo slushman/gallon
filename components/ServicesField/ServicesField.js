@@ -11,29 +11,27 @@ import * as uniStyles from '../../utils/styles';
 import { useDarkmode } from '../../hooks/useDarkMode';
 
 const ServicesField = (props) => {
-  const [field, meta, { setTouched, setValue }] = useField(props);
-  const { navigate, servicesList } = props;
-  let hasServices = servicesList.length > 0;
+  const [field, meta, { setValue }] = useField(props);
+  const { entry, navigate, services: serviceList } = props;
+  const services = R.propOr(serviceList, 'services', entry);
+  let hasServices = services.length > 0;
   const isDarkMode = useDarkmode();
   const bgColor = colors.getBgColor(isDarkMode);
   const bgContrast = colors.getBgContrast(isDarkMode);
 
   React.useEffect(
     () => {
-      const hasNewServices = R.prop('value', field) !== servicesList;
+      const hasNewServices = R.prop('value', field) !== services;
       if (hasServices && hasNewServices) {
-        setValue(servicesList);
+        setValue(services);
       }
     },
-    [field, hasServices, servicesList, setValue],
+    [field, hasServices, services, setValue],
   );
 
   const goToSelectServices = React.useCallback(
-    () => {
-      setTouched(true);
-      navigate(routes.SELECT_SERVICES, { servicesList });
-    },
-    [navigate, servicesList, setTouched],
+    () => navigate(routes.SELECT_SERVICES, { entry }),
+    [entry, navigate],
   );
 
   const labelStyle = React.useMemo(
@@ -76,7 +74,7 @@ const ServicesField = (props) => {
       <View style={labelWrapperStyle}>
         <Text style={labelStyle}>Services</Text>
       </View>
-      <Text style={uniStyles.inputStyle}>{hasServices ? R.join(', ', servicesList) : ''}</Text>
+      <Text style={uniStyles.inputStyle}>{hasServices ? R.join(', ', services) : ''}</Text>
     </Pressable>
   );
 };
