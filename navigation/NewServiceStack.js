@@ -9,16 +9,18 @@ import * as routes from '../constants/routes';
 const Stack = createStackNavigator();
 
 const NewServiceStackScreen = () => (
-  <Stack.Navigator initialRouteName={routes.NEW_SERVICE}>
+  <Stack.Navigator>
     <Stack.Screen
       component={ServiceForm}
       name={routes.NEW_SERVICE}
-      options={{ headerShown: false }}
     />
     <Stack.Screen
       component={ServiceForm}
       name={routes.EDIT_SERVICE}
-      options={{ headerShown: false }}
+      options={({ route }) => ({
+        headerShown: R.prop('name', route) === routes.EDIT_SERVICE
+          || R.pathEq(['params', 'screen'], routes.EDIT_SERVICE, route),
+      })}
     />
     <Stack.Screen
       component={SelectServices}

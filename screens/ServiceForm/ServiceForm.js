@@ -23,6 +23,7 @@ const ServiceSchema = Yup.object().shape({
 });
 
 const ServiceForm = ({ navigation: { navigate }, route }) => {
+  const entry = R.pathOr({}, ['params', 'entry'], route);
   const date = R.pathOr('', ['params', 'entry', 'date'], route);
   const odometer = R.pathOr('', ['params', 'entry', 'odometer'], route);
   const serviceList = R.pathOr([], ['params', 'services'], route);
@@ -30,15 +31,23 @@ const ServiceForm = ({ navigation: { navigate }, route }) => {
   const total = R.pathOr('', ['params', 'entry', 'total'], route);
   const vehicle = R.pathOr(0, ['params', 'entry', 'vehicle'], route);
 
-  const submitForm = React.useCallback((values) => { console.log(values); }, []);
+  const submitForm = React.useCallback((values) => {
+    const serviceDateString = dayjs(R.prop('serviceDate', values)).toISOString();
+    const newValues = R.assoc('serviceDate', serviceDateString, values);
+
+    console.log(newValues);
+  }, []);
+
   const hasOtherService = R.includes(serviceTypes.OTHER, services);
   const requiredFields = ['serviceOdometer', 'serviceTotal', 'services', 'serviceVehicle'];
 
+  console.log('ServiceForm', { entry });
+
   const initialValues = React.useMemo(
     () => ({
-      serviceDate: date === '' ? today : dayjs(date).toISOString(),
+      serviceDate: date === '' ? today : dayjs(date),
       serviceOdometer: odometer,
-      services: services,
+      services,
       serviceTotal: total,
       serviceVehicle: vehicle,
     }),
@@ -93,9 +102,10 @@ const ServiceForm = ({ navigation: { navigate }, route }) => {
                 name="serviceTotal"
               />
               <ServicesField
+                entry={entry}
                 name="services"
                 navigate={navigate}
-                servicesList={services}
+                services={services}
               />
               {OtherField}
               <Button disabled={!hasAllRequired} label="Save" onPress={handleSubmit} />

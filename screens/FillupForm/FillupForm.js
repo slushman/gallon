@@ -66,7 +66,6 @@ const FillupForm = ({ navigation, route }) => {
     >
       {({ handleSubmit, values }) => {
         const hasAllRequired = utils.allHaveValues(requiredFields, values);
-        console.log({ hasAllRequired });
 
         if (utils.hasValue(R.prop('fillupVehicle', values))) {
           getOdometer();

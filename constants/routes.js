@@ -11,5 +11,6 @@ export const NEW_VEHICLE = 'New Vehicle';
 export const SELECT_SERVICES = 'Select Services';
 export const SERVICE = 'Service';
 export const SERVICE_DETAILS = 'Service Details';
+export const SERVICE_STACK = 'Service Stack';
 export const SETTINGS = 'Settings';
 export const VEHICLE_DETAILS = 'Vehicle Details';

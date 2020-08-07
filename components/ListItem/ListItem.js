@@ -19,6 +19,7 @@ const ListItem = ({
   subtitle,
 }) => {
   const isDarkMode = useDarkmode();
+  const bgColor = colors.getBgColor(isDarkMode);
   const bgContrast = colors.getBgContrast(isDarkMode);
   const gallonBlue = colors.getBlue(isDarkMode);
 
@@ -58,6 +59,7 @@ const ListItem = ({
   const listItemWrapStyle = React.useMemo(
     () => {
       let style = {
+        backgroundColor: bgColor,
         flexDirection: 'row',
         justifyContent: 'space-between',
       };
@@ -78,7 +80,7 @@ const ListItem = ({
 
       return style;
     },
-    [noPadding, shortItem],
+    [bgColor, noPadding, shortItem],
   );
 
   const leftContentTextStyle = React.useMemo(

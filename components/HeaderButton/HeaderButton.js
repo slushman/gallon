@@ -22,8 +22,6 @@ const HeaderButton = ({
   const isDarkMode = useDarkmode();
   const gallonBlue = colors.getBlue(isDarkMode);
 
-  console.log(routeParams);
-
   const handlePress = React.useCallback(
     () => {
       if (onPress !== null) {

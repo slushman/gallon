@@ -7,7 +7,8 @@ export const perfectGray = 'rgba(117, 117, 117, 1)';
 export const darkGray = 'rgba(72, 72, 74, 1)';
 
 export const getBlue = (isDarkMode) => (isDarkMode ? 'rgb(10, 132, 255)' : 'rgba(0, 109, 247, 1)');
-export const getGreen = (isDarkMode) => (isDarkMode ? 'rgba(52, 199, 89, 1)' : 'rgba(0, 135, 57, 1)');
-export const getRed = (isDarkMode) => (isDarkMode ? 'rgba(255, 40, 20, 1)' : 'rgba(235, 20, 10, 1)');
+export const getGreen = (isDarkMode) => (isDarkMode ? 'rgba(48, 209, 88, 1)' : 'rgba(52, 199, 89, 1)');
+export const getRed = (isDarkMode) => (isDarkMode ? 'rgba(255, 69, 58, 1)' : 'rgba(215, 0, 21, 1)');
 export const getBgColor = (isDarkMode) => (isDarkMode ? gallonBlack : white);
 export const getBgContrast = (isDarkMode) => (isDarkMode ? lightGray : gallonBlack);
+export const getRedContrast = (isDarkMode) => (isDarkMode ? gallonBlack : white);
