@@ -41,8 +41,6 @@ const ServiceForm = ({ navigation: { navigate }, route }) => {
   const hasOtherService = R.includes(serviceTypes.OTHER, services);
   const requiredFields = ['serviceOdometer', 'serviceTotal', 'services', 'serviceVehicle'];
 
-  console.log('ServiceForm', { entry });
-
   const initialValues = React.useMemo(
     () => ({
       serviceDate: date === '' ? today : dayjs(date),
@@ -90,13 +88,11 @@ const ServiceForm = ({ navigation: { navigate }, route }) => {
               <VehicleChooser name="serviceVehicle" />
               <DatePicker label="Date" name="serviceDate" />
               <TextField
-                fieldName="serviceOdometer"
                 keyboardType="numeric"
                 label="Odometer"
                 name="serviceOdometer"
               />
               <TextField
-                fieldName="serviceTotal"
                 keyboardType="numeric"
                 label="Total"
                 name="serviceTotal"

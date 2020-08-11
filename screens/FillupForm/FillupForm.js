@@ -25,16 +25,16 @@ const FillupForm = ({ navigation, route }) => {
   const gallons = R.pathOr('', ['params', 'entry', 'gallons'], route);
   const odometer = R.pathOr('', ['params', 'entry', 'odometer'], route);
   const total = R.pathOr('', ['params', 'entry', 'total'], route);
-  const vehicle = R.pathOr('', ['params', 'entry', 'vehicle'], route);
+  const vehicle = R.pathOr(0, ['params', 'entry', 'vehicle'], route);
   const requiredFields = ['fillupOdometer', 'fillupTotal', 'fillupGallons', 'fillupVehicle'];
 
   const initialValues = React.useMemo(
     () => ({
-      fillupDate: date === '' ? today : dayjs(date).toISOString(),
-      fillupGallons: gallons || '',
-      fillupOdometer: odometer || '',
-      fillupTotal: total || '',
-      fillupVehicle: vehicle || 0,
+      fillupDate: date === '' ? today : dayjs(date),
+      fillupGallons: gallons,
+      fillupOdometer: odometer,
+      fillupTotal: total,
+      fillupVehicle: vehicle,
     }),
     [date, gallons, odometer, total, vehicle ],
   );
@@ -77,22 +77,19 @@ const FillupForm = ({ navigation, route }) => {
               <VehicleChooser name="fillupVehicle" />
               <DatePicker label="Date" name="fillupDate" />
               <TextField
-                fieldName="fillupOdometer"
                 keyboardType="numeric"
-                label="Odometer"
-                name="fillupOdometer"
+                label="Gallons"
+                name="fillupGallons"
               />
               <TextField
-                fieldName="fillupTotal"
                 keyboardType="numeric"
                 label="Total"
                 name="fillupTotal"
               />
               <TextField
-                fieldName="fillupGallons"
                 keyboardType="numeric"
-                label="Gallons"
-                name="fillupGallons"
+                label="Odometer"
+                name="fillupOdometer"
               />
               {submitButton(handleSubmit, !hasAllRequired)}
             </ScrollView>

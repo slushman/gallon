@@ -3,18 +3,36 @@ import { View } from 'react-native';
 import PropTypes from 'prop-types';
 import * as R from 'ramda';
 
+import HeaderButton from '../../components/HeaderButton';
 import ScrollView from '../../components/ScrollView';
 import Text from '../../components/Text';
 import Wrapper from '../../components/Wrapper';
 import * as uniStyles from '../../utils/styles';
+import * as routes from '../../constants/routes';
 
-const VehicleDetails = ({ route }) => {
+const VehicleDetails = ({ navigation: { setOptions },route }) => {
+  const vehicle = R.path(['params', 'vehicle'], route);
   const {
     vehicleMake,
     vehicleModel,
     vehicleName,
     vehicleYear,
   } = R.path(['params', 'vehicle'], route);
+  console.log({ route, vehicle });
+
+  const headerButtonParams = React.useMemo(() => ({ vehicle }), [vehicle]);
+
+  React.useLayoutEffect(() => {
+    setOptions({
+      headerRight: () => (
+        <HeaderButton
+          route={routes.EDIT_VEHICLE}
+          routeParams={headerButtonParams}
+          text="Edit"
+        />
+      ),
+    });
+  }, [headerButtonParams, setOptions]);
 
   return (
     <Wrapper>

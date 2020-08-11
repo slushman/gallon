@@ -50,12 +50,12 @@ const Settings = () => {
 
   return (
     <Wrapper>
+      <View style={styles.vehiclesWrap}>
+        <Heading label="Manage Vehicles" noPadding={true} />
+        <VehicleList />
+        <Button label={NewVehicleButtonLabel} onPress={handleNewVehicle} />
+      </View>
       <ScrollView>
-        <View style={styles.vehiclesWrap}>
-          <Heading label="Manage Vehicles" noPadding={true} />
-          <VehicleList />
-          <Button label={NewVehicleButtonLabel} onPress={handleNewVehicle} />
-        </View>
         <Heading label="Preferences" />
         <HandPreferenceSetting />
         <EntriesShowSettings />

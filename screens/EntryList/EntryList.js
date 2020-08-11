@@ -39,7 +39,7 @@ const EntryList = ({ navigation: { navigate } }) => {
       const params = R.prop('type', entry) === types.FILLUP
         ? { entry }
         : { screen: routes.EDIT_SERVICE,
-          params: { entry } }
+          params: { entry } };
       navigate(route, params);
     },
     [navigate],
