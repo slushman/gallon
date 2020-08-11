@@ -10,5 +10,6 @@ export const vehicleButtonLabel = {
 };
 
 export const vehiclesWrap = {
-  paddingHorizontal: 16,
+  paddingVertical: 16,
+  paddingLeft: 16
 };

@@ -1,99 +1,33 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { ErrorMessage, useField } from 'formik';
-import { Animated, TextInput, View } from 'react-native';
-import { useAnimation } from 'react-native-animation-hooks';
+import { TextInput, View } from 'react-native';
 import * as R from 'ramda';
 
 import Text from '../../components/Text';
-import { timingSettings } from '../../constants/animation';
 import * as colors from '../../constants/colors';
-import * as status from '../../constants/status';
 import { useDarkmode } from '../../hooks/useDarkMode';
 import * as styles from './styles';
 import * as uniStyles from '../../utils/styles';
+import * as fieldUtils from '../../utils/fields';
 
-const TextField = ({ fieldName, label, multiline, numberOfLines, ...props }) => {
-  const [field, { error, touched }, { setTouched }] = useField(props);
+const TextField = ({ label, multiline, name, numberOfLines, ...otherProps }) => {
+  const [field, { error, touched }, { setTouched }] = useField(name);
+  console.log({ field });
   const [isFocused, setIsFocused] = React.useState(false);
   const hasMultipleLines = multiline && numberOfLines > 1;
-  const toValue = isFocused ? 1 : 0;
   const isDarkMode = useDarkmode();
   const bgColor = colors.getBgColor(isDarkMode);
-  const gallonBlue = colors.getBlue(isDarkMode);
-  const gallonRed = colors.getRed(isDarkMode);
   const bgContrast = colors.getBgContrast(isDarkMode);
+  const gallonRed = colors.getRed(isDarkMode);
 
-  const fieldAnim = useAnimation({ toValue, ...timingSettings });
-
-  const fieldStatus = React.useMemo(() => {
-    if (touched && !error && R.has('value', field)) {
-      return status.ISVALID;
-    }
-
-    if (touched && error) {
-      return status.HASERROR;
-    }
-
-    if (!touched && R.has('value', field)) {
-      return status.HASVALUE;
-    }
-
-    return null;
-  }, [error, field, touched]);
-
-  const backgroundColor = React.useMemo(() => {
-    if (R.contains(fieldStatus, [status.HASERROR, status.ISVALID, status.HASVALUE])) {
-      return bgColor;
-    }
-
-    return fieldAnim.interpolate({
-      inputRange: [0, 1],
-      outputRange: [colors.transparent, bgColor],
-    });
-  }, [fieldStatus, fieldAnim, bgColor]);
-
-  const borderAndTextColor = React.useMemo(() => {
-    if (fieldStatus === status.HASERROR) {
-      return gallonRed;
-    }
-
-    if (R.contains(fieldStatus, [status.ISVALID, status.HASVALUE])) {
-      return bgContrast;
-    }
-
-    return fieldAnim.interpolate({
-      inputRange: [0, 1],
-      outputRange: [bgContrast, gallonBlue],
-    });
-  }, [bgContrast, fieldStatus, fieldAnim, gallonBlue, gallonRed]);
+  const fieldStatus = fieldUtils.getFieldStatus(error, field, touched);
+  const borderAndTextColor = fieldUtils.getBorderAndTextColor(fieldStatus, isFocused);
 
   const errorTextStyle = React.useMemo(() => ({
     color: gallonRed,
     paddingHorizontal: 8,
   }), [gallonRed]);
-
-  const fontSize = React.useMemo(() => {
-    if (R.contains(fieldStatus, [status.HASERROR, status.ISVALID, status.HASVALUE])) {
-      return 14;
-    }
-
-    return fieldAnim.interpolate({
-      inputRange: [0, 1],
-      outputRange: [20, 14],
-    });
-  }, [fieldStatus, fieldAnim]);
-
-  const topPosition = React.useMemo(() => {
-    if (R.contains(fieldStatus, [status.HASERROR, status.ISVALID, status.HASVALUE])) {
-      return -10;
-    }
-
-    return fieldAnim.interpolate({
-      inputRange: [0, 1],
-      outputRange: [10, -10],
-    });
-  }, [fieldStatus, fieldAnim]);
 
   const fieldStyle = React.useMemo(
     () => ({
@@ -112,33 +46,32 @@ const TextField = ({ fieldName, label, multiline, numberOfLines, ...props }) => 
       return ({
         ...uniStyles.inputStyle,
         alignItems: hasMultipleLines ? 'flex-start' : 'center',
-        color: borderAndTextColor,
+        color: bgContrast,
         height: hasMultipleLines ? calcHeight : 'auto',
-        paddingTop: hasMultipleLines ? 12 : 8,
       });
     },
-    [borderAndTextColor, hasMultipleLines, numberOfLines],
+    [bgContrast, hasMultipleLines, numberOfLines],
   );
 
   const labelStyle = React.useMemo(
     () => ({
+      ...uniStyles.inputLabelText,
       color: borderAndTextColor,
-      fontSize: fontSize,
     }),
-    [borderAndTextColor, fontSize],
+    [borderAndTextColor],
   );
 
   const labelWrapStyle = React.useMemo(
     () => ({
-      backgroundColor: isDarkMode ? bgColor : backgroundColor,
+      backgroundColor: bgColor,
       elevation: 100000,
       left: 8,
       paddingHorizontal: 2,
       position: 'absolute',
-      top: topPosition,
+      top: -10,
       zIndex: 100,
     }),
-    [backgroundColor, bgColor, isDarkMode, topPosition],
+    [bgColor],
   );
 
   const handleBlur = React.useCallback(() => {
@@ -150,30 +83,30 @@ const TextField = ({ fieldName, label, multiline, numberOfLines, ...props }) => 
 
   return (
     <View style={styles.wrapStyle}>
-      <Animated.View style={fieldStyle}>
-        <Animated.View pointerEvents="none" style={labelWrapStyle}>
-          <Animated.Text style={labelStyle}>{label}</Animated.Text>
-        </Animated.View>
+      <View style={fieldStyle}>
+        <View pointerEvents="none" style={labelWrapStyle}>
+          <Text style={labelStyle}>{label}</Text>
+        </View>
         <TextInput
-          {...field}
-          {...props}
+          {...otherProps}
           multiline={multiline}
           numberOfLines={numberOfLines}
           onBlur={handleBlur}
-          onChangeText={field.onChange(fieldName)}
+          onChangeText={field.onChange(name)}
           onFocus={handleFocus}
           style={inputStyles}
+          value={R.prop('value', field)}
         />
-      </Animated.View>
-      <ErrorMessage name={fieldName} render={msg => <Text style={errorTextStyle}>{msg}</Text>} />
+      </View>
+      <ErrorMessage name={name} render={msg => <Text style={errorTextStyle}>{msg}</Text>} />
     </View>
   );
 };
 
 TextField.propTypes = {
-  fieldName: PropTypes.string.isRequired,
   label: PropTypes.string.isRequired,
   multiline: PropTypes.bool,
+  name: PropTypes.string.isRequired,
   numberOfLines: PropTypes.number,
 };
 

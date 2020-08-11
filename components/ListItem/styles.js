@@ -2,7 +2,7 @@ import * as colors from '../../constants/colors';
 
 export const iconWrap = {
   justifyContent: 'center',
-  padding: 16,
+  paddingVertical: 16,
 };
 
 export const leftContentStyle = {

@@ -1,7 +1,7 @@
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 
-import NewVehicle from '../screens/NewVehicle';
+import VehicleForm from '../screens/VehicleForm';
 import Settings from '../screens/Settings';
 import VehicleDetails from '../screens/VehicleDetails';
 import * as routes from '../constants/routes';
@@ -19,8 +19,12 @@ const SettingsStackScreen = () => (
       name={routes.VEHICLE_DETAILS}
     />
     <Stack.Screen
-      component={NewVehicle}
+      component={VehicleForm}
       name={routes.NEW_VEHICLE}
+    />
+    <Stack.Screen
+      component={VehicleForm}
+      name={routes.EDIT_VEHICLE}
     />
   </Stack.Navigator>
 );

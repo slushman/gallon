@@ -1,5 +1,6 @@
 export const EDIT_FILLUP = 'Edit Fillup';
 export const EDIT_SERVICE = 'Edit Service';
+export const EDIT_VEHICLE = 'Edit Vehicle';
 export const ENTRY = 'Entry';
 export const ENTRY_LIST = 'Entries';
 export const FILLUP = 'Fill-up';

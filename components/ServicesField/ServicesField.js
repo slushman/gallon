@@ -9,15 +9,18 @@ import * as colors from '../../constants/colors';
 import * as routes from '../../constants/routes';
 import * as uniStyles from '../../utils/styles';
 import { useDarkmode } from '../../hooks/useDarkMode';
+import * as fieldUtils from '../../utils/fields';
 
 const ServicesField = (props) => {
-  const [field, meta, { setValue }] = useField(props);
+  const [field, { error, touched }, { setValue }] = useField(props);
   const { entry, navigate, services: serviceList } = props;
   const services = R.propOr(serviceList, 'services', entry);
   let hasServices = services.length > 0;
   const isDarkMode = useDarkmode();
   const bgColor = colors.getBgColor(isDarkMode);
-  const bgContrast = colors.getBgContrast(isDarkMode);
+
+  const fieldStatus = fieldUtils.getFieldStatus(error, field, touched);
+  const borderAndTextColor = fieldUtils.getBorderAndTextColor(fieldStatus, false);
 
   React.useEffect(
     () => {
@@ -36,10 +39,10 @@ const ServicesField = (props) => {
 
   const labelStyle = React.useMemo(
     () => ({
-      color: bgContrast,
-      fontSize: hasServices ? 14 : 20,
+      ...uniStyles.inputLabelText,
+      color: borderAndTextColor,
     }),
-    [bgContrast, hasServices],
+    [borderAndTextColor],
   );
 
   const labelWrapperStyle = React.useMemo(
@@ -47,18 +50,18 @@ const ServicesField = (props) => {
       backgroundColor: bgColor,
       elevation: 100000,
       left: 3,
-      marginLeft: hasServices ? 4 : undefined,
-      paddingHorizontal: hasServices ? 2 : 7,
+      marginLeft: 4,
+      paddingHorizontal: 2,
       paddingTop: 6,
       position: 'absolute',
-      top: hasServices ? -15 : 3,
+      top: -15,
     }),
-    [bgColor, hasServices],
+    [bgColor],
   );
 
   const wrapperStyle = React.useMemo(
     () => ({
-      borderColor: bgContrast,
+      borderColor: borderAndTextColor,
       borderRadius: 5,
       borderStyle: 'solid',
       borderWidth: 1,
@@ -66,7 +69,7 @@ const ServicesField = (props) => {
       marginHorizontal: 20,
       padding: hasServices ? 1 : 4,
     }),
-    [bgContrast, hasServices],
+    [borderAndTextColor, hasServices],
   );
 
   return (

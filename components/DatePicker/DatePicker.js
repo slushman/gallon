@@ -11,36 +11,38 @@ import Text from '../../components/Text';
 import * as colors from '../../constants/colors';
 import * as uniStyles from '../../utils/styles';
 import { useDarkmode } from '../../hooks/useDarkMode';
+import * as fieldUtils from '../../utils/fields';
 
 const DatePicker = ({ label, ...props }) => {
   const [pickerVisible, setPickerVisible] = React.useState(false);
-  const [field, meta, helpers] = useField(props);
+  const [field, { error, touched }, helpers] = useField(props);
   const value = dayjs.isDayjs(field.value) ? field.value.toDate() : field.value;
   const [date, setDate] = React.useState(value);
   const isDarkMode = useDarkmode();
   const bgColor = colors.getBgColor(isDarkMode);
-  const bgContrast = colors.getBgContrast(isDarkMode);
-  const gallonBlue = colors.getBlue(isDarkMode);
 
   const closePicker = React.useCallback(() => setPickerVisible(false), []);
 
+  const fieldStatus = fieldUtils.getFieldStatus(error, field, touched);
+  const borderAndTextColor = fieldUtils.getBorderAndTextColor(fieldStatus, pickerVisible);
+
   const fieldStyle = React.useMemo(
     () => ({
-      borderColor: pickerVisible ? gallonBlue : bgContrast,
+      borderColor: borderAndTextColor,
       borderRadius: 5,
       borderStyle: 'solid',
       borderWidth: 1,
     }),
-    [bgContrast, gallonBlue, pickerVisible],
+    [borderAndTextColor],
   );
 
   const labelStyle = React.useMemo(
     () => ({
-      color: pickerVisible ? gallonBlue : bgContrast,
+      color: borderAndTextColor,
       fontSize: 14,
       paddingHorizontal: 2,
     }),
-    [bgContrast, gallonBlue, pickerVisible],
+    [borderAndTextColor],
   );
 
   const labelWrapStyle = React.useMemo(

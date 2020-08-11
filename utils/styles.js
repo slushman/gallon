@@ -7,9 +7,15 @@ export const detailsText = {
   fontSize: 20,
 };
 
+export const inputLabelText = {
+  fontSize: 16,
+};
+
 export const inputStyle = {
   fontSize: 20,
-  padding: 8,
+  paddingBottom: 4,
+  paddingHorizontal: 8,
+  paddingTop: 12,
   position: 'relative',
   width: '100%',
 };
