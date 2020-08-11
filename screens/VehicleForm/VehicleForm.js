@@ -101,7 +101,7 @@ const VehicleForm = ({ navigation: { navigate }, route }) => {
                   name="vehicleVIN"
                 />
               </Expandable>
-              <Button disabled={!hasAllRequired} label="Save" onPress={handleSubmit} />
+              <Button disabled={!hasAllRequired} label="Save Vehicle" onPress={handleSubmit} />
             </ScrollView>
           </Wrapper>
         );

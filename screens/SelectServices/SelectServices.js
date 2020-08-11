@@ -56,7 +56,7 @@ const SelectServices = ({ navigation: { navigate }, route }) => {
   );
 
   const saveButton = React.useMemo(
-    () => (<Button disabled={selectedServices.length < 1} label="Save" onPress={saveSelectedServices} />),
+    () => (<Button disabled={selectedServices.length < 1} label="Save Selections" onPress={saveSelectedServices} />),
     [saveSelectedServices, selectedServices],
   );
 

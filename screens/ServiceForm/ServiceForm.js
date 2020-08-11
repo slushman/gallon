@@ -104,7 +104,7 @@ const ServiceForm = ({ navigation: { navigate }, route }) => {
                 services={services}
               />
               {OtherField}
-              <Button disabled={!hasAllRequired} label="Save" onPress={handleSubmit} />
+              <Button disabled={!hasAllRequired} label="Save Service Entry" onPress={handleSubmit} />
             </ScrollView>
           </Wrapper>
         );
