@@ -7,6 +7,12 @@ export const detailsText = {
   fontSize: 20,
 };
 
+export const fieldIconStyle = {
+  position: 'absolute',
+  right: 8,
+  top: 8,
+};
+
 export const inputLabelText = {
   fontSize: 16,
 };
