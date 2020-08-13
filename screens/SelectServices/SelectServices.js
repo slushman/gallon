@@ -15,7 +15,8 @@ const getServiceKey = service => R.indexOf(service, serviceList).toString();
 
 const SelectServices = ({ navigation: { navigate }, route }) => {
   const entry = R.pathOr({}, ['params', 'entry'], route);
-  const services = R.propOr([], 'services', entry);
+  const entryServices = R.propOr([], 'services', entry);
+  const services = R.pathOr(entryServices, ['params', 'services'], route);
   const [selectedServices, setSelectedServices] = React.useState(services);
   const navState = useNavigationState(state => state);
   const previousScreen = R.path(['routes', 0, 'name'], navState);
@@ -26,7 +27,6 @@ const SelectServices = ({ navigation: { navigate }, route }) => {
       const params = R.isEmpty(entry)
         ? { services: selectedServices }
         : { entry: newEntry };
-      console.log('SelectServices', { params });
       navigate(routes.SERVICE_STACK, {
         screen: previousScreen,
         params,

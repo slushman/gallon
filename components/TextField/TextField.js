@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { ErrorMessage, useField } from 'formik';
 import { TextInput, View } from 'react-native';
 import * as R from 'ramda';
+import MCIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import Text from '../../components/Text';
 import * as colors from '../../constants/colors';
@@ -13,7 +14,6 @@ import * as fieldUtils from '../../utils/fields';
 
 const TextField = ({ label, multiline, name, numberOfLines, ...otherProps }) => {
   const [field, { error, touched }, { setTouched }] = useField(name);
-  console.log({ field });
   const [isFocused, setIsFocused] = React.useState(false);
   const hasMultipleLines = multiline && numberOfLines > 1;
   const isDarkMode = useDarkmode();
@@ -23,6 +23,7 @@ const TextField = ({ label, multiline, name, numberOfLines, ...otherProps }) => 
 
   const fieldStatus = fieldUtils.getFieldStatus(error, field, touched);
   const borderAndTextColor = fieldUtils.getBorderAndTextColor(fieldStatus, isFocused);
+  const statusIcon = fieldUtils.getStatusIcon(fieldStatus, isFocused);
 
   const errorTextStyle = React.useMemo(() => ({
     color: gallonRed,
@@ -81,6 +82,19 @@ const TextField = ({ label, multiline, name, numberOfLines, ...otherProps }) => 
 
   const handleFocus = React.useCallback(() => setIsFocused(true), []);
 
+  const FieldIcon = React.useMemo(
+    () => {
+      if (statusIcon === '') return null;
+
+      return (
+        <View style={uniStyles.fieldIconStyle}>
+          <MCIcon color={borderAndTextColor} name={statusIcon} size={25} />
+        </View>
+      );
+    },
+    [borderAndTextColor, statusIcon],
+  );
+
   return (
     <View style={styles.wrapStyle}>
       <View style={fieldStyle}>
@@ -97,6 +111,7 @@ const TextField = ({ label, multiline, name, numberOfLines, ...otherProps }) => 
           style={inputStyles}
           value={R.prop('value', field)}
         />
+        {FieldIcon}
       </View>
       <ErrorMessage name={name} render={msg => <Text style={errorTextStyle}>{msg}</Text>} />
     </View>

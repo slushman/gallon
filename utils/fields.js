@@ -37,3 +37,13 @@ export const getFieldStatus = (error, field, touched) => {
 
   return null;
 };
+
+export const getStatusIcon = (fieldStatus, isFocused) => {
+  if (fieldStatus === status.HASERROR) return 'close';
+
+  if (isFocused) return 'arrow-left';
+
+  if (fieldStatus === status.ISVALID) return 'check';
+
+  return '';
+};

@@ -18,7 +18,6 @@ const VehicleDetails = ({ navigation: { setOptions },route }) => {
     vehicleName,
     vehicleYear,
   } = R.path(['params', 'vehicle'], route);
-  console.log({ route, vehicle });
 
   const headerButtonParams = React.useMemo(() => ({ vehicle }), [vehicle]);
 

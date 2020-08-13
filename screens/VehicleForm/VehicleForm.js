@@ -89,7 +89,7 @@ const VehicleForm = ({ navigation: { navigate }, route }) => {
                 name="vehicleOdometer"
               />
               <Expandable labelMain="Optional Settings">
-                <DatePicker label="Purchase Date" name="vehiclePurchaseDate" />
+                <DatePicker label="Purchase Date" mode="date" name="vehiclePurchaseDate" />
                 <TextField
                   fieldName="vehicleLicensePlate"
                   label="License Plate"
