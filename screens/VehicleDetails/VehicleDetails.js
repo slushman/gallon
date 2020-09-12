@@ -2,15 +2,20 @@ import React from 'react';
 import { View } from 'react-native';
 import PropTypes from 'prop-types';
 import * as R from 'ramda';
+import dayjs from 'dayjs';
 
+import Heading from '../../components/Heading';
 import HeaderButton from '../../components/HeaderButton';
-import ScrollView from '../../components/ScrollView';
-import Text from '../../components/Text';
+import LineChart from '../../components/LineChart';
+import Stat from './components/Stat';
 import Wrapper from '../../components/Wrapper';
-import * as uniStyles from '../../utils/styles';
+import { entries } from '../../constants/data';
 import * as routes from '../../constants/routes';
+import * as types from '../../constants/types';
+import { getMPG, roundMPG } from '../../utils/mpg';
+import * as styles from './styles';
 
-const VehicleDetails = ({ navigation: { setOptions },route }) => {
+const VehicleDetails = ({ navigation: { setOptions }, route }) => {
   const vehicle = R.path(['params', 'vehicle'], route);
   const {
     vehicleMake,
@@ -25,34 +30,77 @@ const VehicleDetails = ({ navigation: { setOptions },route }) => {
     setOptions({
       headerRight: () => (
         <HeaderButton
-          route={routes.EDIT_VEHICLE}
+          route={routes.VEHICLE_FORM}
           routeParams={headerButtonParams}
           text="Edit"
         />
       ),
+      title: `${vehicleName} Details`,
     });
-  }, [headerButtonParams, setOptions]);
+  }, [headerButtonParams, setOptions, vehicleName]);
+
+  const vehicleEntries = React.useMemo(
+    () => R.filter((entry) => R.prop('vehicle', entry) === vehicleName, entries),
+    [vehicleName],
+  );
+
+  const vehicleFillups = React.useMemo(
+    () => R.filter((entry) => R.prop('type', entry) === types.FILLUP, vehicleEntries),
+    [vehicleEntries],
+  );
+
+  const chartData = React.useMemo(
+    () => {
+      const howMany = 8;
+      const dataset = R.take(howMany, R.map((entry) => roundMPG(getMPG(entry)), vehicleFillups));
+      const rawDates = R.pluck('date', vehicleFillups);
+      const labels = R.take(howMany, R.map(date => dayjs(date).format('M/D'), rawDates));
+
+      return {
+        labels,
+        datasets: [{ data: dataset }],
+      };
+    },
+    [vehicleFillups],
+  );
+
+  const AverageMPG = React.useMemo(
+    () => {
+      const allMPGs = R.map((entry) => roundMPG(getMPG(entry)), vehicleFillups);
+      const sumMPGs = R.sum(allMPGs);
+
+      return (<Stat text={`Average MPG: ${roundMPG(sumMPGs / R.length(allMPGs))} MPG`} />);
+    },
+    [vehicleFillups],
+  );
+
+  const LatestMPG = React.useMemo(
+    () => {
+      const latest = R.take(1, vehicleFillups);
+      const latestMPG = Math.round(getMPG(latest[0]) * 10) / 10;
+
+      return (<Stat text={`Latest MPG: ${latestMPG} MPG`} />);
+    },
+    [vehicleFillups],
+  );
 
   return (
     <Wrapper>
-      <ScrollView>
-        <View style={uniStyles.dataRow}>
-          <Text style={uniStyles.labelText}>Name:</Text>
-          <Text style={uniStyles.detailsText}>{vehicleName}</Text>
-        </View>
-        <View style={uniStyles.dataRow}>
-          <Text style={uniStyles.labelText}>Year:</Text>
-          <Text style={uniStyles.detailsText}>{vehicleYear}</Text>
-        </View>
-        <View style={uniStyles.dataRow}>
-          <Text style={uniStyles.labelText}>Make:</Text>
-          <Text style={uniStyles.detailsText}>{vehicleMake}</Text>
-        </View>
-        <View style={uniStyles.dataRow}>
-          <Text style={uniStyles.labelText}>Modal:</Text>
-          <Text style={uniStyles.detailsText}>{vehicleModel}</Text>
-        </View>
-      </ScrollView>
+      <View style={styles.vehicleDetailsWrap}>
+        <Heading center label={`${vehicleYear} ${vehicleMake} ${vehicleModel}`} />
+        <LineChart
+          chartData={chartData}
+          heading="MPG"
+        />
+      </View>
+      {LatestMPG}
+      {AverageMPG}
+      { /*
+        TODO: Vehicle Stats
+        miles until next oil change
+        miles until next tire rotation
+        /* paid version has miles until... for everything
+        */ }
     </Wrapper>
   );
 };

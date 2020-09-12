@@ -12,7 +12,7 @@ import * as uniStyles from '../../utils/styles';
 import { getMPG } from '../../utils/mpg';
 
 const FillupDetails = ({ navigation: { setOptions }, route }) => {
-  const entry = R.prop('params', route);
+  const entry = R.path(['params'], route);
   const { date, gallons, odometer, previousOdometer, total, vehicle } = R.prop('params', route);
 
   const getDate = React.useCallback(
@@ -30,7 +30,7 @@ const FillupDetails = ({ navigation: { setOptions }, route }) => {
     setOptions({
       headerRight: () => (
         <HeaderButton
-          route={routes.EDIT_FILLUP}
+          route={routes.FILLUP_FORM}
           routeParams={headerButtonParams}
           text="Edit"
         />
@@ -38,12 +38,14 @@ const FillupDetails = ({ navigation: { setOptions }, route }) => {
     });
   }, [headerButtonParams, setOptions]);
 
+  const fillupMPG = getMPG({ gallons, odometer, previousOdometer }).toFixed(1);
+
   return (
     <Wrapper>
       <ScrollView>
         <View style={uniStyles.dataRow}>
           <Text style={uniStyles.labelText}>MPG:</Text>
-          <Text style={uniStyles.detailsText}>{getMPG({ gallons, odometer, previousOdometer })}</Text>
+          <Text style={uniStyles.detailsText}>{`${fillupMPG} mpg`}</Text>
         </View>
         <View style={uniStyles.dataRow}>
           <Text style={uniStyles.labelText}>Vehicle:</Text>

@@ -34,7 +34,7 @@ const Settings = () => {
   }, [setOptions]);
 
   const handleNewVehicle = React.useCallback(
-    () => navigate(routes.NEW_VEHICLE),
+    () => navigate(routes.VEHICLE_FORM),
     [navigate],
   );
 

@@ -18,21 +18,16 @@ const SelectServices = ({ navigation: { navigate }, route }) => {
   const entryServices = R.propOr([], 'services', entry);
   const services = R.pathOr(entryServices, ['params', 'services'], route);
   const [selectedServices, setSelectedServices] = React.useState(services);
-  const navState = useNavigationState(state => state);
-  const previousScreen = R.path(['routes', 0, 'name'], navState);
 
   const saveSelectedServices = React.useCallback(
     () => {
       const newEntry = R.isEmpty(entry) ? {} : R.assoc('services', selectedServices, entry);
       const params = R.isEmpty(entry)
-        ? { services: selectedServices }
+        ? { selectedServices }
         : { entry: newEntry };
-      navigate(routes.SERVICE_STACK, {
-        screen: previousScreen,
-        params,
-      });
+      navigate(routes.SERVICE_FORM, params);
     },
-    [entry, navigate, previousScreen, selectedServices],
+    [entry, navigate, selectedServices],
   );
 
   const toggleService = React.useCallback(

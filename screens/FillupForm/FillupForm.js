@@ -20,13 +20,23 @@ const FillupSchema = Yup.object().shape({
   fillupTotal: Yup.number().required('Enter the total price for this fillup.'),
 });
 
-const FillupForm = ({ navigation, route }) => {
-  const date = R.pathOr('', ['params', 'entry', 'date'], route);
-  const gallons = R.pathOr('', ['params', 'entry', 'gallons'], route);
-  const odometer = R.pathOr('', ['params', 'entry', 'odometer'], route);
-  const total = R.pathOr('', ['params', 'entry', 'total'], route);
-  const vehicle = R.pathOr(0, ['params', 'entry', 'vehicle'], route);
+const FillupForm = ({ navigation: { setOptions }, route }) => {
+  const entry = R.pathOr('', ['params', 'entry'], route);
+
+  console.log({ route, entry });
+
+  const date = R.propOr('', 'date', entry);
+  const gallons = R.propOr('', 'gallons', entry);
+  const odometer = R.propOr('', 'odometer', entry);
+  const total = R.propOr('', 'total', entry);
+  const vehicle = R.propOr(0, 'vehicle', entry);
   const requiredFields = ['fillupOdometer', 'fillupTotal', 'fillupGallons', 'fillupVehicle'];
+
+  React.useLayoutEffect(() => {
+    setOptions({
+      title: R.isEmpty(entry) ? 'New Fillup' : 'Edit Fillup',
+    });
+  }, [entry, setOptions]);
 
   const initialValues = React.useMemo(
     () => ({
