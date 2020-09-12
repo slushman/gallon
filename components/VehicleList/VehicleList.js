@@ -9,7 +9,6 @@ import Swipeable from '../../components/Swipeable';
 import * as colors from '../../constants/colors';
 import * as routes from '../../constants/routes';
 import * as styles from './styles';
-import * as types from '../../constants/types';
 import { noop } from '../../utils';
 import { useDarkmode } from '../../hooks/useDarkMode';
 
@@ -26,7 +25,7 @@ const VehicleList = ({ vehicleList }) => {
 
   const goToEdit = React.useCallback(
     (vehicle) => {
-      navigate(routes.EDIT_VEHICLE, { vehicle });
+      navigate(routes.VEHICLE_FORM, { vehicle });
     },
     [navigate],
   );

@@ -19,7 +19,7 @@ const Text = ({ center, children, style }) => {
     [bgContrast, style, textAlign],
   );
 
-  return (<RNText style={textStyles}>{ children }</RNText>);
+  return (<RNText style={textStyles}>{children}</RNText>);
 };
 
 Text.propTypes = {

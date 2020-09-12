@@ -1,43 +1,29 @@
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
-import * as R from 'ramda';
 
-import MainStackScreen from './MainStack';
-import SettingsStackScreen from './SettingsStack';
-import NewServiceStackScreen from './NewServiceStack';
+import CardsStackScreen from './CardsStack';
 import FillupForm from '../screens/FillupForm';
+import ServiceStackScreen from './ServiceStack';
+
 import * as routes from '../constants/routes';
 
 const Stack = createStackNavigator();
 
 const RootStack = () => (
-  <Stack.Navigator initialRouteName={routes.HOME} mode="modal">
+  <Stack.Navigator initialRouteName={routes.ENTRY_LIST} mode="modal">
     <Stack.Screen
-      component={MainStackScreen}
-      name={routes.ENTRY_LIST}
-      options={{ headerShown: false }}
-    />
-    <Stack.Screen
-      component={SettingsStackScreen}
-      name={routes.SETTINGS}
+      component={CardsStackScreen}
+      name="Entries"
       options={{ headerShown: false }}
     />
     <Stack.Screen
       component={FillupForm}
-      name={routes.NEW_FILLUP}
+      name={routes.FILLUP_FORM}
     />
     <Stack.Screen
-      component={FillupForm}
-      name={routes.EDIT_FILLUP}
-    />
-    <Stack.Screen
-      component={NewServiceStackScreen}
-      name={routes.SERVICE_STACK}
-      options={({ route }) => ({
-        headerShown: (!R.propEq('name', routes.SERVICE_STACK, route) && !R.pathEq(['params', 'screen'], routes.SELECT_SERVICES, route))
-          || (!R.propEq('name', routes.SERVICE_STACK, route) && !R.pathEq(['params', 'screen'], routes.NEW_SERVICE, route))
-          || (!R.propEq('name', routes.SERVICE_STACK, route) && !R.pathEq(['params', 'screen'], routes.EDIT_SERVICE, route)),
-      })}
+      component={ServiceStackScreen}
+      name="Service"
+      options={{ headerShown: false }}
     />
   </Stack.Navigator>
 );

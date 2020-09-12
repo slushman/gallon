@@ -10,9 +10,7 @@ const NewServiceFab = ({ expandFabs, fabsExpanded }) => {
   const handlePress = React.useCallback(
     () => {
       expandFabs(false);
-      navigate(routes.SERVICE_STACK, {
-        screen: routes.NEW_SERVICE,
-      });
+      navigate(routes.SERVICE_FORM);
     },
     [expandFabs, navigate],
   );

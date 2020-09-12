@@ -16,7 +16,7 @@ const ServiceDetails = ({ navigation: { setOptions }, route }) => {
 
   const headerButtonParams = React.useMemo(
     () => ({
-      screen: routes.EDIT_SERVICE,
+      screen: routes.SERVICE_FORM,
       params: { entry },
     }),
     [entry],
@@ -26,7 +26,7 @@ const ServiceDetails = ({ navigation: { setOptions }, route }) => {
     setOptions({
       headerRight: () => (
         <HeaderButton
-          route={routes.SERVICE_STACK}
+          route={routes.SERVICE_FORM}
           routeParams={headerButtonParams}
           text="Edit"
         />

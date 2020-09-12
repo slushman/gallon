@@ -22,14 +22,21 @@ const ServiceSchema = Yup.object().shape({
   serviceTotal: Yup.number().required('Enter the total price for this fillup.'),
 });
 
-const ServiceForm = ({ navigation: { navigate }, route }) => {
+const ServiceForm = ({ navigation: { navigate, setOptions }, route }) => {
+  console.log({ route });
+  const selectedServices = R.pathOr([], ['params', 'selectedServices'], route);
   const entry = R.pathOr({}, ['params', 'entry'], route);
-  const date = R.pathOr('', ['params', 'entry', 'date'], route);
-  const odometer = R.pathOr('', ['params', 'entry', 'odometer'], route);
-  const serviceList = R.pathOr([], ['params', 'services'], route);
-  const services = R.pathOr(serviceList, ['params', 'entry', 'services'], route);
-  const total = R.pathOr('', ['params', 'entry', 'total'], route);
-  const vehicle = R.pathOr(0, ['params', 'entry', 'vehicle'], route);
+  const date = R.propOr('', 'date', entry);
+  const odometer = R.propOr('', 'odometer', entry);
+  const services = R.propOr(selectedServices, 'services', entry);
+  const total = R.propOr('', 'total', entry);
+  const vehicle = R.propOr(0, 'vehicle', entry);
+
+  React.useLayoutEffect(() => {
+    setOptions({
+      title: R.isEmpty(entry) ? 'New Service' : 'Edit Service',
+    });
+  }, [entry, setOptions]);
 
   const submitForm = React.useCallback((values) => {
     const serviceDateString = dayjs(R.prop('serviceDate', values)).toISOString();

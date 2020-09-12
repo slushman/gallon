@@ -10,7 +10,7 @@ const NewFillupFab = ({ expandFabs, fabsExpanded }) => {
   const handlePress = React.useCallback(
     () => {
       expandFabs();
-      navigate(routes.NEW_FILLUP);
+      navigate(routes.FILLUP_FORM);
     },
     [expandFabs, navigate],
   );

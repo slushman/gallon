@@ -29,6 +29,8 @@ const HeaderButton = ({
         return;
       }
 
+      console.log({ routeParams });
+
       navigate(route, routeParams);
     },
     [navigate, onPress, route, routeParams],

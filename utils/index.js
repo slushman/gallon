@@ -20,3 +20,5 @@ export const updateArray = (array, value) => {
 };
 
 export const noop = () => {};
+
+export const getEntryKey = entry => entry.id.toString();
