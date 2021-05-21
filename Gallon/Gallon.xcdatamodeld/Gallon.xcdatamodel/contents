@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="17709" systemVersion="19H1030" minimumToolsVersion="Automatic" sourceLanguage="Swift" usedWithCloudKit="YES" userDefinedModelVersionIdentifier="">
-    <entity name="Entry" representedClassName="Entry" syncable="YES" codeGenerationType="class">
+    <entity name="Entry" representedClassName="Entry" syncable="YES">
         <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="gallons" optional="YES" attributeType="Float" defaultValueString="0.0" usesScalarValueType="YES"/>
         <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
@@ -13,18 +13,18 @@
     <entity name="Item" representedClassName="Item" syncable="YES" codeGenerationType="class">
         <attribute name="timestamp" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
     </entity>
-    <entity name="Provider" representedClassName="Provider" syncable="YES" codeGenerationType="class">
+    <entity name="Provider" representedClassName="Provider" syncable="YES">
         <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
         <attribute name="name" optional="YES" attributeType="String"/>
         <attribute name="phone" optional="YES" attributeType="String"/>
         <attribute name="service" optional="YES" attributeType="String"/>
     </entity>
-    <entity name="Service" representedClassName="Service" syncable="YES" codeGenerationType="class">
+    <entity name="Service" representedClassName="Service" syncable="YES">
         <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
         <attribute name="name" optional="YES" attributeType="String"/>
         <relationship name="entry" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Entry" inverseName="services" inverseEntity="Entry"/>
     </entity>
-    <entity name="Vehicle" representedClassName="Vehicle" syncable="YES" codeGenerationType="class">
+    <entity name="Vehicle" representedClassName="Vehicle" syncable="YES">
         <attribute name="color" optional="YES" attributeType="String"/>
         <attribute name="engineSize" optional="YES" attributeType="String"/>
         <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
@@ -36,7 +36,7 @@
         <attribute name="odometer" optional="YES" attributeType="Float" defaultValueString="0.0" usesScalarValueType="YES"/>
         <attribute name="purchaseDate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="vin" optional="YES" attributeType="String"/>
-        <attribute name="yaer" optional="YES" attributeType="String"/>
+        <attribute name="year" optional="YES" attributeType="String"/>
         <relationship name="entries" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Entry" inverseName="vehicle" inverseEntity="Entry"/>
     </entity>
     <elements>
