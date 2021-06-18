@@ -19,7 +19,7 @@ struct SelectServices: View {
             }
             .navigationTitle("Select Services")
             .toolbar {
-                ToolbarItem(placement: .bottomBar) {
+                ToolbarItem(placement: .navigationBarLeading) {
                     Text("Cancel")
                         .foregroundColor(Color.green)
                         .padding()
@@ -28,7 +28,7 @@ struct SelectServices: View {
                         }
                 }
                 
-                ToolbarItem(placement: .bottomBar) {
+                ToolbarItem(placement: .navigationBarTrailing) {
                     Text("Save")
                         .foregroundColor(Color.green)
                         .padding()

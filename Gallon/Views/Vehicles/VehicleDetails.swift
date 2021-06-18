@@ -11,21 +11,27 @@ import CoreData
 struct VehicleDetails: View {
     @Environment(\.managedObjectContext) var moc
     @Environment(\.presentationMode) var mode: Binding<PresentationMode>
-    @State private var activeSheet: ActiveSheet?
-    
+
     @FetchRequest(entity: Entry.entity(), sortDescriptors: [])
     var entries: FetchedResults<Entry>
 
+    @State private var activeSheet: ActiveSheet?
+    @State private var selectedColorIndex = 0
+    
     let vehicle: Vehicle
     
     var body: some View {
         VStack {
             VehicleImageHeader(vehicleName: vehicle.wName)
             
-            List(entries, id: \.self) { entry in
-                EntryRow(entry: entry)
+            if entries.count > 0 {
+                List(entries, id: \.self) { entry in
+                    EntryRow(entry: entry)
+                }
+            } else {
+                VehicleDetailsBlankSlate()
             }
-
+            
             Spacer()
         }
         .navigationTitle("Vehicle Details")
@@ -43,41 +49,48 @@ struct VehicleDetails: View {
                 }
             }
             
-            ToolbarItem(placement: .navigationBarTrailing) {
-                Text("Edit")
-                    .foregroundColor(Color.green)
-                    .onTapGesture {
+            ToolbarItem(placement: .primaryAction) {
+                Menu {
+                    Button("Delete \(vehicle.wName)") {
+                        // delete vehicle from CoreData
+                    }
+                    Button("Edit \(vehicle.wName)") {
                         self.activeSheet = .manageVehicle
                     }
-            }
-        }
-        .toolbar {
-            ToolbarItem(placement: .bottomBar) {
-                Text("Add Service")
-                    .foregroundColor(Color.green)
-                    .padding()
-                    .onTapGesture {
+                    Button("Add Service") {
                         self.activeSheet = .manageService
                     }
-            }
-            
-            ToolbarItem(placement: .bottomBar) {
-                Text("Add Fill-up")
-                    .foregroundColor(Color.green)
-                    .padding()
-                    .onTapGesture {
+                    Button("Add Fill-up") {
                         self.activeSheet = .manageFillup
                     }
+                }
+                label: {
+                    Label("Edit", systemImage: "ellipsis.circle")
+                        .foregroundColor(Color.green)
+                }
             }
         }
         .sheet(item: $activeSheet) { item in
             switch item {
-            case .manageVehicle:
-                ManageVehicle()
             case .manageFillup:
-                ManageFillup()
+                ManageFillup(vehicle: vehicle)
             case .manageService:
-                ManageService()
+                ManageService(vehicle: vehicle)
+            default:
+                ManageVehicle(
+                    vehicleToEdit: vehicle,
+                    name: vehicle.wName,
+                    make: vehicle.wMake,
+                    model: vehicle.wModel,
+                    year: vehicle.wYear,
+                    odometer: vehicle.odometer,
+                    vin: vehicle.wVin,
+                    licensePlateState: vehicle.wLicensePlateState,
+                    licensePlateNumber: vehicle.wLicensePlateNumber,
+                    color: vehicle.wColor,
+                    engineSize: vehicle.wEngineSize,
+                    purchaseDate: vehicle.wPurchaseDate
+                )
             }
         }
     }

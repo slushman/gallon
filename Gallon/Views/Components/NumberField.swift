@@ -11,13 +11,18 @@ struct NumberField: View {
     let label: String
     
     @Binding var value: Float
+    
+    init(_ label: String, value: Binding<Float>) {
+        self.label = label
+        self._value = value
+    }
 
     let formatter: NumberFormatter = {
         let formatter = NumberFormatter()
         formatter.numberStyle = .decimal
         return formatter
     }()
-
+    
     var body: some View {
         HStack {
             Text(label)
@@ -33,6 +38,6 @@ struct NumberField: View {
 
 struct NumberField_Previews: PreviewProvider {
     static var previews: some View {
-        NumberField(label: "Number Field", value: .constant(2000))
+        NumberField("Number Field", value: .constant(2000))
     }
 }

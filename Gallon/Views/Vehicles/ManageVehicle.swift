@@ -11,23 +11,30 @@ import CoreData
 struct ManageVehicle: View {
     @Environment(\.managedObjectContext) var moc
     @Environment(\.presentationMode) var presentationMode
-    @State private var name = ""
-    @State private var make = ""
-    @State private var model = ""
-    @State private var year = ""
-    @State private var odometer: Float = 0
-    @State private var vin = ""
-    @State private var licensePlateState = ""
-    @State private var licensePlateNumber = ""
-    @State private var color = ""
-    @State private var engineSize = ""
-    @State private var purchaseDate = Date()
+    
+    var vehicleToEdit: Vehicle?
+    
+    @State var name = ""
+    @State var make = ""
+    @State var model = ""
+    @State var year = ""
+    @State var odometer: Float = 0
+    @State var vin = ""
+    @State var licensePlateState = ""
+    @State var licensePlateNumber = ""
+    @State var color = ""
+    @State var engineSize = ""
+    @State var purchaseDate = Date()
     @State private var showOptionalFields: Bool = false
     
     var dateFormatter: DateFormatter {
         let formatter = DateFormatter()
         formatter.dateStyle = .long
         return formatter
+    }
+    
+    var title: String {
+        vehicleToEdit == nil ? "Add Vehicle" : "Edit Vehicle"
     }
     
     var body: some View {
@@ -45,7 +52,7 @@ struct ManageVehicle: View {
                         
                         TextField("Model", text: $model)
                         
-                        NumberField(label: "Odometer", value: $odometer)
+                        NumberField("Odometer", value: $odometer)
                     }
                     
                     Section {
@@ -69,11 +76,19 @@ struct ManageVehicle: View {
                             TextField("Engine Size", text: $engineSize)
                         }
                     }
+                    
+                    NavigationLink(destination: ProvidersList()) {
+                        Text("Service Providers")
+                    }
+                    
+                    NavigationLink(destination: OverridesList()) {
+                        Text("Mileage Overrides")
+                    }
                 }
             }
-            .navigationTitle("Add Vehicle")
+            .navigationTitle(title)
             .toolbar {
-                ToolbarItem(placement: .bottomBar) {
+                ToolbarItem(placement: .navigationBarLeading) {
                     Text("Cancel")
                         .foregroundColor(Color.green)
                         .padding()
@@ -82,32 +97,43 @@ struct ManageVehicle: View {
                         }
                 }
                 
-                ToolbarItem(placement: .bottomBar) {
+                ToolbarItem(placement: .navigationBarTrailing) {
                     Text("Save")
                         .foregroundColor(Color.green)
                         .padding()
                         .onTapGesture {
-                            let vehicle = Vehicle(context: self.moc)
-                            vehicle.id = UUID()
-                            vehicle.name = self.name
-                            vehicle.make = self.make
-                            vehicle.model = self.model
-                            vehicle.year = self.year
-                            vehicle.odometer = self.odometer
-                            vehicle.vin = self.vin
-                            vehicle.licensePlateState = self.licensePlateState
-                            vehicle.licensePlateNumber = self.licensePlateNumber
-                            vehicle.color = self.color
-                            vehicle.engineSize = self.engineSize
-                            vehicle.purchaseDate = Date()
-                            
-                            try? self.moc.save()
-                            
-                            self.presentationMode.wrappedValue.dismiss()
+                            self.onSaveTapped()
                         }
                 }
             }
         }
+    }
+    
+    private func onSaveTapped() {
+        let vehicle: Vehicle
+
+        if let vehicleToEdit = self.vehicleToEdit {
+            vehicle = vehicleToEdit
+        } else {
+            vehicle = Vehicle(context: self.moc)
+            vehicle.id = UUID()
+        }
+
+        vehicle.name = self.name
+        vehicle.make = self.make
+        vehicle.model = self.model
+        vehicle.year = self.year
+        vehicle.odometer = self.odometer
+        vehicle.vin = self.vin
+        vehicle.licensePlateState = self.licensePlateState
+        vehicle.licensePlateNumber = self.licensePlateNumber
+        vehicle.color = self.color
+        vehicle.engineSize = self.engineSize
+        vehicle.purchaseDate = Date()
+        
+        try? self.moc.save()
+        
+        self.presentationMode.wrappedValue.dismiss()
     }
 }
 

@@ -16,13 +16,18 @@ extension Provider {
         return NSFetchRequest<Provider>(entityName: "Provider")
     }
 
-    @NSManaged public var service: String?
+    @NSManaged public var service: String
     @NSManaged public var phone: String?
     @NSManaged public var name: String?
     @NSManaged public var id: UUID?
 
-    var wService: String {
-        service ?? "Unknown service"
+    var wService: ServiceType {
+        get {
+            return ServiceType(rawValue: self.service) ?? ServiceType.ACSystem
+        }
+        set {
+            self.service = newValue.rawValue
+        }
     }
     
     var wPhone: String {
@@ -32,7 +37,6 @@ extension Provider {
     var wName: String {
         name ?? "Unknown name"
     }
-    
 }
 
 extension Provider : Identifiable {

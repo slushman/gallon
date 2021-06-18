@@ -7,6 +7,8 @@
 
 import SwiftUI
 
+// TODO: maybe update to PHPicker?
+
 struct ImagePicker: UIViewControllerRepresentable {
     @Binding var image: UIImage?
     @Environment(\.presentationMode) var presentationMode

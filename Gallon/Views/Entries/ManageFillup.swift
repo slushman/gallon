@@ -11,32 +11,27 @@ import CoreData
 struct ManageFillup: View {
     @Environment(\.managedObjectContext) var moc
     @Environment(\.presentationMode) var presentationMode
+    
+    var vehicle: Vehicle
+    var fillupEntryToEdit: Entry?
+    
     @State private var showingMPGAlert = false
-
-    @State private var entryDate: Date = Date()
-    @State private var odometer: Float = 0 // set to previous odometer - maybe eventually have some smart data estimate the next odometer reading based on previous fill-ups
-    @State private var price: Float = 0
-    @State private var gallons: Float = 0
     @State private var mpg: Float?
 
-    // TODO: how to get an entry in here?
-    // or does there need to be en "edit" form component
-    // maybe something with Binding?
+    @State var entryDate: Date = Date()
+    @State var odometer: Float = 0 // set to previous odometer - maybe eventually have some smart data estimate the next odometer reading based on prell-ups
+    @State var price: Float = 0
+    @State var gallons: Float = 0
 
-    //    let entry: Entry?
-//
-//    init() {
-//        self.entryDate = self.entry?.entryDate ?? Date()
-//        self.odometer = self.entry?.odometer ?? 0
-//        self.price = self.entry?.price ?? 0.00
-//        self.gallons = self.entry?.gallons ?? 0
-//    }
-    
     let dateFormatter: DateFormatter = {
         let formatter = DateFormatter()
         formatter.dateStyle = .long
         return formatter
     }()
+    
+    var title: String {
+        fillupEntryToEdit == nil ? "Add Fill-up" : "Edit Fill-up"
+    }
     
     var body: some View {
         NavigationView {
@@ -44,21 +39,23 @@ struct ManageFillup: View {
                 VStack {
                     Form {
                         Section {
+                            VehicleNameDisplayField(vehicle.wName)
+
                             DatePicker(selection: $entryDate, in: ...Date(), displayedComponents: [.date, .hourAndMinute]) {
                                 Text("Date")
                             }
 
-                            NumberField(label: "Price", value: $price)
+                            NumberField("Price", value: $price)
 
-                            NumberField(label: "Gallons", value: $gallons)
+                            NumberField("Gallons", value: $gallons)
                             
-                            NumberField(label: "Odometer", value: $odometer)
+                            NumberField("Odometer", value: $odometer)
                         }
                     }
                 }
-                .navigationTitle("Add Fill-up")
+                .navigationTitle(title)
                 .toolbar {
-                    ToolbarItem(placement: .bottomBar) {
+                    ToolbarItem(placement: .navigationBarLeading) {
                         Text("Cancel")
                             .foregroundColor(Color.green)
                             .padding()
@@ -67,37 +64,12 @@ struct ManageFillup: View {
                             }
                     }
                     
-                    ToolbarItem(placement: .bottomBar) {
+                    ToolbarItem(placement: .navigationBarTrailing) {
                         Text("Save")
                             .foregroundColor(Color.green)
                             .padding()
                             .onTapGesture {
-                                // save fillup to CoreData
-                                let entry = Entry(context: self.moc)
-                                entry.id = UUID()
-                                entry.date = self.entryDate
-                                entry.odometer = self.odometer
-                                entry.price = self.price
-                                entry.gallons = self.gallons
-                                
-                                try? self.moc.save()
-                                
-                                self.presentationMode.wrappedValue.dismiss()
-                                
-                                
-                                
-                                
-                                
-                                
-                                // calculate the MPG for this fillup
-                                // set mpg state
-                                self.mpg = 28.2
-
-                                // check for any services within the mileage range
-                                                            
-                                // display pop-up by assigning the mpg for this fillup
-                                // to the mpg state.
-                                self.showingMPGAlert = true
+                                self.onSaveTapped()
                             }
                     }
                 }
@@ -108,11 +80,54 @@ struct ManageFillup: View {
             }
         }
     }
+    
+    private func onSaveTapped() {
+        let entry: Entry
+
+        if let fillupEntryToEdit = self.fillupEntryToEdit {
+            entry = fillupEntryToEdit
+        } else {
+            entry = Entry(context: self.moc)
+            entry.id = UUID()
+        }
+
+        entry.date = self.entryDate
+        entry.odometer = self.odometer
+        entry.price = self.price
+        entry.gallons = self.gallons
+        entry.vehicle = vehicle
+        
+        try? self.moc.save()
+        
+        self.presentationMode.wrappedValue.dismiss()
+        
+        
+        
+        
+        
+        
+        // calculate the MPG for this fillup
+        // set mpg state
+        self.mpg = 28.2
+
+        // check for any services within the mileage range
+                                    
+        // display pop-up by assigning the mpg for this fillup
+        // to the mpg state.
+        self.showingMPGAlert = true
+    }
 }
 
 struct ManageFillup_Previews: PreviewProvider {
+    static let moc = NSManagedObjectContext(concurrencyType: .mainQueueConcurrencyType)
+
     static var previews: some View {
-        ManageFillup()
-        ManageFillup()
+        let vehicle = Vehicle(context: moc)
+        vehicle.name = "Scooby"
+        vehicle.make = "Toyota"
+        vehicle.model = "Prius"
+        vehicle.year = "2010"
+        
+        return ManageFillup(vehicle: vehicle)
     }
 }

@@ -53,7 +53,14 @@ struct FillupDetails: View {
             }
         }
         .sheet(isPresented: $showManageFillup) {
-            ManageFillup()
+            ManageFillup(
+                vehicle: entry.vehicle!,
+                fillupEntryToEdit: entry,
+                entryDate: entry.wDate,
+                odometer: entry.odometer,
+                price: entry.price,
+                gallons: entry.gallons
+            )
         }
     }
 }

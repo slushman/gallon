@@ -56,7 +56,13 @@ struct ServiceDetails: View {
             }
         }
         .sheet(isPresented: $showManageService) {
-            ManageService()
+            ManageService(
+                vehicle: entry.vehicle!,
+                serviceEntryToEdit: entry,
+                entryDate: entry.wDate,
+                odometer: entry.odometer,
+                price: entry.price
+            )
         }
     }
 }

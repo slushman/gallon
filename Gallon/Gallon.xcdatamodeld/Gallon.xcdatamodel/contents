@@ -13,6 +13,12 @@
     <entity name="Item" representedClassName="Item" syncable="YES" codeGenerationType="class">
         <attribute name="timestamp" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
     </entity>
+    <entity name="Override" representedClassName="Override" syncable="YES">
+        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="miles" optional="YES" attributeType="Float" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="service" optional="YES" attributeType="String"/>
+        <attribute name="vehicle" optional="YES" attributeType="String"/>
+    </entity>
     <entity name="Provider" representedClassName="Provider" syncable="YES">
         <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
         <attribute name="name" optional="YES" attributeType="String"/>
@@ -40,10 +46,11 @@
         <relationship name="entries" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Entry" inverseName="vehicle" inverseEntity="Entry"/>
     </entity>
     <elements>
-        <element name="Item" positionX="-63" positionY="-18" width="128" height="44"/>
-        <element name="Vehicle" positionX="-27" positionY="18" width="128" height="238"/>
-        <element name="Service" positionX="0" positionY="135" width="128" height="88"/>
-        <element name="Provider" positionX="27" positionY="144" width="128" height="103"/>
         <element name="Entry" positionX="-18" positionY="90" width="128" height="163"/>
+        <element name="Item" positionX="-63" positionY="-18" width="128" height="44"/>
+        <element name="Provider" positionX="27" positionY="144" width="128" height="103"/>
+        <element name="Service" positionX="0" positionY="135" width="128" height="88"/>
+        <element name="Vehicle" positionX="-27" positionY="18" width="128" height="238"/>
+        <element name="Override" positionX="-18" positionY="108" width="128" height="103"/>
     </elements>
 </model>

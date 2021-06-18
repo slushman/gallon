@@ -15,9 +15,9 @@ struct EntryDetails: View {
 
     var body: some View {
         if EntryType(rawValue: entry.type) == EntryType.Fillup {
-            return AnyView(FillupDetails(entry: entry))
+            FillupDetails(entry: entry)
         } else {
-            return AnyView(ServiceDetails(entry: entry))
+            ServiceDetails(entry: entry)
         }
     }
 }
