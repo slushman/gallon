@@ -1,6 +1,6 @@
-import * as types from './types';
-
+import { ServiceType } from './enums';
 export const iconMap = {
-  [types.FILLUP]: 'fuel',
-  [types.SERVICE]: 'tools',
+    [ServiceType.FILLUP]: 'fuel',
+    [ServiceType.SERVICE]: 'tools',
 };
+//# sourceMappingURL=maps.js.map

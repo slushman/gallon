@@ -1,0 +1,1 @@
+{"version":3,"file":"connectVehicleList.js","sourceRoot":"","sources":["connectVehicleList.ts"],"names":[],"mappings":"AAAA,OAAO,EAAE,OAAO,EAAE,MAAM,aAAa,CAAC;AACtC,OAAO,EAAE,wBAAwB,EAAE,MAAM,UAAU,CAAC;AAEpD,OAAO,EAAE,mBAAmB,EAAE,MAAM,uBAAuB,CAAC;AAE5D,MAAM,QAAQ,GAAG,wBAAwB,CAAC;IACxC,WAAW,EAAE,mBAAmB;CACjC,CAAC,CAAC;AAEH,eAAe,OAAO,CAAC,QAAQ,CAAC,CAAC"}

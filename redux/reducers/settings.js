@@ -1,38 +1,23 @@
-import * as R from 'ramda';
-
-import * as reduxConsts from '../../constants/redux';
-import { RIGHT } from '../../constants/settings';
-
+import { ReduxKey } from '../../constants/enums';
+import { Setting } from '../../constants/enums';
 const initialState = {
-  handPreference: RIGHT,
-  showGallons: false,
-  showOdometer: false,
-  showPrice: false,
+    handPreference: Setting.RIGHT,
+    showGallons: false,
+    showOdometer: false,
+    showPrice: false,
 };
-
 export const settings = (state = initialState, action) => {
-  switch (action.type) {
-    case reduxConsts.HAND_PREFERENCE:
-      return {
-        ...state,
-        handPreference: action.handPreference,
-      };
-    case reduxConsts.SHOW_GALLONS:
-      return {
-        ...state,
-        showGallons: action.showGallons,
-      };
-    case reduxConsts.SHOW_ODOMETER:
-      return {
-        ...state,
-        showOdometer: action.showOdometer,
-      };
-    case reduxConsts.SHOW_PRICE:
-      return {
-        ...state,
-        showPrice: action.showPrice,
-      };
-    default:
-      return state;
-  }
+    switch (action.type) {
+        case ReduxKey.HAND_PREFERENCE:
+            return Object.assign(Object.assign({}, state), { handPreference: action.handPreference });
+        case ReduxKey.SHOW_GALLONS:
+            return Object.assign(Object.assign({}, state), { showGallons: action.showGallons });
+        case ReduxKey.SHOW_ODOMETER:
+            return Object.assign(Object.assign({}, state), { showOdometer: action.showOdometer });
+        case ReduxKey.SHOW_PRICE:
+            return Object.assign(Object.assign({}, state), { showPrice: action.showPrice });
+        default:
+            return state;
+    }
 };
+//# sourceMappingURL=settings.js.map

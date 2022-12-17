@@ -1,31 +1,25 @@
-import * as colors from '../../constants/colors';
-
+import { Color } from '../../constants/enums';
 export const iconWrap = {
-  justifyContent: 'center',
-  paddingVertical: 16,
+    justifyContent: 'center',
+    paddingVertical: 16,
 };
-
 export const leftContentStyle = {
-  flexDirection: 'row',
+    flexDirection: 'row',
 };
-
 export const leftContentTextWrapStyle = {
-  justifyContent: 'center',
+    justifyContent: 'center',
 };
-
 export const leftContentIconWrap = {
-  justifyContent: 'center',
-  paddingRight: 8,
+    justifyContent: 'center',
+    paddingRight: 8,
 };
-
 export const rightContentStyle = {
-  flexDirection: 'row',
+    flexDirection: 'row',
 };
-
 export const rightContentTextStyle = {
-  justifyContent: 'center',
+    justifyContent: 'center',
 };
-
 export const subtitleTextStyle = {
-  color: colors.perfectGray,
+    color: Color.PERFECT_GRAY,
 };
+//# sourceMappingURL=styles.js.map

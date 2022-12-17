@@ -1,3 +1,4 @@
 export const vehicleListWrap = {
-  marginBottom: 16,
+    marginBottom: 16,
 };
+//# sourceMappingURL=styles.js.map

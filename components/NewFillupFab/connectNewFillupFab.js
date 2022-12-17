@@ -1,15 +1,12 @@
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
-
 import { expandFabs } from '../../redux/actions';
 import { fabsExpandedSelector } from '../../redux/selectors';
-
 const mapState = createStructuredSelector({
-  fabsExpanded: fabsExpandedSelector,
+    fabsExpanded: fabsExpandedSelector,
 });
-
 const mapDispatch = (dispatch) => ({
-  expandFabs: () => dispatch(expandFabs(false)),
+    expandFabs: () => dispatch(expandFabs(false)),
 });
-
 export default connect(mapState, mapDispatch);
+//# sourceMappingURL=connectNewFillupFab.js.map

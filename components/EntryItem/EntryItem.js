@@ -3,141 +3,100 @@ import * as R from 'ramda';
 import dayjs from 'dayjs';
 import * as ReactRedux from 'react-redux';
 import LocalizedFormat from 'dayjs/plugin/localizedFormat';
-import PropTypes from 'prop-types';
 import { useNavigation } from '@react-navigation/native';
-
-import ListItem from '../../components/ListItem';
-import Swipeable from '../../components/Swipeable';
-import * as colors from '../../constants/colors';
+import ListItem from '../ListItem';
+import Swipeable from '../Swipeable';
+import * as colors from '../../utils/colors';
+import { Color, Route, ServiceType } from '../../constants/enums';
 import * as maps from '../../constants/maps';
-import * as routes from '../../constants/routes';
 import * as selectors from '../../redux/selectors';
-import * as services from '../../constants/services';
-import * as types from '../../constants/types';
 import { useDarkmode } from '../../hooks/useDarkMode';
 import { getMPG } from '../../utils/mpg';
 import { noop } from '../../utils';
-
 dayjs.extend(LocalizedFormat);
-
-const EntryItem = ({ item }) => {
-  const { navigate } = useNavigation();
-
-  const isDarkMode = useDarkmode();
-  const green = colors.getGreen(isDarkMode);
-  const red = colors.getRed(isDarkMode);
-  const date = dayjs(R.prop('date', item)).format('LLL');
-  const showGallons = ReactRedux.useSelector(selectors.showGallonsSelector);
-  const showPrice = ReactRedux.useSelector(selectors.showPriceSelector);
-  const type = R.prop('type', item);
-
-  const getEntryMPG = React.useCallback(
-    (entry) => {
-      if (R.prop('type', entry) === types.SERVICE) return null;
-      return `${getMPG(entry).toFixed(1)} mpg`;
-    },
-    [],
-  );
-
-  const getSubtitleContent = React.useCallback(
-    (entry) => {
-      let content = [];
-      const entryType = R.prop('type', entry);
-
-      if (entryType === types.FILLUP) {
-        if (showGallons) {
-          content.push(`${R.prop('gallons', entry)} gallons`);
+const EntryItem = ({ date, gallons, id, odometer, previousOdometer, services, total, type, vehicle, }) => {
+    const { navigate } = useNavigation();
+    const isDarkMode = useDarkmode();
+    const green = colors.getGreen(isDarkMode);
+    const red = colors.getRed(isDarkMode);
+    const i18nDate = dayjs(date).format('LLL');
+    const showGallons = ReactRedux.useSelector(selectors.showGallonsSelector);
+    const showPrice = ReactRedux.useSelector(selectors.showPriceSelector);
+    const entry = React.useMemo(() => ({
+        date,
+        gallons,
+        id,
+        odometer,
+        previousOdometer,
+        services,
+        total,
+        type,
+        vehicle,
+    }), [
+        date,
+        gallons,
+        id,
+        odometer,
+        previousOdometer,
+        services,
+        total,
+        type,
+        vehicle,
+    ]);
+    const entryMPG = React.useMemo(() => {
+        if (type === ServiceType.SERVICE)
+            return null;
+        return `${getMPG(gallons, odometer, previousOdometer).toFixed(1)} mpg`;
+    }, [gallons, odometer, previousOdometer, type]);
+    const subtitleContent = React.useMemo(() => {
+        let content = [];
+        if (type === ServiceType.FILLUP) {
+            if (showGallons) {
+                content.push(`${gallons} gallons`);
+            }
+            if (showPrice) {
+                content.push(`$${total}`);
+            }
         }
-
-        if (showPrice) {
-          content.push(`$${R.prop('total', entry)}`);
+        if (type === ServiceType.SERVICE) {
+            content = services;
         }
-      }
-
-      if (entryType === types.SERVICE) {
-        content = R.prop('services', entry);
-      }
-
-      return R.join(', ', content);
-    },
-    [showGallons, showPrice],
-  );
-
-  const goToEdit = React.useCallback(
-    (entry) => {
-      const entryType = R.prop('type', entry);
-      const route = entryType === types.FILLUP
-        ? routes.FILLUP_FORM
-        : routes.SERVICE_FORM;
-      console.log({ route, entry });
-      const params = entryType === types.FILLUP
-        ? { entry }
-        : { screen: route,
-          params: { entry } };
-      navigate(route, params);
-    },
-    [navigate],
-  );
-
-  const handleEntryPress = React.useCallback(
-    (entry) => () => {
-      const entryType = R.prop('type', entry);
-      const route = entryType === types.FILLUP
-        ? routes.FILLUP_DETAILS
-        : routes.SERVICE_DETAILS;
-      navigate(route, { ...entry });
-    },
-    [navigate],
-  );
-
-  const rightActions = React.useMemo(
-    () => {
-      return [
-        {
-          bgColor: green,
-          label: 'Edit',
-          onPress: goToEdit,
-          textColor: colors.gallonBlack,
-        },
-        {
-          bgColor: red,
-          label: 'Delete',
-          onPress: noop,
-        },
-      ];
-    },
-    [goToEdit, green, red],
-  );
-
-  return (
-    <Swipeable
-      item={item}
-      rightActions={rightActions}
-    >
-      <ListItem
-        leftContent={date}
-        leftIcon={maps.iconMap[type]}
-        onPress={handleEntryPress(item)}
-        pressData={item}
-        rightContent={getEntryMPG(item)}
-        subtitle={getSubtitleContent(item)}
-      />
-    </Swipeable>
-  );
+        return R.join(', ', content);
+    }, [gallons, services, showGallons, showPrice, total, type]);
+    const goToEdit = React.useCallback(() => {
+        const route = type === ServiceType.FILLUP
+            ? Route.FILLUP_FORM
+            : Route.SERVICE_FORM;
+        const params = type === ServiceType.FILLUP
+            ? entry
+            : { screen: route,
+                params: entry };
+        navigate(route, params);
+    }, [entry, navigate, type]);
+    const handleEntryPress = React.useCallback(() => {
+        const route = type === ServiceType.FILLUP
+            ? Route.FILLUP_DETAILS
+            : Route.SERVICE_DETAILS;
+        navigate(route, Object.assign({}, entry));
+    }, [entry, navigate, type]);
+    const rightActions = React.useMemo(() => {
+        return [
+            {
+                bgColor: green,
+                label: 'Edit',
+                onPress: goToEdit,
+                textColor: Color.GALLON_BLACK,
+            },
+            {
+                bgColor: red,
+                label: 'Delete',
+                onPress: noop,
+            },
+        ];
+    }, [goToEdit, green, red]);
+    return (<Swipeable item={entry} rightActions={rightActions}>
+      <ListItem leftContent={i18nDate} leftIcon={maps.iconMap[type]} onPress={handleEntryPress} pressData={entry} rightContent={entryMPG} subtitle={subtitleContent}/>
+    </Swipeable>);
 };
-
-EntryItem.propTypes = {
-  item: PropTypes.shape({
-    date: PropTypes.string,
-    gallons: PropTypes.string,
-    id: PropTypes.number,
-    odometer: PropTypes.string,
-    previousOdometer: PropTypes.string,
-    services: PropTypes.arrayOf(PropTypes.oneOf(services.serviceList)),
-    total: PropTypes.string,
-    type: PropTypes.oneOf([types.FILLUP, types.SERVICE]),
-    vehicle: PropTypes.string,
-  }).isRequired,
-};
-
 export default React.memo(EntryItem);
+//# sourceMappingURL=EntryItem.js.map

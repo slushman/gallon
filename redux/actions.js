@@ -1,26 +1,22 @@
-import * as reduxConsts from '../constants/redux';
-
+import { ReduxKey } from '../constants/enums';
 export const expandFabs = fabsExpanded => ({
-  fabsExpanded,
-  type: reduxConsts.FABS_EXPANDED,
+    fabsExpanded,
+    type: ReduxKey.FABS_EXPANDED,
 });
-
 export const setHandPreference = handPreference => ({
-  handPreference,
-  type: reduxConsts.HAND_PREFERENCE,
+    handPreference,
+    type: ReduxKey.HAND_PREFERENCE,
 });
-
 export const setShowGallons = showGallons => ({
-  showGallons,
-  type: reduxConsts.SHOW_GALLONS,
+    showGallons,
+    type: ReduxKey.SHOW_GALLONS,
 });
-
 export const setShowPrice = showPrice => ({
-  showPrice,
-  type: reduxConsts.SHOW_PRICE,
+    showPrice,
+    type: ReduxKey.SHOW_PRICE,
 });
-
 export const toggleSettingsModal = settingsModal => ({
-  settingsModal,
-  type: reduxConsts.SETTINGS_MODAL,
+    settingsModal,
+    type: ReduxKey.SETTINGS_MODAL,
 });
+//# sourceMappingURL=actions.js.map
